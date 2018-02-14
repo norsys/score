@@ -1,0 +1,14 @@
+language: php
+
+php:
+  - 7.1
+
+notifications:
+  irc: "irc.freenode.org##east"
+
+before_script:
+  - echo 'xdebug.max_nesting_level = 4096' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - composer install
+
+script:
+  - php tests/units/runner.php
