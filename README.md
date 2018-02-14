@@ -37,7 +37,6 @@ To use it, just put it in a text file in (for example) your home and define it a
 
 To run unit tests, just do `php tests/units/runner.php`.
 
-
 ## Languages and tools
 
-- [*atoum*](http://docs.atoum.org) ;
+- [*atoum*](http://docs.atoum.org).
