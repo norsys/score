@@ -4,5 +4,5 @@ use norsys\score\{ composer, php };
 
 interface depedencies
 {
-	function recipientOfStringForDepedenciesFromComposerConfigIs(composer\config $config, php\string\recipient $recipient) :void;
+	function recipientOfStringForDepedenciesFromComposerDepedenciesIs(composer\depedency\container $depedencies, php\string\recipient $recipient) :void;
 }

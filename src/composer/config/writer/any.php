@@ -26,7 +26,6 @@ class any
 	{
 		$separator = '';
 		$buffer = '{';
-
 		$bufferizer = new php\string\recipient\functor(
 			function($string) use (& $buffer, & $separator)
 			{
@@ -36,10 +35,19 @@ class any
 			}
 		);
 
-		$this->depedencies
-			->recipientOfStringForDepedenciesFromComposerConfigIs(
-				$config,
-				$bufferizer
+		$config
+			->recipientOfComposerDepedenciesIs(
+				new composer\depedency\container\recipient\functor(
+					function($depedencies) use ($bufferizer)
+					{
+						$this->depedencies
+							->recipientOfStringForDepedenciesFromComposerDepedenciesIs(
+								$depedencies,
+								$bufferizer
+							)
+						;
+					}
+				)
 			)
 		;
 

@@ -47,9 +47,14 @@ class any extends units\test
 						->once
 
 			->given(
+				$depedencies = new mockOfScore\composer\depedency\container,
+				$this->calling($config)->recipientOfComposerDepedenciesIs = function($recipient) use ($depedencies) {
+					$recipient->composerDepedenciesIs($depedencies);
+				},
+
 				$jsonDepedencies = uniqid(),
-				$this->calling($depedenciesWriter)->recipientOfStringForDepedenciesFromComposerConfigIs = function($aConfig, $aRecipient) use ($config, $jsonDepedencies) {
-					if ($aConfig == $config)
+				$this->calling($depedenciesWriter)->recipientOfStringForDepedenciesFromComposerDepedenciesIs = function($aDepedencies, $aRecipient) use ($depedencies, $jsonDepedencies) {
+					if ($aDepedencies == $depedencies)
 					{
 						$aRecipient->stringIs($jsonDepedencies);
 					}

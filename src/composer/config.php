@@ -2,4 +2,5 @@
 
 interface config
 {
+	function recipientOfComposerDepedenciesIs(depedency\container\recipient $recipient) :void;
 }

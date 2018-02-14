@@ -6,5 +6,7 @@ class any
 	implements
 		composer\config
 {
-
+	function recipientOfComposerDepedenciesIs(composer\depedency\container\recipient $recipient) :void
+	{
+	}
 }
