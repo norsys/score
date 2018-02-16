@@ -1,6 +1,8 @@
 <?php namespace norsys\score\composer\depedency;
 
-interface version
+use norsys\score\php;
+
+interface version extends php\string\provider
 {
 
 }
