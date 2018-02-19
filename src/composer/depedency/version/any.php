@@ -6,7 +6,7 @@ class any extends php\string\any
 	implements
 		depedency\version
 {
-	private const stability = '(?:(-|@)(?:dev|alpha|beta|RC|stable))?';
+	private const stability = '(?:(?:-|@)(?:dev|alpha|beta|RC|stable))?';
 	private const operators = '(?:>|>=|<|<=|!=)?';
 	private const version = '(?:\d+(?:\.(?:\d+|\*))*)' . self::stability;
 	private const constraint = self::operators . self::version;
@@ -16,11 +16,11 @@ class any extends php\string\any
 	{
 		if (! preg_match(
 			'/' .
-			'(?:^' . self::constraint . '(?: (?:\|\| )?' . self::constraint . ')*' . '$)' .
+			self::regex(self::constraint . '(?: (?:\|\| )?' . self::constraint . ')*') .
 			'|' .
-			'(?:^' . self::version . ' - ' . self::version . '$)' .
+			self::regex(self::version . ' - ' . self::version) .
 			'|' .
-			'(?:' . self::unaryOperators . self::version . '$)' .
+			self::regex(self::unaryOperators . self::version) .
 			'/',
 			$string
 			)
@@ -30,5 +30,10 @@ class any extends php\string\any
 		}
 
 		parent::__construct($string);
+	}
+
+	private static function regex(string $string) :string
+	{
+		return '(?:^' . $string . '$)';
 	}
 }
