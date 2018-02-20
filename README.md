@@ -1,4 +1,4 @@
-# Score [![Build Status](https://travis-ci.org/norsys/score.svg?branch=master)](https://travis-ci.org/norsys/score)
+# Score [![Build Status](https://travis-ci.org/norsys/score.svg?branch=master)](https://travis-ci.org/norsys/score) [![Coverage Status](https://coveralls.io/repos/github/norsys/score/badge.svg?branch=master)](https://coveralls.io/github/norsys/score?branch=master)
 
 `Score` allows a developper to create or maintain a PHP [composer](https://getcomposer.org)'s configuration file.
 
