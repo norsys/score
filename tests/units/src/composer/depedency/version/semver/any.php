@@ -23,7 +23,7 @@ class any extends units\test
 						new semver\number\any,
 						new semver\number\any,
 						new semver\number\any,
-						new semver\converter\toString\dot
+						new semver\converter\toString\dot\aggregator
 					)
 				)
 		;

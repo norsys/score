@@ -15,10 +15,10 @@ class any
 
 	function __construct(semver\number $major = null, semver\number $minor = null, semver\number $patch = null, semver\converter\toString $semverToStringConverter = null)
 	{
-		$this->major = self::returnDefaultNumberIfNull($major);
-		$this->minor = self::returnDefaultNumberIfNull($minor);
-		$this->patch = self::returnDefaultNumberIfNull($patch);
-		$this->semverToStringConverter = $semverToStringConverter ?: new semver\converter\toString\dot;
+		$this->major = self::numberIs($major);
+		$this->minor = self::numberIs($minor);
+		$this->patch = self::numberIs($patch);
+		$this->semverToStringConverter = $semverToStringConverter ?: new semver\converter\toString\dot\aggregator;
 	}
 
 	function recipientOfMajorNumberInSemverIs(semver\number\recipient $recipient) :void
@@ -46,7 +46,7 @@ class any
 		;
 	}
 
-	private static function returnDefaultNumberIfNull($variable)
+	private static function numberIs($variable)
 	{
 		return $variable ?: new semver\number\any;
 	}
