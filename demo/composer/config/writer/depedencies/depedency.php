@@ -1,5 +1,7 @@
 <?php
 
+# To execute this file, just do `php -f path/to/this/file`.
+
 namespace norsys\score\demo\config\writer\depedencies\depedency;
 
 require __DIR__ . '/../../../../../vendor/autoload.php';
