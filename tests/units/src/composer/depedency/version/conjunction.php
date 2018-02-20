@@ -5,7 +5,7 @@ require __DIR__ . '/../../../../runner.php';
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class conjonction extends units\test
+class conjunction extends units\test
 {
 	function testClass()
 	{
