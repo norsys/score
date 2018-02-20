@@ -10,7 +10,7 @@ RM := rm -rf
 	$(MKDIR) $@
 
 .PHONY: install
-install: vendor/autoload.php ## Install all depedencies
+install: vendor/autoload.php .git/hooks/pre-commit ## Install all depedencies
 
 .PHONY: vendor/update
 vendor/update: composer.lock
@@ -31,6 +31,13 @@ bin/composer: bin/. ## Install composer
 	php composer-setup.php --quiet
 	$(RM) composer-setup.php
 	mv ./composer.phar $@
+
+.git/hooks/pre-commit: ./resources/pre-commit | .git ## Install pre-commit hook for git.
+	cp $^ $@
+	chmod u+x $@
+
+.git:
+	git init
 
 clean:
 	$(RM) bin
