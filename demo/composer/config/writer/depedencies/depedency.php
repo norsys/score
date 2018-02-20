@@ -13,7 +13,8 @@ use norsys\score\{
 	php\string\recipient\vardump,
 	composer\depedency\any as depedency,
 	composer\depedency\name\any as name,
-	composer\depedency\version\semver\number\any as number
+	composer\depedency\version\semver\number\any as number,
+	vcs\branch\any as branch
 };
 
 $writer = new writer\depedencies\depedency\any(
@@ -303,6 +304,18 @@ $writer
 						new number(2)
 					)
 				)
+			)
+		),
+		new vardump
+	)
+;
+
+$writer
+	->recipientOfStringForComposerDepedencyIs(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\dev\any(
+				new branch('a_branch')
 			)
 		),
 		new vardump
