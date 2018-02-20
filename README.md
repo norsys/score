@@ -35,7 +35,7 @@ To use it, just put it in a text file in (for example) your home and define it a
 
 ### About testing
 
-To run unit tests, just do `php tests/units/runner.php`.
+To run unit tests, just do `make unit-tests`.
 
 ## Languages and tools
 
