@@ -183,8 +183,7 @@ $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency\any(
 			new depedency\name\any('atoum/atoum'),
-			new depedency\version\constraint\any(
-				new depedency\version\constraint\operator\any('>'),
+			new depedency\version\greaterThan(
 				new semver\major(
 					new semver\number\any(1)
 				)
@@ -193,3 +192,18 @@ $writer
 		new vardump
 	)
 ;
+
+//$writer
+//	->recipientOfStringForComposerDepedencyIs(
+//		new depedency\any(
+//			new depedency\name\any('atoum/atoum'),
+//			new depedency\version\constraint\greaterThanOrEqualTo(
+//				new semver\major\minor(
+//					new semver\number\any(2),
+//					new semver\number\any(5)
+//				)
+//			)
+//		),
+//		new vardump
+//	)
+//;
