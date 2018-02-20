@@ -72,3 +72,15 @@ $writer
 		new vardump
 	)
 ;
+
+$writer
+	->recipientOfStringForComposerDepedencyIs(
+		new depedency\any(
+			new depedency\name\any('atoum/atoum'),
+			new semver\major\minor\wildcard(
+				new semver\number\any(2)
+			)
+		),
+		new vardump
+	)
+;
