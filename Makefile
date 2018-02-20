@@ -1,6 +1,8 @@
 MKDIR := mkdir -p
 RM := rm -rf
 
+.SILENT:
+
 .SUFFIXES:
 
 .DELETE_ON_ERROR:
@@ -23,7 +25,7 @@ unit-tests: install ## Run unit tests
 git/setup: .git/hooks/pre-commit ## Install pre-commit hook for git.
 
 .PHONY: export
-export: | .git
+export: | .git ## Generate a `./score.zip` archive from local git repository
 	git archive -o score.zip HEAD
 
 vendor/autoload.php: bin/composer
