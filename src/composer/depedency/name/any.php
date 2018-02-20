@@ -8,7 +8,7 @@ class any extends php\string\any
 {
 	function __construct(string $string)
 	{
-		if (! $string)
+		if ($string == '')
 		{
 			throw new \invalidArgumentException('Composer depedency name must not be an empty string');
 		}

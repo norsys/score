@@ -40,6 +40,7 @@ class any extends units\test
 	protected function goodArgumentProvider()
 	{
 		return [
+			0,
 			rand(0, 9),
 			chr(rand(65, 90)), // a-z
 			chr(rand(97, 122)), // A-Z

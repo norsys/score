@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../../../../runner.php';
 
-use norsys\score\{ tests\units, php };
+use norsys\score\{ tests\units, php\integer\converter\toString };
 use mock\norsys\score as mockOfScore;
 
 class dot extends units\test
@@ -16,7 +16,16 @@ class dot extends units\test
 
 	function test__construct()
 	{
-		$this->object($this->newTestedInstance)->isEqualTo($this->newTestedInstance(new php\integer\converter\toString\identical));
+		$this
+			->object($this->newTestedInstance)
+				->isEqualTo(
+					$this->newTestedInstance(
+						new toString\identical,
+						new toString\identical,
+						new toString\identical
+					)
+				)
+		;
 	}
 
 	function testRecipientOfSemverVersionAsStringIs()
@@ -24,7 +33,9 @@ class dot extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$integerToString = new mockOfScore\php\integer\converter\toString
+					$majorToString = new mockOfScore\php\integer\converter\toString,
+					$minorToString = new mockOfScore\php\integer\converter\toString,
+					$patchToString = new mockOfScore\php\integer\converter\toString
 				),
 				$semver = new mockOfScore\composer\depedency\version\semver,
 				$recipient = new mockOfScore\php\string\recipient
@@ -34,7 +45,12 @@ class dot extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($integerToString))
+					->isEqualTo($this->newTestedInstance(
+						$majorToString,
+						$minorToString,
+						$patchToString
+					)
+				)
 				->mock($recipient)
 					->receive('stringIs')
 						->never
@@ -56,22 +72,26 @@ class dot extends units\test
 				},
 
 				$majorAsString = uniqid(),
-				$minorAsString = uniqid(),
-				$patchAsString = uniqid(),
-				$this->calling($integerToString)->recipientOfPhpIntegerAsStringIs = function($aPhpInteger, $aRecipient) use ($major, $majorAsString, $minor, $minorAsString, $patch, $patchAsString) {
-					switch (true)
+				$this->calling($majorToString)->recipientOfPhpIntegerAsStringIs = function($aPhpInteger, $aRecipient) use ($major, $majorAsString) {
+					if ($aPhpInteger == $major)
 					{
-						case $aPhpInteger == $major:
-							$aRecipient->stringIs($majorAsString);
-							break;
+						$aRecipient->stringIs($majorAsString);
+					}
+				},
 
-						case $aPhpInteger == $minor:
-							$aRecipient->stringIs($minorAsString);
-							break;
+				$minorAsString = uniqid(),
+				$this->calling($minorToString)->recipientOfPhpIntegerAsStringIs = function($aPhpInteger, $aRecipient) use ($minor, $minorAsString) {
+					if ($aPhpInteger == $minor)
+					{
+						$aRecipient->stringIs($minorAsString);
+					}
+				},
 
-						case $aPhpInteger == $patch:
-							$aRecipient->stringIs($patchAsString);
-							break;
+				$patchAsString = uniqid(),
+				$this->calling($patchToString)->recipientOfPhpIntegerAsStringIs = function($aPhpInteger, $aRecipient) use ($patch, $patchAsString) {
+					if ($aPhpInteger == $patch)
+					{
+						$aRecipient->stringIs($patchAsString);
 					}
 				}
 			)
@@ -80,7 +100,12 @@ class dot extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($integerToString))
+					->isEqualTo($this->newTestedInstance(
+						$majorToString,
+						$minorToString,
+						$patchToString
+					)
+				)
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments($majorAsString . '.' . $minorAsString . '.' . $patchAsString)

@@ -1,18 +1,22 @@
 <?php namespace norsys\score\composer\depedency\version\semver\converter\toString;
 
-use norsys\score\{ composer\depedency\version\semver, php };
+use norsys\score\{ composer\depedency\version\semver, php\integer\converter\toString, php };
 
 class dot
 	implements
 		semver\converter\toString
 {
 	private
-		$integerToStringConverter
+		$majorToString,
+		$minorToString,
+		$patchToString
 	;
 
-	function __construct(php\integer\converter\toString $integerToStringConverter = null)
+	function __construct(toString $majorToString = null, toString $minorToString = null, toString $patchToString = null)
 	{
-		$this->integerToStringConverter = $integerToStringConverter ?: new php\integer\converter\toString\identical;
+		$this->majorToString = $majorToString ?: new toString\identical;
+		$this->minorToString = $minorToString ?: new toString\identical;
+		$this->patchToString = $patchToString ?: new toString\identical;
 	}
 
 	function recipientOfSemverVersionAsStringIs(semver $semver, php\string\recipient $recipient) :void
@@ -33,21 +37,21 @@ class dot
 													function($patch) use ($major, $minor, $recipient)
 													{
 														$this
-															->integerToStringConverter
+															->majorToString
 																->recipientOfPhpIntegerAsStringIs(
 																	$major,
 																	new php\string\recipient\functor(
 																		function($major) use ($minor, $patch, $recipient)
 																		{
 																			$this
-																				->integerToStringConverter
+																				->minorToString
 																					->recipientOfPhpIntegerAsStringIs(
 																						$minor,
 																						new php\string\recipient\functor(
 																							function($minor) use ($major, $patch, $recipient)
 																							{
 																								$this
-																									->integerToStringConverter
+																									->patchToString
 																										->recipientOfPhpIntegerAsStringIs(
 																											$patch,
 																											new php\string\recipient\functor(
