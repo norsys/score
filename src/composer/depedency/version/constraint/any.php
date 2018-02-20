@@ -26,11 +26,9 @@ class any
 					{
 						$this->operator
 							->recipientOfStringIs(
-								new php\string\recipient\functor(
-									function($operator) use ($version, $recipient)
-									{
-										$recipient->stringIs($operator . $version);
-									}
+								new php\string\recipient\suffix(
+									$version,
+									$recipient
 								)
 							)
 						;
