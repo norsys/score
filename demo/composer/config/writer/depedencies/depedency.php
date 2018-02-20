@@ -252,3 +252,31 @@ $writer
 		new vardump
 	)
 ;
+
+$writer
+	->recipientOfStringForComposerDepedencyIs(
+		new depedency\any(
+			new depedency\name\any('atoum/atoum'),
+			new depedency\version\conjonction(
+				new depedency\version\greaterThan(
+					new semver\major(
+						new semver\number\any(1)
+					)
+				),
+				new depedency\version\not(
+					new semver\major\minor(
+						new semver\number\any(3),
+						new semver\number\any(6)
+					)
+				),
+				new depedency\version\lessThan\orEqualTo(
+					new semver\major\minor(
+						new semver\number\any(4),
+						new semver\number\any(2)
+					)
+				)
+			)
+		),
+		new vardump
+	)
+;
