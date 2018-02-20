@@ -8,27 +8,27 @@ require __DIR__ . '/../../../../../vendor/autoload.php';
 
 use norsys\score\{
 	composer\config\writer,
-	composer\depedency,
+	composer\depedency\version,
 	composer\depedency\version\semver,
 	php\string\recipient\vardump,
-	composer\depedency\version\semver\number as major,
-	composer\depedency\version\semver\number as minor,
-	composer\depedency\version\semver\number as patch
+	composer\depedency\any as depedency,
+	composer\depedency\name\any as name,
+	composer\depedency\version\semver\number\any as number
 };
 
 $writer = new writer\depedencies\depedency\any(
 	new writer\depedencies\depedency\name\any,
 	new writer\depedencies\depedency\version\any
+
 );
-
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\any(
-				new semver\number\any(2),
-				new semver\number\any(3),
-				new semver\number\any(7)
+				new number(2),
+				new number(3),
+				new number(7)
 			)
 		),
 		new vardump
@@ -37,10 +37,10 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\major(
-				new semver\number\any(2)
+				new number(2)
 			)
 		),
 		new vardump
@@ -49,11 +49,11 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\major\minor(
-				new semver\number\any(2),
-				new semver\number\any(1)
+				new number(2),
+				new number(1)
 			)
 		),
 		new vardump
@@ -62,8 +62,8 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\initial
 		),
 		new vardump
@@ -72,10 +72,10 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\initial(
-				new semver\number\any(5)
+				new number(5)
 			)
 		),
 		new vardump
@@ -84,11 +84,11 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\initial(
-				new semver\number\any(5),
-				new semver\number\any(2)
+				new number(5),
+				new number(2)
 			)
 		),
 		new vardump
@@ -97,10 +97,10 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\major\wildcard(
-				new semver\number\any(5)
+				new number(5)
 			)
 		),
 		new vardump
@@ -109,10 +109,10 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\major\minor\wildcard(
-				new semver\number\any(2)
+				new number(2)
 			)
 		),
 		new vardump
@@ -121,11 +121,11 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
+		new depedency(
+			new name('atoum/atoum'),
 			new semver\major\minor\wildcard(
-				new semver\number\any(2),
-				new semver\number\any(5)
+				new number(2),
+				new number(5)
 			)
 		),
 		new vardump
@@ -134,12 +134,12 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\range\bc(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\range\bc(
 				new semver\major\minor\wildcard(
-					new semver\number\any(2),
-					new semver\number\any(5)
+					new number(2),
+					new number(5)
 				)
 			)
 		),
@@ -149,11 +149,11 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\range\bc\no(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\range\bc\no(
 				new semver\major\minor\wildcard(
-					new semver\number\any(3)
+					new number(3)
 				)
 			)
 		),
@@ -163,15 +163,15 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\range\inclusive(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\range\inclusive(
 				new semver\major(
-					new semver\number\any(1)
+					new number(1)
 				),
 				new semver\any(
-					new semver\number\any(2),
-					new semver\number\any(1)
+					new number(2),
+					new number(1)
 				)
 			)
 		),
@@ -181,11 +181,11 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\greaterThan(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\greaterThan(
 				new semver\major(
-					new semver\number\any(1)
+					new number(1)
 				)
 			)
 		),
@@ -195,12 +195,12 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\greaterThan\orEqualTo(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\greaterThan\orEqualTo(
 				new semver\major\minor(
-					new semver\number\any(2),
-					new semver\number\any(5)
+					new number(2),
+					new number(5)
 				)
 			)
 		),
@@ -210,12 +210,12 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\lessThan(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\lessThan(
 				new semver\major\minor(
-					new semver\number\any(2),
-					new semver\number\any(5)
+					new number(2),
+					new number(5)
 				)
 			)
 		),
@@ -225,12 +225,12 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\lessThan\orEqualTo(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\lessThan\orEqualTo(
 				new semver\major\minor(
-					new semver\number\any(3),
-					new semver\number\any(6)
+					new number(3),
+					new number(6)
 				)
 			)
 		),
@@ -240,12 +240,12 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\not(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\not(
 				new semver\major\minor(
-					new semver\number\any(3),
-					new semver\number\any(6)
+					new number(3),
+					new number(6)
 				)
 			)
 		),
@@ -255,24 +255,24 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\conjunction(
-				new depedency\version\greaterThan(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\conjunction(
+				new version\greaterThan(
 					new semver\major(
-						new semver\number\any(1)
+						new number(1)
 					)
 				),
-				new depedency\version\not(
+				new version\not(
 					new semver\major\minor(
-						new semver\number\any(3),
-						new semver\number\any(6)
+						new number(3),
+						new number(6)
 					)
 				),
-				new depedency\version\lessThan\orEqualTo(
+				new version\lessThan\orEqualTo(
 					new semver\major\minor(
-						new semver\number\any(4),
-						new semver\number\any(2)
+						new number(4),
+						new number(2)
 					)
 				)
 			)
@@ -283,24 +283,24 @@ $writer
 
 $writer
 	->recipientOfStringForComposerDepedencyIs(
-		new depedency\any(
-			new depedency\name\any('atoum/atoum'),
-			new depedency\version\disjunction(
-				new depedency\version\greaterThan(
+		new depedency(
+			new name('atoum/atoum'),
+			new version\disjunction(
+				new version\greaterThan(
 					new semver\major(
-						new semver\number\any(1)
+						new number(1)
 					)
 				),
-				new depedency\version\not(
+				new version\not(
 					new semver\major\minor(
-						new semver\number\any(3),
-						new semver\number\any(6)
+						new number(3),
+						new number(6)
 					)
 				),
-				new depedency\version\lessThan\orEqualTo(
+				new version\lessThan\orEqualTo(
 					new semver\major\minor(
-						new semver\number\any(4),
-						new semver\number\any(2)
+						new number(4),
+						new number(2)
 					)
 				)
 			)
