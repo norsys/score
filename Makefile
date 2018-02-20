@@ -10,7 +10,7 @@ RM := rm -rf
 	$(MKDIR) $@
 
 .PHONY: install
-install: vendor/autoload.php .git/hooks/pre-commit ## Install all depedencies
+install: vendor/autoload.php git/setup ## Install all depedencies
 
 .PHONY: vendor/update
 vendor/update: composer.lock
@@ -18,6 +18,13 @@ vendor/update: composer.lock
 .PHONY: unit-tests
 unit-tests: install ## Run unit tests
 	php tests/units/runner.php -ulr
+
+.PHONY: git/setup
+git/setup: .git/hooks/pre-commit ## Install pre-commit hook for git.
+
+.PHONY: export
+export: | .git
+	git archive -o score.zip HEAD
 
 vendor/autoload.php: bin/composer
 	bin/composer install
@@ -32,17 +39,13 @@ bin/composer: bin/. ## Install composer
 	$(RM) composer-setup.php
 	mv ./composer.phar $@
 
-.git/hooks/pre-commit: ./resources/pre-commit | .git ## Install pre-commit hook for git.
+.git/hooks/pre-commit: ./resources/pre-commit | .git
 	cp $^ $@
 	chmod u+x $@
 
 .git:
 	git init
 
-clean:
-	$(RM) bin
-
 .PHONY: help
 help: ## Display this help.
 	@printf "$$(cat $(MAKEFILE_LIST) | egrep -h '^[^:]+:[^#]+## .+$$' | sed -e 's/:[^#]*##/:/' -e 's/\(.*\):/\\033[92m\1\\033[0m:/' | sort -d | column -c2 -t -s :)\n"
-
