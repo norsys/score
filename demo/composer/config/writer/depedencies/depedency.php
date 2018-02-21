@@ -12,7 +12,7 @@ use norsys\score\{
 	composer\depedency\version\semver,
 	php\string\recipient\vardump,
 	composer\depedency\any as depedency,
-	composer\depedency\name\any as name,
+	composer\depedency\name,
 	composer\depedency\version\semver\number\any as number,
 	vcs\branch\any as branch
 };
@@ -25,7 +25,7 @@ $writer = new writer\depedencies\depedency\any(
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\any(
 				new number(2),
 				new number(3),
@@ -39,7 +39,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\major(
 				new number(2)
 			)
@@ -51,7 +51,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\major\minor(
 				new number(2),
 				new number(1)
@@ -64,7 +64,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\initial
 		),
 		new vardump
@@ -74,7 +74,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\initial(
 				new number(5)
 			)
@@ -86,7 +86,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\initial(
 				new number(5),
 				new number(2)
@@ -99,7 +99,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\major\wildcard(
 				new number(5)
 			)
@@ -111,7 +111,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\major\minor\wildcard(
 				new number(2)
 			)
@@ -123,7 +123,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new semver\major\minor\wildcard(
 				new number(2),
 				new number(5)
@@ -136,7 +136,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\range\bc(
 				new semver\major\minor\wildcard(
 					new number(2),
@@ -151,7 +151,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\range\bc\no(
 				new semver\major\minor\wildcard(
 					new number(3)
@@ -165,7 +165,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\range\inclusive(
 				new semver\major(
 					new number(1)
@@ -183,7 +183,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\greaterThan(
 				new semver\major(
 					new number(1)
@@ -197,7 +197,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\greaterThan\orEqualTo(
 				new semver\major\minor(
 					new number(2),
@@ -212,7 +212,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\lessThan(
 				new semver\major\minor(
 					new number(2),
@@ -227,7 +227,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\lessThan\orEqualTo(
 				new semver\major\minor(
 					new number(3),
@@ -242,7 +242,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\not(
 				new semver\major\minor(
 					new number(3),
@@ -257,7 +257,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\conjunction(
 				new version\greaterThan(
 					new semver\major(
@@ -285,7 +285,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\disjunction(
 				new version\greaterThan(
 					new semver\major(
@@ -313,7 +313,7 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency(
-			new name('atoum/atoum'),
+			new name\atoum,
 			new version\dev\any(
 				new branch('a_branch')
 			)

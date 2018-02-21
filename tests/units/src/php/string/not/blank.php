@@ -22,6 +22,9 @@ class blank extends units\test
 			->exception(function() use ($argument) { $this->newTestedInstance($argument); })
 				->isInstanceOf('invalidArgumentException')
 				->hasMessage('Argument must be a not empty string')
+
+			->exception(function() use ($argument, & $exception) { $this->newTestedInstance($argument, $exception = new \mock\exception); })
+				->isIdenticalTo($exception)
 		;
 	}
 

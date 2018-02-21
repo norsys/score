@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\{ tests\units, php };
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -14,14 +14,34 @@ class any extends units\test
 		;
 	}
 
-	/**
-	 * @dataProvider goodArgumentProvider
-	 */
-	function testRecipientOfStringIs_withArgument($string)
+	function test__construct()
+	{
+		$this
+			->object(
+				$this->newTestedInstance(
+					$vendor = new mockOfScore\composer\depedency\name\vendor,
+					$project = new mockOfScore\composer\depedency\name\project
+				)
+			)
+				->isEqualTo(
+					$this->newTestedInstance(
+						$vendor,
+						$project,
+						new php\string\formater\sprintf('%s/%s')
+					)
+				)
+		;
+	}
+
+	function testRecipientOfStringIs()
 	{
 		$this
 			->given(
-				$this->newTestedInstance($string),
+				$this->newTestedInstance(
+					$vendor = new mockOfScore\composer\depedency\name\vendor,
+					$project = new mockOfScore\composer\depedency\name\project,
+					$formater = new mockOfScore\php\string\formater
+				),
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -29,59 +49,40 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($string))
+					->isEqualTo($this->newTestedInstance($vendor, $project, $formater))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments($string)
-							->once
-		;
-	}
+						->never
 
-	protected function goodArgumentProvider()
-	{
-		return [
-			0,
-			rand(0, 9),
-			chr(rand(65, 90)), // a-z
-			chr(rand(97, 122)), // A-Z
-			chr(rand(91, 96)), // [, \ , ], ^, `, _
-			chr(rand(123, 126)), // {, |, },  ~
-			uniqid(),
-			rand(PHP_INT_MIN, PHP_INT_MAX),
-			' ',
-			"	",
-			PHP_EOL,
-			' ' . uniqid(),
-			"	" . uniqid(),
-			PHP_EOL . uniqid(),
-			uniqid() . ' ',
-			uniqid() . "	",
-			uniqid() . PHP_EOL,
-			uniqid() . ' ' . uniqid(),
-			uniqid() . "	" . uniqid(),
-			uniqid() . PHP_EOL . uniqid()
-		];
-	}
+			->given(
+				$vendorAsString = uniqid(),
+				$this->calling($vendor)->recipientOfStringIs = function($aRecipient) use (& $vendorAsString) {
+					$aRecipient->stringIs($vendorAsString);
+				},
 
-	/**
-	 * @dataProvider badArgumentProvider
-	 */
-	function test__construct_withBadArgument($argument)
-	{
-		$this
-			->exception(function() use ($argument) {
-					$this->newTestedInstance($argument);
+				$projectAsString = uniqid(),
+				$this->calling($project)->recipientOfStringIs = function($aRecipient) use (& $projectAsString) {
+					$aRecipient->stringIs($projectAsString);
+				},
+
+				$formaterAsString = uniqid(),
+				$this->calling($formater)->stringsForRecipientOfFormatedStringAre = function($aRecipient, ...$strings) use ($vendorAsString, $projectAsString, & $formaterAsString) {
+					if ($strings == [ $vendorAsString, $projectAsString ])
+					{
+						$aRecipient->stringIs($formaterAsString);
+					}
 				}
 			)
-				->isInstanceOf('invalidArgumentException')
-				->hasMessage('Composer depedency name must not be an empty string')
+			->if(
+				$this->testedInstance->recipientOfStringIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($vendor, $project, $formater))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($formaterAsString)
+							->once
 		;
-	}
-
-	protected function badArgumentProvider()
-	{
-		return [
-			''
-		];
 	}
 }

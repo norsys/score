@@ -1,26 +1,14 @@
 <?php namespace norsys\score\composer\depedency\name\vendor;
 
-use norsys\score\{ composer\depedency\name\vendor, php };
+use norsys\score\composer\depedency\name\component;
 
-class any extends php\string\not\blank
-	implements
-		vendor
+class any extends component
 {
 	function __construct($string)
 	{
-		try
-		{
-			parent::__construct($string);
-		}
-		catch (\invalidArgumentException $invalidArgumentException)
-		{
-			throw new \invalidArgumentException('Vendor of composer depedency must not be an empty string and can not contains `"` or `\'`');
-		}
-
-		if (strpos($string, '\'') !== false || strpos($string, '"') !== false)
-		{
-			throw new \invalidArgumentException('Vendor of composer depedency must not be an empty string and can not contains `"` or `\'`');
-		}
+		parent::__construct(
+			$string,
+			new \invalidArgumentException('Vendor of composer depedency must not be an empty string and can not contains `"` or `\'`')
+		);
 	}
-
 }
