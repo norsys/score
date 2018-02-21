@@ -22,6 +22,7 @@ $writer = new writer\depedencies\depedency\any(
 	new writer\depedencies\depedency\version\any
 
 );
+
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency\atoum(
@@ -29,6 +30,21 @@ $writer
 				new number(2),
 				new number(3),
 				new number(7)
+			)
+		),
+		new vardump
+	)
+;
+
+$writer
+	->recipientOfStringForComposerDepedencyIs(
+		new depedency\atoum(
+			new semver\prefixed(
+				new semver\any(
+					new number(2),
+					new number(3),
+					new number(7)
+				)
 			)
 		),
 		new vardump
