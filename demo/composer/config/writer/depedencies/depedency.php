@@ -301,3 +301,10 @@ $writer
 		new vardump
 	)
 ;
+
+$writer
+	->recipientOfStringForComposerDepedencyIs(
+		new depedency\atoum\dev,
+		new vardump
+	)
+;
