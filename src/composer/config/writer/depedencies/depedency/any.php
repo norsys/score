@@ -8,13 +8,15 @@ class any
 {
 	private
 		$nameWriter,
-		$versionWriter
+		$versionWriter,
+		$formater
 	;
 
-	function __construct(writer\depedencies\depedency\name $nameWriter, writer\depedencies\depedency\version $versionWriter)
+	function __construct(writer\depedencies\depedency\name $nameWriter = null, writer\depedencies\depedency\version $versionWriter = null, php\string\formater $formater = null)
 	{
-		$this->nameWriter = $nameWriter;
-		$this->versionWriter = $versionWriter;
+		$this->nameWriter = $nameWriter ?: new writer\depedencies\depedency\name\any;
+		$this->versionWriter = $versionWriter ?: new writer\depedencies\depedency\version\any;
+		$this->formater = $formater ?: new php\string\formater\sprintf('"%s": "%s"');
 	}
 
 	function recipientOfStringForComposerDepedencyIs(composer\depedency $depedency, php\string\recipient $recipient) :void
@@ -39,7 +41,13 @@ class any
 																$depedencyVersion,
 																new php\string\recipient\functor(
 																	function($versionAsString) use ($nameAsString, $recipient) {
-																		$recipient->stringIs(sprintf('"%s": "%s"', $nameAsString, $versionAsString));
+																		$this->formater
+																			->stringsForRecipientOfFormatedStringAre(
+																				$recipient,
+																				$nameAsString,
+																				$versionAsString
+																			)
+																		;
 																	}
 																)
 															)

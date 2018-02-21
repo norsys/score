@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\{ tests\units, composer\config\writer, php };
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -14,13 +14,28 @@ class any extends units\test
 		;
 	}
 
+	function test__construct()
+	{
+		$this
+			->object($this->newTestedInstance)
+				->isEqualTo(
+					$this->newTestedInstance(
+						new writer\depedencies\depedency\name\any,
+						new writer\depedencies\depedency\version\any,
+						new php\string\formater\sprintf('"%s": "%s"')
+					)
+				)
+		;
+	}
+
 	function testRecipientOfStringForComposerDepedencyIs()
 	{
 		$this
 			->given(
 				$this->newTestedInstance(
 					$nameWriter = new mockOfScore\composer\config\writer\depedencies\depedency\name,
-					$versionWriter = new mockOfScore\composer\config\writer\depedencies\depedency\version
+					$versionWriter = new mockOfScore\composer\config\writer\depedencies\depedency\version,
+					$formater = new mockOfScore\php\string\formater
 				),
 				$recipient = new mockOfScore\php\string\recipient,
 				$depedency = new mockOfScore\composer\depedency
@@ -32,7 +47,8 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance(
 							$nameWriter,
-							$versionWriter
+							$versionWriter,
+							$formater
 						)
 					)
 				->mock($recipient)
@@ -66,6 +82,14 @@ class any extends units\test
 					{
 						$aRecipient->stringIs($depedencyVersionAsString);
 					}
+				},
+
+				$depedencyAsString = uniqid(),
+				$this->calling($formater)->stringsForRecipientOfFormatedStringAre = function($recipient, ...$strings) use ($depedencyAsString, $depedencyNameAsString, $depedencyVersionAsString) {
+					if ($strings == [ $depedencyNameAsString, $depedencyVersionAsString ])
+					{
+						$recipient->stringIs($depedencyAsString);
+					}
 				}
 			)
 			->if(
@@ -75,12 +99,13 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance(
 							$nameWriter,
-							$versionWriter
+							$versionWriter,
+							$formater
 						)
 					)
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments('"' . $depedencyNameAsString . '": "' . $depedencyVersionAsString . '"')
+						->withArguments($depedencyAsString)
 							->once
 		;
 	}
