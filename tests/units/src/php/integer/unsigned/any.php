@@ -31,6 +31,13 @@ class any extends units\test
 			)
 				->isInstanceOf('invalidArgumentException')
 				->hasMessage('Argument must be greater than or equal to zero')
+
+			->exception(function() use ($argument, & $exception) {
+					$this->newTestedInstance($argument, $exception = new \exception);
+				}
+			)
+				->isIdenticalTo($exception)
+		;
 		;
 	}
 

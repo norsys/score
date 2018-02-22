@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\depedency\version\semver\converter\toString\dot;
 
-use norsys\score\{ composer\depedency\version\semver, php };
+use norsys\score\{ composer\depedency\version\semver, php, php\test };
 
 class aggregator
 	implements
@@ -86,10 +86,17 @@ class aggregator
 			)
 		;
 
-		if ($buffer !== null)
-		{
-			$recipient->stringIs($buffer);
-		}
+		(new test\defined)
+			->recipientOfTestOnVariableIs(
+				$buffer,
+				new test\recipient\ifTrue\functor(
+					function() use ($buffer, $recipient)
+					{
+						$recipient->stringIs($buffer);
+					}
+				)
+			)
+		;
 	}
 
 	private static function integerConverterIs($variable) :php\integer\converter\toString

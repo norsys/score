@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\depedency\version;
 
-use norsys\score\{ composer\depedency\version, php };
+use norsys\score\{ composer\depedency\version, php, php\test };
 
 class constraints
 	implements
@@ -27,8 +27,6 @@ class constraints
 				new php\string\recipient\functor(
 					function($operator) use ($recipient)
 					{
-						$versions = [];
-
 						foreach ($this->versions as $version)
 						{
 							$version
@@ -43,10 +41,17 @@ class constraints
 							;
 						}
 
-						if ($versions)
-						{
-							$recipient->stringIs(join($operator, $versions));
-						}
+						(new test\defined)
+							->recipientOfTestOnVariableIs(
+								$versions,
+								new test\recipient\ifTrue\functor(
+									function() use ($recipient, $operator, $versions)
+									{
+										$recipient->stringIs(join($operator, $versions));
+									}
+								)
+							)
+						;
 					}
 				)
 			)

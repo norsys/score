@@ -1,25 +1,28 @@
 <?php namespace norsys\score\php\integer\unsigned;
 
-use norsys\score\php\integer;
+use norsys\score\php\{ integer\any as anyInteger, integer\unsigned, integer\recipient\functor, test\variable\isTrue, test\recipient\exception\fallback as exception };
 
-class any extends integer\any
+class any extends anyInteger
 	implements
-		integer\unsigned
+		unsigned
 {
-	function __construct(int $value = 0)
+	function __construct(int $value = 0, \exception $exception = null)
 	{
-		parent::__construct($value);
+		(
+			new isTrue\strictly($value < 0)
+		)
+			->recipientOfTestIs(
+				new exception(new \invalidArgumentException('Argument must be greater than or equal to zero'), $exception)
+			)
+		;
 
-		if ($value < 0)
-		{
-			throw new \invalidArgumentException('Argument must be greater than or equal to zero');
-		}
+		parent::__construct($value);
 	}
 
-	function recipientOfUnsignedIntegerIs(integer\unsigned\recipient $recipient) :void
+	function recipientOfUnsignedIntegerIs(unsigned\recipient $recipient) :void
 	{
 		parent::recipientOfIntegerIs(
-			new integer\recipient\functor(
+			new functor(
 				function($unsigned) use ($recipient)
 				{
 					$recipient->unsignedIntegerIs($unsigned);

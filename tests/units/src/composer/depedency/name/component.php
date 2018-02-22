@@ -71,10 +71,10 @@ class component extends units\test
 	{
 		$this
 			->exception(function() use ($argument, & $exception) {
-					$this->newTestedInstance($argument, $exception = new \mock\exception);
+					$this->newTestedInstance($argument, $exception = new \exception);
 				}
 			)
-				->isEqualTo($exception)
+				->isIdenticalTo($exception)
 		;
 	}
 

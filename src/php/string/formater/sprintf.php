@@ -1,10 +1,10 @@
 <?php namespace norsys\score\php\string\formater;
 
-use norsys\score\php;
+use norsys\score\{ php\test\variable\isNotFalse, php\test\recipient\ifTrue\functor, php\string\formater, php\string\recipient };
 
 class sprintf
 	implements
-		php\string\formater
+		formater
 {
 	private
 		$format
@@ -15,13 +15,21 @@ class sprintf
 		$this->format = $format;
 	}
 
-	function stringsForRecipientOfFormatedStringAre(php\string\recipient $recipient, string... $strings) :void
+	function stringsForRecipientOfFormatedStringAre(recipient $recipient, string... $strings) :void
 	{
-		$formatedString = @sprintf($this->format, ...$strings);
-
-		if ($formatedString !== false)
-		{
-			$recipient->stringIs($formatedString);
-		}
+		(
+			new isNotFalse\strictly(
+				$formatedString = @sprintf($this->format, ...$strings)
+			)
+		)
+			->recipientOfTestIs(
+				new functor(
+					function() use ($recipient, $formatedString)
+					{
+						$recipient->stringIs($formatedString);
+					}
+				)
+			)
+		;
 	}
 }

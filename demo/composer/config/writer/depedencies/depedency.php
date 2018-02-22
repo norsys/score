@@ -7,10 +7,10 @@ namespace norsys\score\demo\config\writer\depedencies\depedency;
 require __DIR__ . '/../../../../../vendor/autoload.php';
 
 use norsys\score\{
+	php\string\recipient\vardump,
 	composer\config\writer,
 	composer\depedency\version,
 	composer\depedency\version\semver,
-	php\string\recipient\vardump,
 	composer\depedency,
 	composer\depedency\name,
 	composer\depedency\version\semver\number\any as number,
