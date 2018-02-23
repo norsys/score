@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\depedency;
 
-use norsys\score\{ composer, composer\depedency, serializer\keyValue as serializer, php\string\recipient, php\string\recipient\functor };
+use norsys\score\{ composer, composer\depedency, serializer\keyValue as serializer, php\string\recipient, php\block\functor, php\string\aggregator\all as stringAggregator };
 
 class any
 	implements
@@ -29,25 +29,21 @@ class any
 
 	function recipientOfStringMadeWithKeyValueSerializerIs(serializer $serializer, recipient $recipient) :void
 	{
-		$this->name
-			->recipientOfStringIs(
+		(
+			new stringAggregator(
+				$this->name,
+				$this->version
+			)
+		)
+			->blockIs(
 				new functor(
-					function($name) use ($serializer, $recipient)
+					function($name, $version) use ($serializer, $recipient)
 					{
-						$this->version
-							->recipientOfStringIs(
-								new functor(
-									function($version) use ($name, $serializer, $recipient)
-									{
-										$serializer
-											->recipientOfSerializedValueAtKeyIs(
-												$version,
-												$name,
-												$recipient
-											)
-										;
-									}
-								)
+						$serializer
+							->recipientOfSerializedValueAtKeyIs(
+								$version,
+								$name,
+								$recipient
 							)
 						;
 					}
