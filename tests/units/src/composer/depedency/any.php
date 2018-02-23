@@ -59,4 +59,57 @@ class any extends units\test
 							->once
 		;
 	}
+
+	function testRecipientOfStringMadeWithKeyValueSerializerIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$name = new mockOfScore\composer\depedency\name,
+					$version = new mockOfScore\composer\depedency\version
+				),
+				$serializer = new mockOfScore\serializer\keyValue,
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($name, $version))
+				->mock($recipient)
+					->receive('stringIs')
+						->never
+
+			->given(
+				$nameAsString = uniqid(),
+				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($nameAsString) {
+					$aRecipient->stringIs($nameAsString);
+				},
+
+				$versionAsString = uniqid(),
+				$this->calling($version)->recipientOfStringIs = function($aRecipient) use ($versionAsString) {
+					$aRecipient->stringIs($versionAsString);
+				},
+
+				$serializedString = uniqid(),
+				$this->calling($serializer)->recipientOfSerializedValueAtKeyIs = function($aValue, $aKey, $aRecipient) use ($nameAsString, $versionAsString, $serializedString) {
+					if ($aKey == $nameAsString && $aValue == $versionAsString)
+					{
+						$aRecipient->stringis($serializedString);
+					}
+				}
+			)
+			->if(
+				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($name, $version))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($serializedString)
+							->once
+		;
+	}
 }

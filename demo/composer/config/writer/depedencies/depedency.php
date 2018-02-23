@@ -14,7 +14,8 @@ use norsys\score\{
 	composer\depedency,
 	composer\depedency\name,
 	composer\depedency\version\semver\number\any as number,
-	vcs\branch\any as branch
+	vcs\branch\any as branch,
+	serializer\keyValue\json
 };
 
 $writer = new writer\depedencies\depedency\any(
@@ -321,6 +322,13 @@ $writer
 $writer
 	->recipientOfStringForComposerDepedencyIs(
 		new depedency\atoum\dev,
+		new vardump
+	)
+;
+
+(new depedency\atoum\dev)
+	->recipientOfStringMadeWithKeyValueSerializerIs(
+		new json,
 		new vardump
 	)
 ;
