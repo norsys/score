@@ -1,6 +1,6 @@
 <?php namespace norsys\score\php\string\formater;
 
-use norsys\score\{ php\test\variable\isNotFalse, php\test\recipient\ifTrue\functor, php\string\formater, php\string\recipient };
+use norsys\score\{ php\test\variable\isNotFalse, php\test\recipient\ifTrue\functor as ifTrue, php\string\formater, php\string\recipient };
 
 class sprintf
 	implements
@@ -23,7 +23,7 @@ class sprintf
 			)
 		)
 			->recipientOfTestIs(
-				new functor(
+				new ifTrue(
 					function() use ($recipient, $formatedString)
 					{
 						$recipient->stringIs($formatedString);

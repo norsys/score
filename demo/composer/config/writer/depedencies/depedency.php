@@ -16,14 +16,14 @@ use norsys\score\{
 	vcs\branch\any as branch,
 	serializer\keyValue\json,
 	container\iterator\fifo,
-	container\iterator\block\functor
+	container\iterator\block\functor as block
 };
 
 (
 	new fifo
 )
 	->variablesForIteratorBlockAre(
-		new functor(
+		new block(
 			function($iterator, $depedency)
 			{
 				$depedency
