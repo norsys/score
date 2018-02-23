@@ -28,6 +28,16 @@ class buffer extends units\test
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($string))
+
+			->given(
+				$this->newTestedInstance($inBuffer = uniqid())
+			)
+			->if(
+				$this->testedInstance->stringIs($string)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($inBuffer . $string))
 		;
 	}
 

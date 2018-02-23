@@ -1,6 +1,6 @@
 <?php namespace norsys\score\php\string\recipient;
 
-use norsys\score\php\string\{ recipient, provider };
+use norsys\score\php\string\{ recipient, provider, recipient\suffix, recipient\functor };
 use norsys\score\php\test\{ variable\defined, recipient\ifTrue\functor as ifTrue };
 
 class buffer
@@ -19,7 +19,19 @@ class buffer
 
 	function stringIs(string $string) :void
 	{
-		$this->string .= $string;
+		(
+			new prefix(
+				$this->string ?: '',
+				new functor(
+					function($string)
+					{
+						$this->string = $string;
+					}
+				)
+			)
+		)
+			->stringIs($string)
+		;
 	}
 
 	function recipientOfStringIs(recipient $recipient) :void
