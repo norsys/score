@@ -9,11 +9,9 @@ require __DIR__ . '/../../../../../vendor/autoload.php';
 use norsys\score\{
 	php\string\recipient\stdout\eol as stdout,
 	php\string\recipient\buffer,
-	composer\config\writer,
 	composer\depedency\version,
 	composer\depedency\version\semver,
 	composer\depedency,
-	composer\depedency\name,
 	composer\depedency\version\semver\number\any as number,
 	vcs\branch\any as branch,
 	serializer\keyValue\json,
