@@ -7,23 +7,28 @@ class json
 		serializer
 {
 	private
-		$indentationLevel
+		$indentationLevel,
+		$pairSeparator
 	;
 
-	function __construct(int $indentationLevel = 0)
+	function __construct(int $indentationLevel = 0, bool $partIsEmpty = true)
 	{
 		$this->indentationLevel = $indentationLevel;
+		$this->pairSeparator = $partIsEmpty ? '' : ',' . PHP_EOL;
 	}
 
 	function recipientOfSerializedValueAtKeyIs(string $value, string $key, recipient $recipient) :void
 	{
 		$recipient->stringIs($this->getKeyFromString($key) . '"' . $value . '"');
+
+		$this->pairSeparator = ',' . PHP_EOL;
 	}
 
 	function recipientOfSerializedPartAtKeyIs(part $part, string $key, recipient $recipient) :void
 	{
 		$clone = clone $this;
 		$clone->indentationLevel++;
+		$clone->pairSeparator = '';
 
 		$part
 			->recipientOfStringMadeWithKeyValueSerializerIs(
@@ -39,6 +44,6 @@ class json
 
 	private function getKeyFromString(string $string) :string
 	{
-		return str_repeat("	", $this->indentationLevel) . '"' . addslashes($string) . '": ';
+		return $this->pairSeparator . str_repeat("	", $this->indentationLevel) . '"' . addslashes($string) . '": ';
 	}
 }

@@ -28,7 +28,7 @@ class json extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
+					->isEqualTo($this->newTestedInstance(0, false))
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments('"' . $key . '": "' . $value . '"')
@@ -45,7 +45,7 @@ class json extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
+					->isEqualTo($this->newTestedInstance(0, false))
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments('"\"": "' . $value . '"')
@@ -60,7 +60,7 @@ class json extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance(1))
+					->isEqualTo($this->newTestedInstance(1, false))
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments("	" . '"' . $key . '": "' . $value . '"')
@@ -131,6 +131,23 @@ class json extends units\test
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments("	" . '"' . $key . '": ' . $partAsString)
+							->once
+
+			->given(
+				$this->newTestedInstance(0, false),
+				$key = uniqid(),
+				$value = uniqid(),
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfSerializedValueAtKeyIs($value, $key, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance(0, false))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments(',' . PHP_EOL . '"' . $key . '": "' . $value . '"')
 							->once
 		;
 	}

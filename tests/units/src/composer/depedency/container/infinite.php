@@ -11,6 +11,7 @@ class infinite extends units\test
 	{
 		$this->testedClass
 			->implements('norsys\score\composer\depedency\container')
+			->implements('norsys\score\serializer\keyValue\part')
 		;
 	}
 
@@ -49,6 +50,116 @@ class infinite extends units\test
 				->mock($iterator)
 					->receive('variablesForIteratorBlockAre')
 						->withArguments($block, $depedency1, $depedency2, $depedency3)
+							->once
+		;
+	}
+
+	function testRecipientOfComposerDepedencyNameIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$depedency1 = new mockOfScore\composer\depedency,
+					$depedency2 = new mockOfScore\composer\depedency,
+					$depedency3 = new mockOfScore\composer\depedency
+				),
+				$recipient = new mockOfScore\composer\depedency\name\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfComposerDepedencyNameIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($depedency1, $depedency2, $depedency3))
+				->mock($depedency1)
+					->receive('recipientOfComposerDepedencyNameIs')
+						->withArguments($recipient)
+							->once
+				->mock($depedency2)
+					->receive('recipientOfComposerDepedencyNameIs')
+						->withArguments($recipient)
+							->once
+				->mock($depedency3)
+					->receive('recipientOfComposerDepedencyNameIs')
+						->withArguments($recipient)
+							->once
+		;
+	}
+
+	function testRecipientOfComposerDepedencyVersionIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$depedency1 = new mockOfScore\composer\depedency,
+					$depedency2 = new mockOfScore\composer\depedency,
+					$depedency3 = new mockOfScore\composer\depedency
+				),
+				$recipient = new mockOfScore\composer\depedency\version\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfComposerDepedencyVersionIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($depedency1, $depedency2, $depedency3))
+				->mock($depedency1)
+					->receive('recipientOfComposerDepedencyVersionIs')
+						->withArguments($recipient)
+							->once
+				->mock($depedency2)
+					->receive('recipientOfComposerDepedencyVersionIs')
+						->withArguments($recipient)
+							->once
+				->mock($depedency3)
+					->receive('recipientOfComposerDepedencyVersionIs')
+						->withArguments($recipient)
+							->once
+		;
+	}
+
+	function testRecipientOfStringMadeWithKeyValueSerializerIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$serializer = new mockOfScore\serializer\keyValue,
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->mock($recipient)
+					->receive('stringIs')
+						->never
+
+			->given(
+				$this->newTestedInstance(
+					$depedency1 = new mockOfScore\composer\depedency,
+					$depedency2 = new mockOfScore\composer\depedency,
+					$depedency3 = new mockOfScore\composer\depedency
+				)
+			)
+			->if(
+				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($depedency1, $depedency2, $depedency3))
+				->mock($depedency1)
+					->receive('recipientOfStringMadeWithKeyValueSerializerIs')
+						->withArguments($serializer, $recipient)
+							->once
+				->mock($depedency2)
+					->receive('recipientOfStringMadeWithKeyValueSerializerIs')
+						->withArguments($serializer, $recipient)
+							->once
+				->mock($depedency3)
+					->receive('recipientOfStringMadeWithKeyValueSerializerIs')
+						->withArguments($serializer, $recipient)
 							->once
 		;
 	}

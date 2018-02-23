@@ -7,7 +7,8 @@ namespace norsys\score\demo\config\writer\depedencies\depedency;
 require __DIR__ . '/../../../../../vendor/autoload.php';
 
 use norsys\score\{
-	php\string\recipient\vardump,
+	php\string\recipient\stdout\eol as stdout,
+	php\string\recipient\buffer,
 	composer\config\writer,
 	composer\depedency\version,
 	composer\depedency\version\semver,
@@ -15,349 +16,227 @@ use norsys\score\{
 	composer\depedency\name,
 	composer\depedency\version\semver\number\any as number,
 	vcs\branch\any as branch,
-	serializer\keyValue\json
+	serializer\keyValue\json,
+	container\iterator\fifo,
+	container\iterator\block\functor
 };
 
 (
-	new depedency\atoum(
-		new semver\any(
-			new number(2),
-			new number(3),
-			new number(7)
-		)
-	)
+	new fifo
 )
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
+	->variablesForIteratorBlockAre(
+		new functor(
+			function($iterator, $depedency)
+			{
+				$depedency
+					->recipientOfStringMadeWithKeyValueSerializerIs(
+						new json,
+						$buffer = new buffer(PHP_EOL)
+					)
+				;
 
-(
-	new depedency\atoum(
-		new semver\prefixed(
+				$buffer->recipientOfStringIs(new stdout);
+			}
+		),
+		new depedency\atoum(
 			new semver\any(
 				new number(2),
 				new number(3),
 				new number(7)
 			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\major(
-			new number(2)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\major\minor(
-			new number(2),
-			new number(1)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\initial
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\initial(
-			new number(5)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\initial(
-			new number(5),
-			new number(2)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\major\wildcard(
-			new number(5)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\major\minor\wildcard(
-			new number(2)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new semver\major\minor\wildcard(
-			new number(2),
-			new number(5)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\range\bc(
+		),
+		new depedency\atoum(
+			new semver\prefixed(
+				new semver\any(
+					new number(2),
+					new number(3),
+					new number(7)
+				)
+			)
+		),
+		new depedency\atoum(
+			new semver\major(
+				new number(2)
+			)
+		),
+		new depedency\atoum(
+			new semver\major\minor(
+				new number(2),
+				new number(1)
+			)
+		),
+		new depedency\atoum(
+			new semver\initial
+		),
+		new depedency\atoum(
+			new semver\initial(
+				new number(5)
+			)
+		),
+		new depedency\atoum(
+			new semver\initial(
+				new number(5),
+				new number(2)
+			)
+		),
+		new depedency\atoum(
+			new semver\major\wildcard(
+				new number(5)
+			)
+		),
+		new depedency\atoum(
+			new semver\major\minor\wildcard(
+				new number(2)
+			)
+		),
+		new depedency\atoum(
 			new semver\major\minor\wildcard(
 				new number(2),
 				new number(5)
 			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\range\bc\no(
-			new semver\major\minor\wildcard(
-				new number(3)
+		),
+		new depedency\atoum(
+			new version\range\bc(
+				new semver\major\minor\wildcard(
+					new number(2),
+					new number(5)
+				)
 			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\range\inclusive(
-			new semver\major(
-				new number(1)
-			),
-			new semver\any(
-				new number(2),
-				new number(1)
+		),
+		new depedency\atoum(
+			new version\range\bc\no(
+				new semver\major\minor\wildcard(
+					new number(3)
+				)
 			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\greaterThan(
-			new semver\major(
-				new number(1)
+		),
+		new depedency\atoum(
+			new version\range\inclusive(
+				new semver\major(
+					new number(1)
+				),
+				new semver\any(
+					new number(2),
+					new number(1)
+				)
 			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\greaterThan\orEqualTo(
-			new semver\major\minor(
-				new number(2),
-				new number(5)
-			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\lessThan(
-			new semver\major\minor(
-				new number(2),
-				new number(5)
-			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\lessThan\orEqualTo(
-			new semver\major\minor(
-				new number(3),
-				new number(6)
-			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\not(
-			new semver\major\minor(
-				new number(3),
-				new number(6)
-			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\conjunction(
+		),
+		new depedency\atoum(
 			new version\greaterThan(
 				new semver\major(
 					new number(1)
 				)
-			),
+			)
+		),
+		new depedency\atoum(
+			new version\greaterThan\orEqualTo(
+				new semver\major\minor(
+					new number(2),
+					new number(5)
+				)
+			)
+		),
+		new depedency\atoum(
+			new version\lessThan(
+				new semver\major\minor(
+					new number(2),
+					new number(5)
+				)
+			)
+		),
+		new depedency\atoum(
+			new version\lessThan\orEqualTo(
+				new semver\major\minor(
+					new number(3),
+					new number(6)
+				)
+			)
+		),
+		new depedency\atoum(
 			new version\not(
 				new semver\major\minor(
 					new number(3),
 					new number(6)
 				)
+			)
+		),
+		new depedency\atoum(
+			new version\conjunction(
+				new version\greaterThan(
+					new semver\major(
+						new number(1)
+					)
+				),
+				new version\not(
+					new semver\major\minor(
+						new number(3),
+						new number(6)
+					)
+				),
+				new version\lessThan\orEqualTo(
+					new semver\major\minor(
+						new number(4),
+						new number(2)
+					)
+				)
+			)
+		),
+		new depedency\atoum(
+			new version\disjunction(
+				new version\greaterThan(
+					new semver\major(
+						new number(1)
+					)
+				),
+				new version\not(
+					new semver\major\minor(
+						new number(3),
+						new number(6)
+					)
+				),
+				new version\lessThan\orEqualTo(
+					new semver\major\minor(
+						new number(4),
+						new number(2)
+					)
+				)
+			)
+		),
+		new depedency\atoum(
+			new version\dev\any(
+				new branch('a_branch')
+			)
+		),
+		new depedency\atoum\dev,
+		new depedency\container\infinite
+		(
+			new depedency\atoum\dev,
+			new depedency\atoum(
+				new version\dev\any(
+					new branch('a_branch')
+				)
 			),
-			new version\lessThan\orEqualTo(
-				new semver\major\minor(
-					new number(4),
-					new number(2)
+			new depedency\atoum(
+				new version\disjunction(
+					new version\greaterThan(
+						new semver\major(
+							new number(1)
+						)
+					),
+					new version\not(
+						new semver\major\minor(
+							new number(3),
+							new number(6)
+						)
+					),
+					new version\lessThan\orEqualTo(
+						new semver\major\minor(
+							new number(4),
+							new number(2)
+						)
+					)
 				)
 			)
 		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\disjunction(
-			new version\greaterThan(
-				new semver\major(
-					new number(1)
-				)
-			),
-			new version\not(
-				new semver\major\minor(
-					new number(3),
-					new number(6)
-				)
-			),
-			new version\lessThan\orEqualTo(
-				new semver\major\minor(
-					new number(4),
-					new number(2)
-				)
-			)
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(
-	new depedency\atoum(
-		new version\dev\any(
-			new branch('a_branch')
-		)
-	)
-)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
-	)
-;
-
-(new depedency\atoum\dev)
-	->recipientOfStringMadeWithKeyValueSerializerIs(
-		new json,
-		new vardump
 	)
 ;
