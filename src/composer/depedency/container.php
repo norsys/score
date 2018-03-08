@@ -1,7 +1,7 @@
 <?php namespace norsys\score\composer\depedency;
 
-use norsys\score;
+use norsys\score\serializer\keyValue\part;
 
-interface container extends score\container
+interface container extends part
 {
 }

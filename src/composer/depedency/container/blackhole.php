@@ -1,12 +1,13 @@
 <?php namespace norsys\score\composer\depedency\container;
 
-use norsys\score\{ composer, container };
+use norsys\score\composer\depedency\container;
+use norsys\score\serializer\keyValue as serializer;
 
 class blackhole
 	implements
-		composer\depedency\container
+		container
 {
-	function blockForContainerIteratorIs(container\iterator $iteraror, container\iterator\block $block) :void
+	function keyValueSerializerIs(serializer $serializer) :void
 	{
 	}
 }

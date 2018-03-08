@@ -10,6 +10,7 @@ class infinite extends units\test
 	function testClass()
 	{
 		$this->testedClass
+			->implements('norsys\score\container')
 			->implements('norsys\score\composer\depedency\container')
 			->implements('norsys\score\serializer\keyValue\part')
 		;
@@ -122,7 +123,11 @@ class infinite extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance,
+				$this->newTestedInstance(
+					$depedency1 = new mockOfScore\composer\depedency,
+					$depedency2 = new mockOfScore\composer\depedency,
+					$depedency3 = new mockOfScore\composer\depedency
+				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -130,28 +135,18 @@ class infinite extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($serializer)
-					->receive('objectToSerializeIs')
-						->withArguments(new object)
-							->once
-
-			->given(
-				$this->newTestedInstance(
-					$depedency1 = new mockOfScore\composer\depedency,
-					$depedency2 = new mockOfScore\composer\depedency,
-					$depedency3 = new mockOfScore\composer\depedency
-				)
-			)
-			->if(
-				$this->testedInstance->keyValueSerializerIs($serializer)
-			)
-			->then
-				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($depedency1, $depedency2, $depedency3))
-				->mock($serializer)
-					->receive('objectToSerializeIs')
-						->withArguments(new object($depedency1, $depedency2, $depedency3))
+				->mock($depedency1)
+					->receive('keyValueSerializerIs')
+						->withArguments($serializer)
+							->once
+				->mock($depedency2)
+					->receive('keyValueSerializerIs')
+						->withArguments($serializer)
+							->once
+				->mock($depedency3)
+					->receive('keyValueSerializerIs')
+						->withArguments($serializer)
 							->once
 		;
 	}

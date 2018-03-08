@@ -1,12 +1,14 @@
 <?php namespace norsys\score\composer\depedency\container;
 
+use norsys\score;
 use norsys\score\container\{ iterator, iterator\fifo, iterator\block\functor as iteratorBlock };
 use norsys\score\serializer\{ keyValue as serializer, keyValue\part\object };
 use norsys\score\php\string\{ recipient, recipient\buffer, recipient\functor };
 use norsys\score\composer\{ depedency, depedency\name\recipient as nameRecipient, depedency\version\recipient as versionRecipient };
 
-class infinite
+class infinite extends object
 	implements
+		score\container,
 		depedency,
 		depedency\container
 {
@@ -56,11 +58,7 @@ class infinite
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer
-			->objectToSerializeIs(
-				new object(... $this->depedencies)
-			)
-		;
+		(new object(... $this->depedencies))->keyValueSerializerIs($serializer);
 	}
 
 	private function iteratorBlockIsCallable(callable $callable) :void

@@ -1,16 +1,16 @@
-<?php namespace norsys\score\tests\units\composer\depedency\container;
+<?php namespace norsys\score\tests\units\composer\required;
 
-require __DIR__ . '/../../../../runner.php';
+require __DIR__ . '/../../../runner.php';
 
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class blackhole extends units\test
+class any extends units\test
 {
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\depedency\container')
+			->implements('norsys\score\composer\required')
 		;
 	}
 
@@ -18,7 +18,7 @@ class blackhole extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance,
+				$this->newTestedInstance($container = new mockOfScore\composer\depedency\container),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -26,14 +26,11 @@ class blackhole extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
+					->isEqualTo($this->newTestedInstance($container))
 				->mock($serializer)
-					->receive('objectToSerializeIs')
-						->never
 					->receive('objectToSerializeAtKeyIs')
-						->never
-					->receive('valueToSerializeAtKeyIs')
-						->never
+						->withArguments('require', $container)
+							->once
 		;
 	}
 }

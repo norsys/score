@@ -12,6 +12,7 @@ use norsys\score\{
 	composer\depedency\version,
 	composer\depedency\version\semver,
 	composer\depedency,
+	composer\required\any as required,
 	composer\depedency\version\semver\number\any as number,
 	vcs\branch\any as branch,
 	serializer\keyValue\json,
@@ -211,31 +212,33 @@ use norsys\score\{
 			)
 		),
 		new depedency\atoum\dev,
-		new depedency\container\infinite
-		(
-			new depedency\atoum\dev,
-			new depedency\atoum(
-				new version\dev\any(
-					new branch('a_branch')
-				)
-			),
-			new depedency\atoum(
-				new version\disjunction(
-					new version\greaterThan(
-						new semver\major(
-							new number(1)
-						)
-					),
-					new version\not(
-						new semver\major\minor(
-							new number(3),
-							new number(6)
-						)
-					),
-					new version\lessThan\orEqualTo(
-						new semver\major\minor(
-							new number(4),
-							new number(2)
+		new required(
+			new depedency\container\infinite
+			(
+				new depedency\atoum\dev,
+				new depedency\atoum(
+					new version\dev\any(
+						new branch('a_branch')
+					)
+				),
+				new depedency\atoum(
+					new version\disjunction(
+						new version\greaterThan(
+							new semver\major(
+								new number(1)
+							)
+						),
+						new version\not(
+							new semver\major\minor(
+								new number(3),
+								new number(6)
+							)
+						),
+						new version\lessThan\orEqualTo(
+							new semver\major\minor(
+								new number(4),
+								new number(2)
+							)
 						)
 					)
 				)
