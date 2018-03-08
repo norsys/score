@@ -1,4 +1,4 @@
-<?php namespace norsys\score\tests\units\composer\required;
+<?php namespace norsys\score\tests\units\composer\object;
 
 require __DIR__ . '/../../../runner.php';
 
@@ -18,7 +18,7 @@ class any extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($container = new mockOfScore\composer\depedency\container),
+				$this->newTestedInstance($key = uniqid(), $part = new mockOfScore\serializer\keyValue\part),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -26,10 +26,10 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($container))
+					->isEqualTo($this->newTestedInstance($key, $part))
 				->mock($serializer)
 					->receive('objectToSerializeAtKeyIs')
-						->withArguments('require', $container)
+						->withArguments($key, $part)
 							->once
 		;
 	}

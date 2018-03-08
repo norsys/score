@@ -2,7 +2,6 @@
 
 use norsys\score\serializer\keyValue\part;
 
-interface required extends part
+interface object extends part
 {
-
 }
