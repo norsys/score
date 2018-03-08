@@ -1,8 +1,8 @@
 <?php namespace norsys\score\composer\depedency\container;
 
 use norsys\score\container\{ iterator, iterator\fifo, iterator\block\functor as iteratorBlock };
-use norsys\score\serializer\keyValue as serializer;
-use norsys\score\php\string\recipient;
+use norsys\score\serializer\{ keyValue as serializer, keyValue\part\object };
+use norsys\score\php\string\{ recipient, recipient\buffer, recipient\functor };
 use norsys\score\composer\{ depedency, depedency\name\recipient as nameRecipient, depedency\version\recipient as versionRecipient };
 
 class infinite
@@ -54,18 +54,11 @@ class infinite
 		;
 	}
 
-	function recipientOfStringMadeWithKeyValueSerializerIs(serializer $serializer, recipient $recipient) :void
+	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$this
-			->iteratorBlockIsCallable(
-				function($iterator, $depedency) use ($serializer, $recipient) {
-					$depedency
-						->recipientOfStringMadeWithKeyValueSerializerIs(
-							$serializer,
-							$recipient
-						)
-					;
-				}
+		$serializer
+			->objectToSerializeIs(
+				new object(... $this->depedencies)
 			)
 		;
 	}

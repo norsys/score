@@ -15,6 +15,9 @@ use norsys\score\{
 	composer\depedency\version\semver\number\any as number,
 	vcs\branch\any as branch,
 	serializer\keyValue\json,
+	serializer\keyValue\json\decorator\proxy,
+	serializer\keyValue\json\decorator\pretty,
+	serializer\keyValue\json\depth\any as depth,
 	container\iterator\fifo,
 	container\iterator\block\functor as block
 };
@@ -27,9 +30,11 @@ use norsys\score\{
 			function($iterator, $depedency)
 			{
 				$depedency
-					->recipientOfStringMadeWithKeyValueSerializerIs(
-						new json,
-						$buffer = new buffer(PHP_EOL)
+					->keyValueSerializerIs(
+						new json(
+							new pretty,
+							$buffer = new buffer
+						)
 					)
 				;
 

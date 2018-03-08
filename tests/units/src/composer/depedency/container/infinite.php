@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\{ tests\units, serializer\keyValue\part\object };
 use mock\norsys\score as mockOfScore;
 
 class infinite extends units\test
@@ -118,23 +118,23 @@ class infinite extends units\test
 		;
 	}
 
-	function testRecipientOfStringMadeWithKeyValueSerializerIs()
+	function testKeyValueSerializerIs()
 	{
 		$this
 			->given(
 				$this->newTestedInstance,
-				$serializer = new mockOfScore\serializer\keyValue,
-				$recipient = new mockOfScore\php\string\recipient
+				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
-				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+				$this->testedInstance->keyValueSerializerIs($serializer)
 			)
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('stringIs')
-						->never
+				->mock($serializer)
+					->receive('objectToSerializeIs')
+						->withArguments(new object)
+							->once
 
 			->given(
 				$this->newTestedInstance(
@@ -144,22 +144,14 @@ class infinite extends units\test
 				)
 			)
 			->if(
-				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+				$this->testedInstance->keyValueSerializerIs($serializer)
 			)
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($depedency1, $depedency2, $depedency3))
-				->mock($depedency1)
-					->receive('recipientOfStringMadeWithKeyValueSerializerIs')
-						->withArguments($serializer, $recipient)
-							->once
-				->mock($depedency2)
-					->receive('recipientOfStringMadeWithKeyValueSerializerIs')
-						->withArguments($serializer, $recipient)
-							->once
-				->mock($depedency3)
-					->receive('recipientOfStringMadeWithKeyValueSerializerIs')
-						->withArguments($serializer, $recipient)
+				->mock($serializer)
+					->receive('objectToSerializeIs')
+						->withArguments(new object($depedency1, $depedency2, $depedency3))
 							->once
 		;
 	}

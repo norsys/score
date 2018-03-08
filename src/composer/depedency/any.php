@@ -27,7 +27,7 @@ class any
 		$recipient->versionOfComposerDepedencyIs($this->version);
 	}
 
-	function recipientOfStringMadeWithKeyValueSerializerIs(serializer $serializer, recipient $recipient) :void
+	function keyValueSerializerIs(serializer $serializer) :void
 	{
 		(
 			new stringAggregator(
@@ -37,13 +37,12 @@ class any
 		)
 			->blockIs(
 				new functor(
-					function($name, $version) use ($serializer, $recipient)
+					function($name, $version) use ($serializer)
 					{
 						$serializer
-							->recipientOfSerializedValueAtKeyIs(
-								$version,
+							->valueToSerializeAtKeyIs(
 								$name,
-								$recipient
+								$version
 							)
 						;
 					}

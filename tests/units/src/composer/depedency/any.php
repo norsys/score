@@ -60,7 +60,7 @@ class any extends units\test
 		;
 	}
 
-	function testRecipientOfStringMadeWithKeyValueSerializerIs()
+	function testKeyValueSerializerIs()
 	{
 		$this
 			->given(
@@ -68,17 +68,16 @@ class any extends units\test
 					$name = new mockOfScore\composer\depedency\name,
 					$version = new mockOfScore\composer\depedency\version
 				),
-				$serializer = new mockOfScore\serializer\keyValue,
-				$recipient = new mockOfScore\php\string\recipient
+				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
-				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+				$this->testedInstance->keyValueSerializerIs($serializer)
 			)
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($name, $version))
-				->mock($recipient)
-					->receive('stringIs')
+				->mock($serializer)
+					->receive('valueToSerializeAtKeyIs')
 						->never
 
 			->given(
@@ -90,25 +89,17 @@ class any extends units\test
 				$versionAsString = uniqid(),
 				$this->calling($version)->recipientOfStringIs = function($aRecipient) use ($versionAsString) {
 					$aRecipient->stringIs($versionAsString);
-				},
-
-				$serializedString = uniqid(),
-				$this->calling($serializer)->recipientOfSerializedValueAtKeyIs = function($aValue, $aKey, $aRecipient) use ($nameAsString, $versionAsString, $serializedString) {
-					if ($aKey == $nameAsString && $aValue == $versionAsString)
-					{
-						$aRecipient->stringis($serializedString);
-					}
 				}
 			)
 			->if(
-				$this->testedInstance->recipientOfStringMadeWithKeyValueSerializerIs($serializer, $recipient)
+				$this->testedInstance->keyValueSerializerIs($serializer)
 			)
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($name, $version))
-				->mock($recipient)
-					->receive('stringIs')
-						->withArguments($serializedString)
+				->mock($serializer)
+					->receive('valueToSerializeAtKeyIs')
+						->withArguments($nameAsString, $versionAsString)
 							->once
 		;
 	}

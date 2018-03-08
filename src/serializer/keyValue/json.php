@@ -1,49 +1,136 @@
 <?php namespace norsys\score\serializer\keyValue;
 
-use norsys\score\{ php\string\recipient, serializer\keyValue as serializer, serializer\keyValue\part };
+use norsys\score\{ php\string\recipient, serializer\keyValue as serializer, serializer\keyValue\part, serializer\keyValue\json\decorator, serializer\keyValue\json\depth };
+use norsys\score\php\test\{ variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
+use norsys\score\php\string\recipient\{ surround\quotationMark, functor };
 
 class json
 	implements
 		serializer
 {
 	private
-		$indentationLevel,
-		$pairSeparator
+		$decorator,
+		$recipient,
+		$properties
 	;
 
-	function __construct(int $indentationLevel = 0, bool $partIsEmpty = true)
+	function __construct(decorator $decorator, recipient $recipient, bool $partial = false)
 	{
-		$this->indentationLevel = $indentationLevel;
-		$this->pairSeparator = $partIsEmpty ? '' : ',' . PHP_EOL;
+		$this->decorator = $decorator;
+		$this->recipient = $recipient;
+		$this->partial = $partial;
 	}
 
-	function recipientOfSerializedValueAtKeyIs(string $value, string $key, recipient $recipient) :void
+	function valueToSerializeAtKeyIs(string $key, string $value) :void
 	{
-		$recipient->stringIs($this->getKeyFromString($key) . '"' . $value . '"');
+		$this->keyIs($key);
 
-		$this->pairSeparator = ',' . PHP_EOL;
+		$this
+			->recipientOfQuotedStringIs(
+				$value,
+				new functor(
+					function($value)
+					{
+						$this->decorator->recipientOfDecoratedJsonValueIs($value, $this->recipient);
+					}
+				)
+			)
+		;
+
+		$this->partial = true;
 	}
 
-	function recipientOfSerializedPartAtKeyIs(part $part, string $key, recipient $recipient) :void
+	function objectToSerializeAtKeyIs(string $key, part $part) :void
 	{
-		$clone = clone $this;
-		$clone->indentationLevel++;
-		$clone->pairSeparator = '';
+		$this->keyIs($key);
 
-		$part
-			->recipientOfStringMadeWithKeyValueSerializerIs(
-				$clone,
-				new recipient\functor(
-					function($serialized) use ($key, $recipient) {
-						$recipient->stringIs($this->getKeyFromString($key) . $serialized);
+		$this->objectToSerializeIs($part);
+	}
+
+	function objectToSerializeIs(part $part) :void
+	{
+		$this->decorator->recipientOfDecoratedJsonOpenTagIs('{', $this->recipient);
+		$this->partIs($part);
+		$this->decorator->recipientOfDecoratedJsonCloseTagIs('}', $this->recipient);
+	}
+
+	private function recipientOfKeyValueSerializerForPartIs(serializer\recipient $recipient) :void
+	{
+		$this->decorator
+			->recipientOfDecoratorForJsonPartIs(
+				new decorator\recipient\functor(
+					function($decorator) use ($recipient)
+					{
+						$serializer = clone $this;
+						$serializer->decorator = $decorator;
+						$serializer->partial = false;
+
+						$recipient->keyValueSerializerIs($serializer);
 					}
 				)
 			)
 		;
 	}
 
-	private function getKeyFromString(string $string) :string
+	private function partIs(part $part) :void
 	{
-		return $this->pairSeparator . str_repeat("	", $this->indentationLevel) . '"' . addslashes($string) . '": ';
+		$this
+			->recipientOfKeyValueSerializerForPartIs(
+				new serializer\recipient\functor(
+					function($serializer) use ($part)
+					{
+						$part->keyValueSerializerIs($serializer);
+					}
+				)
+			)
+		;
+	}
+
+	private function recipientOfQuotedStringIs(string $string, recipient $recipient) :void
+	{
+		(
+			new quotationMark(
+				$recipient
+			)
+		)
+			->stringIs($string)
+		;
+	}
+
+	private function jsonValueSeparator() :void
+	{
+		(
+			new isTrue(
+				$this->partial
+			)
+		)
+			->recipientOfTestIs(
+				new ifTrue(
+					function()
+					{
+						$this->decorator->recipientOfDecoratedJsonValueSeparatorIs(',', $this->recipient);
+					}
+				)
+			)
+		;
+	}
+
+	private function keyIs(string $key) :void
+	{
+		$this->jsonValueSeparator();
+
+		$this
+			->recipientOfQuotedStringIs(
+				$key,
+				new functor(
+					function($key)
+					{
+						$this->decorator->recipientOfDecoratedJsonKeyIs($key, $this->recipient);
+					}
+				)
+			)
+		;
+
+		$this->decorator->recipientOfDecoratedJsonNameSeparatorIs(':', $this->recipient);
 	}
 }
