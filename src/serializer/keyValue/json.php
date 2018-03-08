@@ -2,7 +2,7 @@
 
 use norsys\score\{ php\string\recipient, serializer\keyValue as serializer, serializer\keyValue\part, serializer\keyValue\json\decorator, serializer\keyValue\json\depth };
 use norsys\score\php\test\{ variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
-use norsys\score\php\string\recipient\{ surround\quotationMark, functor };
+use norsys\score\php\string\recipient\{ surround\quotationMark, functor, utf8 };
 
 class json
 	implements
@@ -89,8 +89,10 @@ class json
 	private function recipientOfQuotedStringIs(string $string, recipient $recipient) :void
 	{
 		(
-			new quotationMark(
-				$recipient
+			new utf8(
+				new quotationMark(
+					$recipient
+				)
 			)
 		)
 			->stringIs($string)

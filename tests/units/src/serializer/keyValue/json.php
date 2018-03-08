@@ -124,6 +124,34 @@ class json extends units\test
 					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
 				->string($buffer)
 					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
+
+			->given(
+				$decoratedKey = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($key, $decoratedKey) {
+					if ($aKey == '"Ã©"')
+					{
+						$aRecipient->stringIs($decoratedKey);
+					}
+				},
+
+				$decoratedValue = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($value, $decoratedValue) {
+					if ($aValue == '"Ã©"')
+					{
+						$aRecipient->stringIs($decoratedValue);
+					}
+				},
+
+				$buffer = null
+			)
+			->if(
+				$this->testedInstance->valueToSerializeAtKeyIs('é', 'é')
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
 		;
 	}
 
