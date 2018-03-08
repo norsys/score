@@ -1,8 +1,8 @@
 <?php namespace norsys\score\serializer\keyValue;
 
-use norsys\score\{ php\string\recipient, serializer\keyValue as serializer, serializer\keyValue\part, serializer\keyValue\json\decorator, serializer\keyValue\json\depth };
 use norsys\score\php\test\{ variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
-use norsys\score\php\string\recipient\{ surround\quotationMark, functor, utf8 };
+use norsys\score\serializer\{ keyValue as serializer, keyValue\part, keyValue\name, keyValue\text, keyValue\json\decorator, keyValue\json\depth };
+use norsys\score\php\string\{ recipient, recipient\surround\quotationMark, recipient\functor, recipient\utf8 };
 
 class json
 	implements
@@ -38,6 +38,29 @@ class json
 		;
 
 		$this->partial = true;
+	}
+
+	function textToSerializeWithNameIs(name $name, text $text) :void
+	{
+		$name
+			->recipientOfStringIs(
+				new functor(
+					function($key) use ($text)
+					{
+						$text
+							->recipientOfStringIs(
+								new functor(
+									function($value) use ($key)
+									{
+										$this->valueToSerializeAtKeyIs($key, $value);
+									}
+								)
+							)
+						;
+					}
+				)
+			)
+		;
 	}
 
 	function objectToSerializeAtKeyIs(string $key, part $part) :void

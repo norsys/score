@@ -64,14 +64,6 @@ class json extends units\test
 					{
 						$aRecipient->stringIs($decoratedNameSeparator);
 					}
-				},
-
-				$decoratedValueSeparator = uniqid(),
-				$this->calling($decorator)->recipientOfDecoratedJsonValueSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedValueSeparator) {
-					if ($aSeparator == ',')
-					{
-						$aRecipient->stringIs($decoratedValueSeparator);
-					}
 				}
 			)
 			->if(
@@ -84,9 +76,15 @@ class json extends units\test
 					->isEqualTo($decoratedKey . $decoratedNameSeparator . $decoratedValue)
 
 			->given(
-				$buffer = null,
+				$decoratedValueSeparator = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedValueSeparator) {
+					if ($aSeparator == ',')
+					{
+						$aRecipient->stringIs($decoratedValueSeparator);
+					}
+				},
 
-				$this->newTestedInstance($decorator, $recipient, true)
+				$buffer = null
 			)
 			->if(
 				$this->testedInstance->valueToSerializeAtKeyIs($key, $value)
@@ -146,6 +144,173 @@ class json extends units\test
 			)
 			->if(
 				$this->testedInstance->valueToSerializeAtKeyIs('é', 'é')
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
+		;
+	}
+
+	function testTextToSerializeWithNameIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$decorator = new mockOfScore\serializer\keyValue\json\decorator,
+					$recipient = new mockOfScore\php\string\recipient
+				),
+
+				$this->calling($recipient)->stringIs = function($aString) use (& $buffer) {
+					$buffer .= $aString;
+				},
+
+				$name = new mockOfScore\serializer\keyValue\name,
+				$text = new mockOfScore\serializer\keyValue\text
+			)
+			->if(
+				$this->testedInstance->textToSerializeWithNameIs($name, $text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient))
+				->variable($buffer)
+					->isNull
+
+			->given(
+				$key = uniqid(),
+				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($key) {
+					$aRecipient->stringIs($key);
+				},
+
+				$value = uniqid(),
+				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($value) {
+					$aRecipient->stringIs($value);
+				},
+
+				$decoratedKey = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($key, $decoratedKey) {
+					if ($aKey == '"' . $key . '"')
+					{
+						$aRecipient->stringIs($decoratedKey);
+					}
+				},
+
+				$decoratedValue = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($value, $decoratedValue) {
+					if ($aValue == '"' . $value . '"')
+					{
+						$aRecipient->stringIs($decoratedValue);
+					}
+				},
+
+				$decoratedNameSeparator = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonNameSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedNameSeparator) {
+					if ($aSeparator == ':')
+					{
+						$aRecipient->stringIs($decoratedNameSeparator);
+					}
+				}
+			)
+			->if(
+				$this->testedInstance->textToSerializeWithNameIs($name, $text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedKey . $decoratedNameSeparator . $decoratedValue)
+
+			->given(
+				$decoratedValueSeparator = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedValueSeparator) {
+					if ($aSeparator == ',')
+					{
+						$aRecipient->stringIs($decoratedValueSeparator);
+					}
+				},
+
+				$buffer = null
+			)
+			->if(
+				$this->testedInstance->textToSerializeWithNameIs($name, $text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
+
+			->given(
+				$key = 'foo"bar',
+				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($key) {
+					$aRecipient->stringIs($key);
+				},
+
+				$value = 'bar"foo',
+				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($value) {
+					$aRecipient->stringIs($value);
+				},
+
+				$decoratedKey = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($key, $decoratedKey) {
+					if ($aKey == '"foo\"bar"')
+					{
+						$aRecipient->stringIs($decoratedKey);
+					}
+				},
+
+				$decoratedValue = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($value, $decoratedValue) {
+					if ($aValue == '"bar\"foo"')
+					{
+						$aRecipient->stringIs($decoratedValue);
+					}
+				},
+
+				$buffer = null
+			)
+			->if(
+				$this->testedInstance->textToSerializeWithNameIs($name, $text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
+
+			->given(
+				$key = 'é',
+				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($key) {
+					$aRecipient->stringIs($key);
+				},
+
+				$value = 'é',
+				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($value) {
+					$aRecipient->stringIs($value);
+				},
+
+				$decoratedKey = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($key, $decoratedKey) {
+					if ($aKey == '"Ã©"')
+					{
+						$aRecipient->stringIs($decoratedKey);
+					}
+				},
+
+				$decoratedValue = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($value, $decoratedValue) {
+					if ($aValue == '"Ã©"')
+					{
+						$aRecipient->stringIs($decoratedValue);
+					}
+				},
+
+				$buffer = null
+			)
+			->if(
+				$this->testedInstance->textToSerializeWithNameIs($name, $text)
 			)
 			->then
 				->object($this->testedInstance)
