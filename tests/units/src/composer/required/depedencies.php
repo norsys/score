@@ -37,5 +37,4 @@ class depedencies extends units\test
 							->once
 		;
 	}
-
 }
