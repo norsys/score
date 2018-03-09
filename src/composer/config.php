@@ -1,6 +1,7 @@
 <?php namespace norsys\score\composer;
 
-interface config
+use norsys\score\serializer\keyValue\part;
+
+interface config extends part
 {
-	function recipientOfComposerDepedenciesIs(depedency\container\recipient $recipient) :void;
 }

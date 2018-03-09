@@ -1,6 +1,6 @@
-<?php namespace norsys\score\composer\object\name;
+<?php namespace norsys\score\composer\part\name;
 
-use norsys\score\{ composer\object\name, php\string\recipient };
+use norsys\score\{ composer\part\name, php\string\recipient };
 use norsys\score\php\string\{ aggregator\all as aggregator, recipient\suffix };
 use norsys\score\php\block;
 

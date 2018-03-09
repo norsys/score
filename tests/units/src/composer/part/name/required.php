@@ -1,16 +1,16 @@
-<?php namespace norsys\score\tests\units\composer\object\name\suffix;
+<?php namespace norsys\score\tests\units\composer\part\name;
 
-require __DIR__ . '/../../../../../runner.php';
+require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class dev extends units\test
+class required extends units\test
 {
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\object\name')
+			->implements('norsys\score\composer\part\name')
 		;
 	}
 
@@ -29,7 +29,7 @@ class dev extends units\test
 					->isEqualTo($this->newTestedInstance)
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments('-dev')
+						->withArguments('require')
 							->once
 		;
 	}

@@ -1,4 +1,4 @@
-<?php namespace norsys\score\composer\object;
+<?php namespace norsys\score\composer\part;
 
 use norsys\score\serializer\keyValue as serializer;
 

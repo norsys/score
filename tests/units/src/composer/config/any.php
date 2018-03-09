@@ -14,44 +14,7 @@ class any extends units\test
 		;
 	}
 
-	function testRecipientOfComposerDepedenciesIs()
+	function testKeyValueSerializerIs()
 	{
-		$this
-			->given(
-				$this->newTestedInstance,
-				$recipient = new mockOfScore\composer\depedency\container\recipient
-			)
-			->if(
-				$this->testedInstance->recipientOfComposerDepedenciesIs($recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('composerDepedenciesIs')
-						->withArguments(new composer\depedency\container\blackhole)
-							->once
-
-			->given(
-				$configReader = new mockOfScore\composer\config\reader,
-
-				$depedencies = new mockOfScore\composer\depedency\container,
-				$this->calling($configReader)->recipientOfComposerDepedenciesIs = function($recipient) use ($depedencies) {
-					$recipient->composerDepedenciesIs($depedencies);
-				},
-
-				$this->newTestedInstance($configReader)
-			)
-			->if(
-				$this->testedInstance->recipientOfComposerDepedenciesIs($recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($configReader))
-				->mock($recipient)
-					->receive('composerDepedenciesIs')
-						->withArguments($depedencies)
-							->once
-		;
 	}
 }

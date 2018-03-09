@@ -1,6 +1,6 @@
-<?php namespace norsys\score\composer\object;
+<?php namespace norsys\score\composer\part\object;
 
-use norsys\score\composer\object;
+use norsys\score\composer\part\object;
 use norsys\score\serializer\{ keyValue as serializer, keyValue\part, keyValue\name };
 
 class any

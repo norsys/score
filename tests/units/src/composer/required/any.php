@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\{ tests\units, composer\object\name\required };
+use norsys\score\{ tests\units, composer\part\name };
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -10,7 +10,7 @@ class any extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\object')
+			->implements('norsys\score\composer\part\object')
 		;
 	}
 
@@ -29,7 +29,7 @@ class any extends units\test
 					->isEqualTo($this->newTestedInstance($container))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments(new required, $container)
+						->withArguments(new name\required, $container)
 							->once
 		;
 	}

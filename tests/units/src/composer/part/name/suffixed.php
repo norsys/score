@@ -1,4 +1,4 @@
-<?php namespace norsys\score\tests\units\composer\object\name;
+<?php namespace norsys\score\tests\units\composer\part\name;
 
 require __DIR__ . '/../../../../runner.php';
 
@@ -10,7 +10,7 @@ class suffixed extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\object\name')
+			->implements('norsys\score\composer\part\name')
 		;
 	}
 
@@ -19,8 +19,8 @@ class suffixed extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$name = new mockOfScore\composer\object\name,
-					$suffix = new mockOfScore\composer\object\name
+					$name = new mockOfScore\composer\part\name,
+					$suffix = new mockOfScore\composer\part\name
 				),
 				$recipient = new mockOfScore\php\string\recipient
 			)

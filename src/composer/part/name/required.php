@@ -1,4 +1,4 @@
-<?php namespace norsys\score\composer\object\name;
+<?php namespace norsys\score\composer\part\name;
 
 class required extends any
 {
