@@ -4,11 +4,12 @@
 
 namespace norsys\score\demo\config\writer\depedencies\depedency;
 
-require __DIR__ . '/../../../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 use norsys\score\{
-	php\string\recipient\stdout\eol as stdout,
+	php\string\recipient\stdout,
 	php\string\recipient\buffer,
+	composer\config\any as config,
 	composer\depedency\version,
 	composer\depedency\version\semver,
 	composer\depedency,
@@ -23,6 +24,57 @@ use norsys\score\{
 	container\iterator\block\functor as block
 };
 
+(
+	new config(
+		new required(
+			new depedency\container\infinite
+			(
+				new depedency\atoum\dev,
+				new depedency\atoum(
+					new version\dev\any(
+						new branch('a_branch')
+					)
+				),
+				new depedency\atoum(
+					new version\disjunction(
+						new version\greaterThan(
+							new semver\major(
+								new number(1)
+							)
+						),
+						new version\not(
+							new semver\major\minor(
+								new number(3),
+								new number(6)
+							)
+						),
+						new version\lessThan\orEqualTo(
+							new semver\major\minor(
+								new number(4),
+								new number(2)
+							)
+						)
+					)
+				)
+			)
+		),
+		new required\dev(
+			new depedency\container\infinite
+			(
+				new depedency\atoum\dev
+			)
+		)
+	)
+)
+	->keyValueSerializerIs(
+		new json(
+			new pretty,
+			new stdout
+		)
+	)
+;
+
+/*
 (
 	new fifo
 )
@@ -278,3 +330,4 @@ use norsys\score\{
 		)
 	)
 ;
+*/
