@@ -1,10 +1,6 @@
 <?php namespace norsys\score\composer\object\name;
 
-use norsys\score\{ composer\object\name, php };
-
-class required extends php\string\any
-	implements
-		name
+class required extends any
 {
 	function __construct()
 	{
