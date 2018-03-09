@@ -1,6 +1,8 @@
 <?php namespace norsys\score\composer\depedency\version\dev;
 
-use norsys\score\{ composer\depedency\version, php, vcs\branch };
+use norsys\score\composer\depedency\version;
+use norsys\score\php\string\{ recipient, recipient\prefix };
+use norsys\score\vcs\branch;
 
 class any
 	implements
@@ -15,11 +17,11 @@ class any
 		$this->branch = $branch;
 	}
 
-	function recipientOfStringIs(php\string\recipient $recipient) :void
+	function recipientOfStringIs(recipient $recipient) :void
 	{
 		$this->branch
 			->recipientOfStringIs(
-				new php\string\recipient\prefix('dev-', $recipient)
+				new prefix('dev-', $recipient)
 			)
 		;
 	}
