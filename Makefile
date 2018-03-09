@@ -48,6 +48,11 @@ bin/composer: bin/. ## Install composer
 .git:
 	git init
 
+.PHONY: clean
+clean: ## Remove empty directories and untracked files, use it CAREFULY!
+	find src tests/units/src -type d -empty -delete
+	git clean -f
+
 .PHONY: help
 help: ## Display this help.
 	@printf "$$(cat $(MAKEFILE_LIST) | egrep -h '^[^:]+:[^#]+## .+$$' | sed -e 's/:[^#]*##/:/' -e 's/\(.*\):/\\033[92m\1\\033[0m:/' | sort -d | column -c2 -t -s :)\n"
