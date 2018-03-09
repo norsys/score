@@ -80,6 +80,8 @@ class json
 						$this->keyIs($key);
 
 						$this->objectToSerializeIs($part);
+
+						$this->partial = true;
 					}
 				)
 			)

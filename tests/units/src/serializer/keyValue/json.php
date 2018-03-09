@@ -552,7 +552,7 @@ class json extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($decorator, $recipient, false))
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
 				->string($buffer)
 					->isEqualTo($decoratedKey . $decoratedNameSeparator . $decoratedOpenTag . $decoratedCloseTag)
 
@@ -609,7 +609,7 @@ class json extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($decorator, $recipient, false))
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
 				->string($buffer)
 					->isEqualTo($decoratedKey . $decoratedNameSeparator . $decoratedOpenTag . $partDecoratedKey . $partDecoratedNameSeparator . $partDecoratedValue .  $decoratedCloseTag)
 

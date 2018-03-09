@@ -2,15 +2,15 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\{ tests\units, composer\part\name };
+use norsys\score\{ tests\units, composer\depedency };
 use mock\norsys\score as mockOfScore;
 
-class any extends units\test
+class depedencies extends units\test
 {
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\part\object')
+			->implements('norsys\score\composer\required')
 		;
 	}
 
@@ -18,7 +18,11 @@ class any extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($container = new mockOfScore\composer\depedency\container),
+				$this->newTestedInstance(
+					$name = new mockOfScore\composer\part\name,
+					$depedency = new mockOfScore\composer\depedency,
+					$otherDepedency = new mockOfScore\composer\depedency
+				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -26,11 +30,12 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($container))
+					->isEqualTo($this->newTestedInstance($name, $depedency, $otherDepedency))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments(new name\required, $container)
+						->withArguments($name, new depedency\container\infinite($depedency, $otherDepedency))
 							->once
 		;
 	}
+
 }
