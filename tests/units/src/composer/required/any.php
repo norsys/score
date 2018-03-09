@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\{ tests\units, composer\object\name\required };
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -28,8 +28,8 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($container))
 				->mock($serializer)
-					->receive('objectToSerializeAtKeyIs')
-						->withArguments('require', $container)
+					->receive('objectToSerializeWithNameIs')
+						->withArguments(new required, $container)
 							->once
 		;
 	}

@@ -7,6 +7,6 @@ class any extends object\any
 {
 	function __construct(container $container)
 	{
-		parent::__construct('require', $container);
+		parent::__construct(new object\name\required, $container);
 	}
 }

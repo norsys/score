@@ -70,6 +70,22 @@ class json
 		$this->objectToSerializeIs($part);
 	}
 
+	function objectToSerializeWithNameIs(name $name, part $part) :void
+	{
+		$name
+			->recipientOfStringIs(
+				new functor(
+					function($key) use ($part)
+					{
+						$this->keyIs($key);
+
+						$this->objectToSerializeIs($part);
+					}
+				)
+			)
+		;
+	}
+
 	function objectToSerializeIs(part $part) :void
 	{
 		$this->decorator->recipientOfDecoratedJsonOpenTagIs('{', $this->recipient);

@@ -18,7 +18,10 @@ class any extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($key = uniqid(), $part = new mockOfScore\serializer\keyValue\part),
+				$this->newTestedInstance(
+					$name = new mockOfScore\serializer\keyValue\name,
+					$part = new mockOfScore\serializer\keyValue\part
+				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -26,10 +29,10 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($key, $part))
+					->isEqualTo($this->newTestedInstance($name, $part))
 				->mock($serializer)
-					->receive('objectToSerializeAtKeyIs')
-						->withArguments($key, $part)
+					->receive('objectToSerializeWithNameIs')
+						->withArguments($name, $part)
 							->once
 		;
 	}

@@ -1,25 +1,25 @@
 <?php namespace norsys\score\composer\object;
 
 use norsys\score\composer\object;
-use norsys\score\serializer\{ keyValue as serializer, keyValue\part };
+use norsys\score\serializer\{ keyValue as serializer, keyValue\part, keyValue\name };
 
 class any
 	implements
 		object
 {
 	private
-		$key,
+		$name,
 		$part
 	;
 
-	function __construct(string $key, part $part)
+	function __construct(name $name, part $part)
 	{
-		$this->key = $key;
+		$this->name = $name;
 		$this->part = $part;
 	}
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer->objectToSerializeAtKeyIs($this->key, $this->part);
+		$serializer->objectToSerializeWithNameIs($this->name, $this->part);
 	}
 }
