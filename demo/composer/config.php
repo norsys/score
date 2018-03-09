@@ -11,7 +11,7 @@ use norsys\score\{
 	composer\config\any as config,
 	composer\depedency\version,
 	composer\depedency\version\semver,
-	composer\name\any as name,
+	composer\name\norsys,
 	composer\depedency,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
@@ -25,7 +25,7 @@ use norsys\score\{
 
 (
 	new config(
-		new name('norsys/score'),
+		new norsys\score,
 		new require_prod(
 			new atoum\dev,
 			new atoum(
