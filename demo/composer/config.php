@@ -14,7 +14,7 @@ use norsys\score\{
 	composer\name\norsys,
 	composer\depedency,
 	composer\type\project,
-	composer\license\any as license,
+	composer\license as license,
 	composer\description\any as description,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
@@ -31,7 +31,7 @@ use norsys\score\{
 		new norsys\score,
 		new description('A fucking description.'),
 		new project,
-		new license('A fucking license'),
+		new license\bsd\threeClause,
 		new require_prod(
 			new atoum\dev,
 			new atoum(
