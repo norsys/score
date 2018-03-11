@@ -88,11 +88,36 @@ class json
 		;
 	}
 
+	function arrayToSerializeWithNameIs(name $name, part $part) :void
+	{
+		$name
+			->recipientOfStringIs(
+				new functor(
+					function($key) use ($part)
+					{
+						$this->keyIs($key);
+
+						$this->arrayToSerializeIs($part);
+
+						$this->partial = true;
+					}
+				)
+			)
+		;
+	}
+
 	function objectToSerializeIs(part $part) :void
 	{
 		$this->decorator->recipientOfDecoratedJsonOpenTagIs('{', $this->recipient);
 		$this->partIs($part);
 		$this->decorator->recipientOfDecoratedJsonCloseTagIs('}', $this->recipient);
+	}
+
+	function arrayToSerializeIs(part $part) :void
+	{
+		$this->decorator->recipientOfDecoratedJsonOpenTagIs('[', $this->recipient);
+		$this->partIs($part);
+		$this->decorator->recipientOfDecoratedJsonCloseTagIs(']', $this->recipient);
 	}
 
 	private function recipientOfKeyValueSerializerForPartIs(serializer\recipient $recipient) :void
