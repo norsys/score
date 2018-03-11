@@ -1,28 +1,14 @@
 <?php namespace norsys\score\composer\license;
 
-use norsys\score\composer\{ license, part\text\any as text, part\name };
+use norsys\score\composer\{ license, text as text, part };
 use norsys\score\serializer\keyValue as serializer;
 
-class any
+class any extends text\fromString
 	implements
 		license
 {
-	private
-		$license
-	;
-
 	function __construct(string $license)
 	{
-		$this->license = $license;
-	}
-
-	function keyValueSerializerIs(serializer $serializer) :void
-	{
-		$serializer
-			->textToSerializeWithNameIs(
-				new name\license,
-				new text($this->license)
-			)
-		;
+		parent::__construct(new part\name\license, $license);
 	}
 }
