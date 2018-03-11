@@ -31,7 +31,7 @@ class any extends units\test
 					->isEqualTo($this->newTestedInstance($part))
 				->mock($serializer)
 					->receive('objectToSerializeIs')
-						->withArguments(new serializer\part\object($part))
+						->withArguments(new serializer\part\container\fifo($part))
 							->once
 		;
 	}

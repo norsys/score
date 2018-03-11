@@ -1,11 +1,11 @@
-<?php namespace norsys\score\tests\units\serializer\keyValue\part;
+<?php namespace norsys\score\tests\units\serializer\keyValue\part\container;
 
-require __DIR__ . '/../../../../runner.php';
+require __DIR__ . '/../../../../../runner.php';
 
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class object extends units\test
+class fifo extends units\test
 {
 	function testClass()
 	{

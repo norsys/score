@@ -2,11 +2,11 @@
 
 use norsys\score;
 use norsys\score\container\{ iterator, iterator\fifo, iterator\block\functor as iteratorBlock };
-use norsys\score\serializer\{ keyValue as serializer, keyValue\part\object };
+use norsys\score\serializer\{ keyValue as serializer, keyValue\part\container };
 use norsys\score\php\string\{ recipient, recipient\buffer, recipient\functor };
 use norsys\score\composer\{ depedency, depedency\name\recipient as nameRecipient, depedency\version\recipient as versionRecipient };
 
-class infinite extends object
+class infinite extends container\fifo
 	implements
 		score\container,
 		depedency,
@@ -58,7 +58,7 @@ class infinite extends object
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		(new object(... $this->depedencies))->keyValueSerializerIs($serializer);
+		(new container\fifo(... $this->depedencies))->keyValueSerializerIs($serializer);
 	}
 
 	private function iteratorBlockIsCallable(callable $callable) :void

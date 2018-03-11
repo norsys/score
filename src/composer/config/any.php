@@ -19,7 +19,7 @@ class any
 	{
 		$serializer
 			->objectToSerializeIs(
-				new serializer\part\object(...$this->parts)
+				new serializer\part\container\fifo(...$this->parts)
 			)
 		;
 	}
