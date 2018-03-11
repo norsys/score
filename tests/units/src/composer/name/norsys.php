@@ -5,7 +5,7 @@ require __DIR__ . '/../../../runner.php';
 use norsys\score\{ tests\units, composer\part\name\name, composer\part\text\any as text };
 use mock\norsys\score as mockOfScore;
 
-class any extends units\test
+class norsys extends units\test
 {
 	function testClass()
 	{
@@ -18,9 +18,7 @@ class any extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance(
-					$name = new mockOfScore\composer\depedency\name
-				),
+				$this->newTestedInstance($project = new mockOfScore\composer\depedency\name\project),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -28,15 +26,15 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($name))
+					->isEqualTo($this->newTestedInstance($project))
 				->mock($serializer)
 					->receive('textToSerializeWithNameIs')
 						->never
 
 			->given(
-				$nameAsString = uniqid(),
-				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($nameAsString) {
-					$aRecipient->stringIs($nameAsString);
+				$projectAsString = uniqid(),
+				$this->calling($project)->recipientOfStringIs = function($aRecipient) use ($projectAsString) {
+					$aRecipient->stringIs($projectAsString);
 				}
 			)
 			->if(
@@ -44,10 +42,10 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($name))
+					->isEqualTo($this->newTestedInstance($project))
 				->mock($serializer)
 					->receive('textToSerializeWithNameIs')
-						->withArguments(new name, new text($nameAsString))
+						->withArguments(new name, new text('norsys/' . $projectAsString))
 							->once
 		;
 	}
