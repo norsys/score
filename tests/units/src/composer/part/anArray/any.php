@@ -1,4 +1,4 @@
-<?php namespace norsys\score\tests\units\composer\part\object;
+<?php namespace norsys\score\tests\units\composer\part\anArray;
 
 require __DIR__ . '/../../../../runner.php';
 
@@ -10,7 +10,7 @@ class any extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\part\object')
+			->implements('norsys\score\composer\part\anArray')
 		;
 	}
 
@@ -31,7 +31,7 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($name, $part))
 				->mock($serializer)
-					->receive('objectToSerializeWithNameIs')
+					->receive('arrayToSerializeWithNameIs')
 						->withArguments($name, $part)
 							->once
 		;

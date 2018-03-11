@@ -16,6 +16,9 @@ use norsys\score\{
 	composer\type\project,
 	composer\license as license,
 	composer\description\any as description,
+	composer\authors\any as authors,
+	composer\authors\author\any as author,
+	composer\authors\author\name\any as name,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
 	composer\required\dev as require_dev,
@@ -32,6 +35,11 @@ use norsys\score\{
 		new description('A fucking description.'),
 		new project,
 		new license\bsd\threeClause,
+		new authors(
+			new author(
+				new name(utf8_decode('Frédéric Hardy'))
+			)
+		),
 		new require_prod(
 			new atoum\dev,
 			new atoum(

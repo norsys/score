@@ -5,7 +5,6 @@ use norsys\score\composer\required;
 use norsys\score\composer\depedency;
 use norsys\score\serializer\keyValue as serializer;
 
-
 class depedencies extends any
 	implements
 		required

@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\depedency;
 
-use norsys\score\serializer\keyValue\part;
+use norsys\score\composer\part;
 
 interface container extends part
 {

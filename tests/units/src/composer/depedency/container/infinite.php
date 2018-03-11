@@ -12,7 +12,7 @@ class infinite extends units\test
 		$this->testedClass
 			->implements('norsys\score\container')
 			->implements('norsys\score\composer\depedency\container')
-			->implements('norsys\score\serializer\keyValue\part')
+			->implements('norsys\score\composer\part')
 		;
 	}
 
