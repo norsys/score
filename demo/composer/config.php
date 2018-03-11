@@ -13,6 +13,7 @@ use norsys\score\{
 	composer\depedency\version\semver,
 	composer\name\norsys,
 	composer\depedency,
+	composer\description\any as description,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
 	composer\required\dev as require_dev,
@@ -26,6 +27,7 @@ use norsys\score\{
 (
 	new config(
 		new norsys\score,
+		new description('A fucking description.'),
 		new require_prod(
 			new atoum\dev,
 			new atoum(
