@@ -142,19 +142,19 @@ class json extends units\test
 					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
 
 			->given(
-				$key = 'é',
+				$key = chr(33),
 				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($key) {
 					$aRecipient->stringIs($key);
 				},
 
-				$value = 'é',
+				$value = chr(33),
 				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($value) {
 					$aRecipient->stringIs($value);
 				},
 
 				$decoratedKey = uniqid(),
 				$this->calling($decorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($key, $decoratedKey) {
-					if ($aKey == '"Ã©"')
+					if ($aKey == '"' . "\u{0021}" . '"')
 					{
 						$aRecipient->stringIs($decoratedKey);
 					}
@@ -162,7 +162,7 @@ class json extends units\test
 
 				$decoratedValue = uniqid(),
 				$this->calling($decorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($value, $decoratedValue) {
-					if ($aValue == '"Ã©"')
+					if ($aValue == '"' . "\u{0021}" . '"')
 					{
 						$aRecipient->stringIs($decoratedValue);
 					}

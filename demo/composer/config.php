@@ -37,10 +37,10 @@ use norsys\score\{
 		new license\bsd\threeClause,
 		new authors(
 			new author(
-				new name(utf8_decode('Frédéric Hardy'))
+				new name('Frédéric Hardy')
 			),
 			new author(
-				new name(utf8_decode('John Doe'))
+				new name('John Doe')
 			)
 		),
 		new require_prod(

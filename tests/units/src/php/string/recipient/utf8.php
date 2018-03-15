@@ -35,7 +35,7 @@ class utf8 extends units\test
 							->once
 
 			->given(
-				$string = 'é'
+				$string = chr(33)
 			)
 			->if(
 				$this->testedInstance->stringIs($string)
@@ -45,7 +45,21 @@ class utf8 extends units\test
 					->isEqualTo($this->newTestedInstance($recipient))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments('Ã©')
+						->withArguments("\u{0021}")
+							->once
+
+			->given(
+				$string = "\u{00e9}"
+			)
+			->if(
+				$this->testedInstance->stringIs($string)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($recipient))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments("\u{00e9}")
 							->once
 		;
 	}

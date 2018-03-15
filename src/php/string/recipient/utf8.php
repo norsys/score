@@ -1,6 +1,6 @@
 <?php namespace norsys\score\php\string\recipient;
 
-use norsys\score\php\string\recipient;
+use norsys\score\php\{ string\recipient, test\variable\isTrue\strictly as isTrue, test\recipient\ifTrue\functor as ifTrue };
 
 class utf8
 	implements
@@ -17,6 +17,21 @@ class utf8
 
 	function stringIs(string $string) :void
 	{
-		$this->recipient->stringIs(utf8_encode($string));
+		(
+			new isTrue(
+				utf8_decode($string) == $string
+			)
+		)
+			->recipientOfTestIs(
+				new ifTrue(
+					function() use (& $string)
+					{
+						$string = utf8_encode($string);
+					}
+				)
+			)
+		;
+
+		$this->recipient->stringIs($string);
 	}
 }
