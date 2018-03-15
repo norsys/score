@@ -17,11 +17,11 @@ use norsys\score\{
 	composer\license as license,
 	composer\description\any as description,
 	composer\authors\any as authors,
-	composer\authors\author\any as author,
+	composer\authors\author,
 	composer\authors\author\name\any as name,
 	composer\authors\author\email\any as email,
 	composer\authors\author\homepage\any as homepage,
-	composer\authors\author\role\developer,
+	composer\authors\author\role\any as role,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
 	composer\required\dev as require_dev,
@@ -39,14 +39,12 @@ use norsys\score\{
 		new project,
 		new license\bsd\threeClause,
 		new authors(
-			new author(
-				new name('Frédéric Hardy'),
-				new email('frederic.hardy@mageekbox.net'),
-				new homepage('http://blog.mageekbox.net'),
-				new developer
-			),
-			new author(
-				new name('John Doe')
+			new author\mageekguy,
+			new author\any(
+				new name('John Doe'),
+				new email('john@doe.name'),
+				new homepage('http://john.doe.name'),
+				new role('Translator')
 			)
 		),
 		new require_prod(
