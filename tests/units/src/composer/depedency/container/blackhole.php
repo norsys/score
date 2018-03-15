@@ -27,13 +27,6 @@ class blackhole extends units\test
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance)
-				->mock($serializer)
-					->receive('objectToSerializeIs')
-						->never
-					->receive('objectToSerializeAtKeyIs')
-						->never
-					->receive('valueToSerializeAtKeyIs')
-						->never
 		;
 	}
 }

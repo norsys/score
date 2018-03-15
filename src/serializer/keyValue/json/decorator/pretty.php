@@ -3,46 +3,26 @@
 use norsys\score\serializer\keyValue\json\{ decorator, depth };
 use norsys\score\php\string\{ recipient, recipient\prefix, recipient\suffix };
 use norsys\score\php\integer\unsigned\recipient\functor as unsignedRecipient;
+use norsys\score\php\test\{ variable\isFalse\strictly as isFalse, recipient\ifTrue\functor as ifTrue };
 
 class pretty
 	implements
 		decorator
 {
 	private
-		$depth
+		$depth,
+		$currentLineIsEmpty
 	;
 
-	function __construct(depth $depth = null)
+	function __construct(depth $depth = null, $currentLineIsEmpty = true)
 	{
 		$this->depth = $depth ?: new depth\any;
+		$this->currentLineIsEmpty = $currentLineIsEmpty;
 	}
 
 	function recipientOfDecoratedJsonKeyIs(string $key, recipient $recipient) :void
 	{
-		$depth = 0;
-
-		$this->depth
-			->recipientOfUnsignedIntegerIs(
-				new unsignedRecipient(
-					function($currentDepth) use (& $depth)
-					{
-						$depth = $currentDepth;
-					}
-				)
-			)
-		;
-
-		(
-			new prefix(
-				str_repeat("	", $depth),
-				new prefix(
-					PHP_EOL,
-					$recipient
-				)
-			)
-		)
-			->stringIs($key)
-		;
+		$this->recipientOfStringPrefixedWithEolIs($key, $recipient);
 	}
 
 	function recipientOfDecoratedJsonValueIs(string $value, recipient $recipient) :void
@@ -64,40 +44,37 @@ class pretty
 
 	function recipientOfDecoratedJsonValueSeparatorIs(string $separator, recipient $recipient) :void
 	{
-		$recipient->stringIs($separator);
+		$this->recipientOfStringSuffixedWithEolIs($separator, $recipient);
 	}
 
-	function recipientOfDecoratedJsonOpenTagIs(string $openTag, recipient $recipient) :void
+	function recipientOfDecoratedJsonOpenTagForObjectIs(string $tag, recipient $recipient) :void
 	{
-		$recipient->stringIs($openTag);
+		$this->recipientOfStringIs($tag, $recipient);
 	}
 
-	function recipientOfDecoratedJsonCloseTagIs(string $openTag, recipient $recipient) :void
+	function recipientOfDecoratedJsonCloseTagForObjectIs(string $tag, recipient $recipient) :void
 	{
-		$depth = 0;
+		$this->recipientOfStringPrefixedWithEolIs($tag, $recipient);
+	}
 
-		$this->depth
-			->recipientOfUnsignedIntegerIs(
-				new unsignedRecipient(
-					function($currentDepth) use (& $depth)
-					{
-						$depth = $currentDepth;
-					}
-				)
-			)
-		;
+	function recipientOfDecoratedJsonOpenTagForObjectInArrayIs(string $tag, recipient $recipient) :void
+	{
+		$this->recipientOfStringPrefixedWithEolIs($tag, $recipient);
+	}
 
-		(
-			new prefix(
-				str_repeat("	", $depth),
-				new prefix(
-					PHP_EOL,
-					$recipient
-				)
-			)
-		)
-			->stringIs($openTag)
-		;
+	function recipientOfDecoratedJsonCloseTagForObjectInArrayIs(string $tag, recipient $recipient) :void
+	{
+		$this->recipientOfStringPrefixedWithEolIs($tag, $recipient);
+	}
+
+	function recipientOfDecoratedJsonOpenTagForArrayIs(string $tag, recipient $recipient) :void
+	{
+		$this->recipientOfStringIs($tag, $recipient);
+	}
+
+	function recipientOfDecoratedJsonCloseTagForArrayIs(string $tag, recipient $recipient) :void
+	{
+		$this->recipientOfStringPrefixedWithEolIs($tag, $recipient);
 	}
 
 	function recipientOfDecoratorForJsonPartIs(decorator\recipient $recipient) :void
@@ -110,6 +87,59 @@ class pretty
 						$decorator->depth = $nextDepth;
 
 						$recipient->jsonDecoratorIs($decorator);
+					}
+				)
+			)
+		;
+	}
+
+	private function recipientOfStringIs(string $string, recipient $recipient) :void
+	{
+		if ($this->currentLineIsEmpty)
+		{
+			$this->depth
+				->recipientOfUnsignedIntegerIs(
+					new unsignedRecipient(
+						function($depth) use ($recipient)
+						{
+							$recipient->stringIs(str_repeat("	", $depth));
+						}
+					)
+				)
+			;
+		}
+
+		$recipient->stringIs($string);
+
+		$this->currentLineIsEmpty = false;
+	}
+
+	private function recipientOfStringPrefixedWithEolIs(string $string, recipient $recipient) :void
+	{
+		$this->recipientOfEolIs($recipient);
+		$this->recipientOfStringIs($string, $recipient);
+	}
+
+	private function recipientOfStringSuffixedWithEolIs(string $string, recipient $recipient) :void
+	{
+		$this->recipientOfStringIs($string, $recipient);
+		$this->recipientOfEolIs($recipient);
+	}
+
+	private function recipientOfEolIs(recipient $recipient)
+	{
+		(
+			new isFalse(
+				$this->currentLineIsEmpty
+			)
+		)
+			->recipientOfTestIs(
+				new ifTrue(
+					function() use ($recipient)
+					{
+						$recipient->stringIs(PHP_EOL);
+
+						$this->currentLineIsEmpty = true;
 					}
 				)
 			)

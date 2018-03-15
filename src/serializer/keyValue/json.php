@@ -21,25 +21,6 @@ class json
 		$this->partial = $partial;
 	}
 
-	function valueToSerializeAtKeyIs(string $key, string $value) :void
-	{
-		$this->keyIs($key);
-
-		$this
-			->recipientOfQuotedStringIs(
-				$value,
-				new functor(
-					function($value)
-					{
-						$this->decorator->recipientOfDecoratedJsonValueIs($value, $this->recipient);
-					}
-				)
-			)
-		;
-
-		$this->partial = true;
-	}
-
 	function textToSerializeWithNameIs(name $name, text $text) :void
 	{
 		$name
@@ -61,6 +42,17 @@ class json
 				)
 			)
 		;
+	}
+
+	function objectInJsonArrayIs(part $part) :void
+	{
+		$this->jsonValueSeparator();
+
+		$this->decorator->recipientOfDecoratedJsonOpenTagForObjectInArrayIs('{', $this->recipient);
+		$this->partIs($part);
+		$this->decorator->recipientOfDecoratedJsonCloseTagForObjectInArrayIs('}', $this->recipient);
+
+		$this->partial = true;
 	}
 
 	function objectToSerializeAtKeyIs(string $key, part $part) :void
@@ -108,16 +100,16 @@ class json
 
 	function objectToSerializeIs(part $part) :void
 	{
-		$this->decorator->recipientOfDecoratedJsonOpenTagIs('{', $this->recipient);
+		$this->decorator->recipientOfDecoratedJsonOpenTagForObjectIs('{', $this->recipient);
 		$this->partIs($part);
-		$this->decorator->recipientOfDecoratedJsonCloseTagIs('}', $this->recipient);
+		$this->decorator->recipientOfDecoratedJsonCloseTagForObjectIs('}', $this->recipient);
 	}
 
 	function arrayToSerializeIs(part $part) :void
 	{
-		$this->decorator->recipientOfDecoratedJsonOpenTagIs('[', $this->recipient);
+		$this->decorator->recipientOfDecoratedJsonOpenTagForArrayIs('[', $this->recipient);
 		$this->partIs($part);
-		$this->decorator->recipientOfDecoratedJsonCloseTagIs(']', $this->recipient);
+		$this->decorator->recipientOfDecoratedJsonCloseTagForArrayIs(']', $this->recipient);
 	}
 
 	private function recipientOfKeyValueSerializerForPartIs(serializer\recipient $recipient) :void
@@ -163,6 +155,25 @@ class json
 		)
 			->stringIs($string)
 		;
+	}
+
+	private function valueToSerializeAtKeyIs(string $key, string $value) :void
+	{
+		$this->keyIs($key);
+
+		$this
+			->recipientOfQuotedStringIs(
+				$value,
+				new functor(
+					function($value)
+					{
+						$this->decorator->recipientOfDecoratedJsonValueIs($value, $this->recipient);
+					}
+				)
+			)
+		;
+
+		$this->partial = true;
 	}
 
 	private function jsonValueSeparator() :void

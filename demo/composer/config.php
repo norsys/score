@@ -38,6 +38,9 @@ use norsys\score\{
 		new authors(
 			new author(
 				new name(utf8_decode('Frédéric Hardy'))
+			),
+			new author(
+				new name(utf8_decode('John Doe'))
 			)
 		),
 		new require_prod(

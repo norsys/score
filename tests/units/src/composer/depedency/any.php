@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\{ tests\units, serializer\keyValue\name, serializer\keyValue\text };
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -77,29 +77,8 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($name, $version))
 				->mock($serializer)
-					->receive('valueToSerializeAtKeyIs')
-						->never
-
-			->given(
-				$nameAsString = uniqid(),
-				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($nameAsString) {
-					$aRecipient->stringIs($nameAsString);
-				},
-
-				$versionAsString = uniqid(),
-				$this->calling($version)->recipientOfStringIs = function($aRecipient) use ($versionAsString) {
-					$aRecipient->stringIs($versionAsString);
-				}
-			)
-			->if(
-				$this->testedInstance->keyValueSerializerIs($serializer)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($name, $version))
-				->mock($serializer)
-					->receive('valueToSerializeAtKeyIs')
-						->withArguments($nameAsString, $versionAsString)
+					->receive('textToSerializeWithNameIs')
+						->withArguments($name, $version)
 							->once
 		;
 	}

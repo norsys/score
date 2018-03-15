@@ -98,7 +98,7 @@ class proxy extends units\test
 		;
 	}
 
-	function testRecipientOfDecoratedJsonOpenTagIs()
+	function testRecipientOfDecoratedJsonOpenTagForObjectIs()
 	{
 		$this
 			->given(
@@ -107,7 +107,7 @@ class proxy extends units\test
 				$tag = uniqid()
 			)
 			->if(
-				$this->testedInstance->recipientOfDecoratedJsonOpenTagIs($tag, $recipient)
+				$this->testedInstance->recipientOfDecoratedJsonOpenTagForObjectIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
@@ -119,7 +119,7 @@ class proxy extends units\test
 		;
 	}
 
-	function testRecipientOfDecoratedJsonCloseTagIs()
+	function testRecipientOfDecoratedJsonCloseTagForObjectIs()
 	{
 		$this
 			->given(
@@ -128,7 +128,91 @@ class proxy extends units\test
 				$tag = uniqid()
 			)
 			->if(
-				$this->testedInstance->recipientOfDecoratedJsonCloseTagIs($tag, $recipient)
+				$this->testedInstance->recipientOfDecoratedJsonCloseTagForObjectIs($tag, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($tag)
+							->once
+		;
+	}
+
+	function testRecipientOfDecoratedJsonOpenTagForObjectInArrayIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$recipient = new mockOfScore\php\string\recipient,
+				$tag = uniqid()
+			)
+			->if(
+				$this->testedInstance->recipientOfDecoratedJsonOpenTagForObjectInArrayIs($tag, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($tag)
+							->once
+		;
+	}
+
+	function testRecipientOfDecoratedJsonCloseTagForObjectInArrayIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$recipient = new mockOfScore\php\string\recipient,
+				$tag = uniqid()
+			)
+			->if(
+				$this->testedInstance->recipientOfDecoratedJsonCloseTagForObjectInArrayIs($tag, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($tag)
+							->once
+		;
+	}
+
+	function testRecipientOfDecoratedJsonOpenTagForArrayIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$recipient = new mockOfScore\php\string\recipient,
+				$tag = uniqid()
+			)
+			->if(
+				$this->testedInstance->recipientOfDecoratedJsonOpenTagForArrayIs($tag, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($tag)
+							->once
+		;
+	}
+
+	function testRecipientOfDecoratedJsonCloseTagForArrayIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$recipient = new mockOfScore\php\string\recipient,
+				$tag = uniqid()
+			)
+			->if(
+				$this->testedInstance->recipientOfDecoratedJsonCloseTagForArrayIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)

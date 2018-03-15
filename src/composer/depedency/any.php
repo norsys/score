@@ -29,24 +29,10 @@ class any
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		(
-			new stringAggregator(
+		$serializer
+			->textToSerializeWithNameIs(
 				$this->name,
 				$this->version
-			)
-		)
-			->blockIs(
-				new functor(
-					function($name, $version) use ($serializer)
-					{
-						$serializer
-							->valueToSerializeAtKeyIs(
-								$name,
-								$version
-							)
-						;
-					}
-				)
 			)
 		;
 	}

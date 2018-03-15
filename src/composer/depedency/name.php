@@ -1,7 +1,7 @@
 <?php namespace norsys\score\composer\depedency;
 
-use norsys\score\php;
+use norsys\score\serializer\keyValue as serializer;
 
-interface name extends php\string\provider
+interface name extends serializer\name
 {
 }

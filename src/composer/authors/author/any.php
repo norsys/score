@@ -18,6 +18,6 @@ class any
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer->objectToSerializeIs(new serializer\part\container\fifo(... $this->parts));
+		$serializer->objectInJsonArrayIs(new serializer\part\container\fifo(... $this->parts));
 	}
 }

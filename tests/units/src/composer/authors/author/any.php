@@ -28,7 +28,7 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($part))
 				->mock($serializer)
-					->receive('objectToSerializeIs')
+					->receive('objectInJsonArrayIs')
 						->withArguments(new fifo($part))
 							->once
 
@@ -42,7 +42,7 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($part, $otherPart))
 				->mock($serializer)
-					->receive('objectToSerializeIs')
+					->receive('objectInJsonArrayIs')
 						->withArguments(new fifo($part, $otherPart))
 							->once
 		;

@@ -5,10 +5,12 @@ use norsys\score\serializer\{ keyValue\part, keyValue\recipient as serializerRec
 
 interface keyValue
 {
-	function valueToSerializeAtKeyIs(string $key, string $value) :void;
 	function textToSerializeWithNameIs(name $name, text $text) :void;
-	function objectToSerializeAtKeyIs(string $key, part $part) :void;
-	function objectToSerializeWithNameIs(name $name, part $part) :void;
-	function arrayToSerializeWithNameIs(name $name, part $part) :void;
+
 	function objectToSerializeIs(part $part) :void;
+	function objectInJsonArrayIs(part $part) :void;
+	function objectToSerializeWithNameIs(name $name, part $part) :void;
+
+	function arrayToSerializeIs(part $part) :void;
+	function arrayToSerializeWithNameIs(name $name, part $part) :void;
 }

@@ -27,14 +27,34 @@ class proxy
 		$recipient->stringIs($separator);
 	}
 
-	function recipientOfDecoratedJsonCloseTagIs(string $openTag, recipient $recipient) :void
+	function recipientOfDecoratedJsonOpenTagForObjectIs(string $tag, recipient $recipient) :void
 	{
-		$recipient->stringIs($openTag);
+		$recipient->stringIs($tag);
 	}
 
-	function recipientOfDecoratedJsonOpenTagIs(string $openTag, recipient $recipient) :void
+	function recipientOfDecoratedJsonCloseTagForObjectIs(string $tag, recipient $recipient) :void
 	{
-		$recipient->stringIs($openTag);
+		$recipient->stringIs($tag);
+	}
+
+	function recipientOfDecoratedJsonOpenTagForObjectInArrayIs(string $tag, recipient $recipient) :void
+	{
+		$recipient->stringIs($tag);
+	}
+
+	function recipientOfDecoratedJsonCloseTagForObjectInArrayIs(string $tag, recipient $recipient) :void
+	{
+		$recipient->stringIs($tag);
+	}
+
+	function recipientOfDecoratedJsonOpenTagForArrayIs(string $tag, recipient $recipient) :void
+	{
+		$recipient->stringIs($tag);
+	}
+
+	function recipientOfDecoratedJsonCloseTagForArrayIs(string $tag, recipient $recipient) :void
+	{
+		$recipient->stringIs($tag);
 	}
 
 	function recipientOfDecoratorForJsonPartIs(decorator\recipient $recipient) :void
