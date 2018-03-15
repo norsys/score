@@ -21,7 +21,7 @@ use norsys\score\{
 	composer\authors\author\name\any as name,
 	composer\authors\author\email\any as email,
 	composer\authors\author\homepage\any as homepage,
-	composer\authors\author\role\any as role,
+	composer\authors\author\role\developer,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
 	composer\required\dev as require_dev,
@@ -43,7 +43,7 @@ use norsys\score\{
 				new name('Frédéric Hardy'),
 				new email('frederic.hardy@mageekbox.net'),
 				new homepage('http://blog.mageekbox.net'),
-				new role('Developer')
+				new developer
 			),
 			new author(
 				new name('John Doe')
