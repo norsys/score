@@ -20,6 +20,7 @@ use norsys\score\{
 	composer\authors\author\any as author,
 	composer\authors\author\name\any as name,
 	composer\authors\author\email\any as email,
+	composer\authors\author\homepage\any as homepage,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
 	composer\required\dev as require_dev,
@@ -39,7 +40,8 @@ use norsys\score\{
 		new authors(
 			new author(
 				new name('Frédéric Hardy'),
-				new email('frederic.hardy@mageekbox.net')
+				new email('frederic.hardy@mageekbox.net'),
+				new homepage('http://blog.mageekbox.net')
 			),
 			new author(
 				new name('John Doe')
