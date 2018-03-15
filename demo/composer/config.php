@@ -19,6 +19,7 @@ use norsys\score\{
 	composer\authors\any as authors,
 	composer\authors\author\any as author,
 	composer\authors\author\name\any as name,
+	composer\authors\author\email\any as email,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
 	composer\required\dev as require_dev,
@@ -37,7 +38,8 @@ use norsys\score\{
 		new license\bsd\threeClause,
 		new authors(
 			new author(
-				new name('Frédéric Hardy')
+				new name('Frédéric Hardy'),
+				new email('frederic.hardy@mageekbox.net')
 			),
 			new author(
 				new name('John Doe')
