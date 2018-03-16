@@ -1,11 +1,11 @@
-<?php namespace norsys\score\tests\units\php\string\recipient;
+<?php namespace norsys\score\tests\units\php\string\recipient\surround;
 
-require __DIR__ . '/../../../../runner.php';
+require __DIR__ . '/../../../../../runner.php';
 
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class surround extends units\test
+class parenthesis extends units\test
 {
 	function testClass()
 	{
@@ -19,8 +19,6 @@ class surround extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$left = uniqid(),
-					$right = uniqid(),
 					$recipient = new mockOfScore\php\string\recipient
 				),
 				$string = uniqid()
@@ -30,10 +28,10 @@ class surround extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($left, $right, $recipient))
+					->isEqualTo($this->newTestedInstance($recipient))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments($left . $string . $right)
+						->withArguments('(' . $string . ')')
 							->once
 		;
 	}

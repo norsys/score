@@ -1,8 +1,8 @@
 <?php namespace norsys\score\php\string\recipient\surround;
 
-use norsys\score\php\string\{ recipient\surround, recipient };
+use norsys\score\php\string\{ recipient\surround\same, recipient };
 
-class quotationMark extends surround
+class quotationMark extends same
 {
 	function __construct(recipient $recipient)
 	{

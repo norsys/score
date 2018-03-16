@@ -4,8 +4,8 @@ use norsys\score\php\string\{ recipient, recipient\prefix, recipient\suffix };
 
 class surround extends prefix
 {
-	function __construct(string $surround, recipient $recipient)
+	function __construct(string $left, string $right, recipient $recipient)
 	{
-		parent::__construct($surround, new suffix($surround, $recipient));
+		parent::__construct($left, new suffix($right, $recipient));
 	}
 }
