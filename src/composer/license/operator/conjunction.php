@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\license\operator;
 
-class conjuction extends any
+class conjunction extends any
 {
 	function __construct()
 	{

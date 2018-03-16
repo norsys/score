@@ -2,19 +2,12 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\tests\units\composer\license\operator;
 use mock\norsys\score as mockOfScore;
 
 
-class any extends units\test
+class any extends operator
 {
-	function testClass()
-	{
-		$this->testedClass
-			->implements('norsys\score\composer\license\operator')
-		;
-	}
-
 	function testRecipientOfStringIs()
 	{
 		$this
