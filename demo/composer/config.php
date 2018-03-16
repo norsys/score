@@ -41,37 +41,22 @@ use norsys\score\{
 		new authors(
 			new author\mageekguy,
 			new author\any(
-				new name('John Doe'),
-				new email('john@doe.name'),
-				new homepage('http://john.doe.name'),
-				new role('Translator')
+				new name('John Doe'), new email('john@doe.name'), new homepage('http://john.doe.name'), new role('Translator')
 			)
 		),
 		new require_prod(
 			new atoum\dev,
 			new atoum(
-				new version\dev\any(
-					new branch('a_branch')
-				)
+				new version\dev\any(new branch('a_branch'))
 			),
 			new atoum(
 				new version\disjunction(
-					new version\greaterThan(
-						new semver\major(
-							new number(1)
-						)
-					),
+					new version\greaterThan(new semver\major(new number(1))),
 					new version\not(
-						new semver\major\minor(
-							new number(3),
-							new number(6)
-						)
+						new semver\major\minor(new number(3), new number(6))
 					),
 					new version\lessThan\orEqualTo(
-						new semver\major\minor(
-							new number(4),
-							new number(2)
-						)
+						new semver\major\minor(new number(4), new number(2))
 					)
 				)
 			)

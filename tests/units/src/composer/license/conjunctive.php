@@ -5,7 +5,7 @@ require __DIR__ . '/../../../runner.php';
 use norsys\score\{ tests\units, composer\part\name\license, composer\part\text\any as text };
 use mock\norsys\score as mockOfScore;
 
-class disjunctive extends units\test
+class conjunctive extends units\test
 {
 	function testClass()
 	{
@@ -48,7 +48,7 @@ class disjunctive extends units\test
 					->isEqualTo($this->newTestedInstance($license, $otherLicense, $anotherLicense))
 				->mock($serializer)
 				->receive('textToSerializeWithNameIs')
-					->withArguments(new license, new text('(' . $licenseAsString . ' or ' . $otherLicenseAsString . ' or ' . $anotherLicenseAsString . ')'))
+					->withArguments(new license, new text('(' . $licenseAsString . ' and ' . $otherLicenseAsString . ' and ' . $anotherLicenseAsString . ')'))
 						->once
 		;
 	}

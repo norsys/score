@@ -5,7 +5,7 @@ require __DIR__ . '/../../../runner.php';
 use norsys\score\{ tests\units, composer\part\name\license, composer\part\text\any as text };
 use mock\norsys\score as mockOfScore;
 
-class disjunctive extends units\test
+class withOperator extends units\test
 {
 	function testClass()
 	{
@@ -19,11 +19,17 @@ class disjunctive extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
+					$operator = new mockOfScore\composer\license\operator,
 					$license = new mockOfScore\composer\license\name,
 					$otherLicense = new mockOfScore\composer\license\name,
 					$anotherLicense = new mockOfScore\composer\license\name
 				),
 				$serializer = new mockOfScore\serializer\keyValue,
+
+				$operatorAsString = uniqid(),
+				$this->calling($operator)->recipientOfStringIs = function($aRecipient) use ($operatorAsString) {
+					$aRecipient->stringIs($operatorAsString);
+				},
 
 				$licenseAsString = uniqid(),
 				$this->calling($license)->recipientOfStringIs = function($aRecipient) use ($licenseAsString) {
@@ -45,10 +51,10 @@ class disjunctive extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($license, $otherLicense, $anotherLicense))
+					->isEqualTo($this->newTestedInstance($operator, $license, $otherLicense, $anotherLicense))
 				->mock($serializer)
 				->receive('textToSerializeWithNameIs')
-					->withArguments(new license, new text('(' . $licenseAsString . ' or ' . $otherLicenseAsString . ' or ' . $anotherLicenseAsString . ')'))
+					->withArguments(new license, new text('(' . $licenseAsString . $operatorAsString. $otherLicenseAsString . $operatorAsString. $anotherLicenseAsString . ')'))
 						->once
 		;
 	}
