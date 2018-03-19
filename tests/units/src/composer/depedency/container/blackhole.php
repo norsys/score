@@ -29,4 +29,20 @@ class blackhole extends units\test
 					->isEqualTo($this->newTestedInstance)
 		;
 	}
+
+	function testBlockForContainerIteratorIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$block = new mockOfScore\container\iterator\block
+			)
+			->if(
+				$this->testedInstance->blockForContainerIteratorIs($block)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+		;
+	}
 }

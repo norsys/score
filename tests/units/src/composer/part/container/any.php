@@ -2,10 +2,10 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\{ tests\units, container\iterator };
+use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class fifo extends units\test
+class any extends units\test
 {
 	function testClass()
 	{
@@ -19,10 +19,20 @@ class fifo extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
+					$iterator = new mockOfScore\container\iterator,
 					$part1 = new mockOfScore\composer\part,
 					$part2 = new mockOfScore\composer\part,
 					$part3 = new mockOfScore\composer\part
 				),
+
+				$this->calling($iterator)->variablesForIteratorBlockAre = function($aBlock, ...$someVariables) use ($iterator, $part1, $part2, $part3) {
+					if ($someVariables == [ $part1, $part2, $part3 ])
+					{
+						$aBlock->containerIteratorHasValue($iterator, $part1);
+						$aBlock->containerIteratorHasValue($iterator, $part2);
+						$aBlock->containerIteratorHasValue($iterator, $part3);
+					}
+				},
 
 				$serializer = new mockOfScore\serializer\keyValue,
 
@@ -54,7 +64,7 @@ class fifo extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($part1, $part2, $part3))
+					->isEqualTo($this->newTestedInstance($iterator, $part1, $part2, $part3))
 				->array($parts)
 					->isEqualTo([ $part1, $part2, $part3 ])
 		;
@@ -65,30 +75,24 @@ class fifo extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
+					$iterator = new mockOfScore\container\iterator,
 					$part1 = new mockOfScore\composer\part,
 					$part2 = new mockOfScore\composer\part,
 					$part3 = new mockOfScore\composer\part
 				),
 
-				$parts = [],
-
-				$block = new mockOfScore\container\iterator\block,
-
-				$this->calling($block)->containerIteratorHasValue = function($anIterator, $aValue) use (& $parts) {
-					if ($anIterator == new iterator\fifo)
-					{
-						$parts[] =  $aValue;
-					}
-				}
+				$block = new mockOfScore\container\iterator\block
 			)
 			->if(
 				$this->testedInstance->blockForContainerIteratorIs($block)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($part1, $part2, $part3))
-				->array($parts)
-					->isEqualTo([ $part1, $part2, $part3 ])
+					->isEqualTo($this->newTestedInstance($iterator, $part1, $part2, $part3))
+				->mock($iterator)
+					->receive('variablesForIteratorBlockAre')
+						->withArguments($block, $part1, $part2, $part3)
+							->once
 		;
 	}
 }

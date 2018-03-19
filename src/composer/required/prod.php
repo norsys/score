@@ -1,7 +1,6 @@
 <?php namespace norsys\score\composer\required;
 
-use norsys\score\composer\{ part\object, required, part\name, depedency };
-use norsys\score\serializer\keyValue as serializer;
+use norsys\score\composer\{ part\name, depedency };
 
 class prod extends depedencies
 {

@@ -32,7 +32,7 @@ class prod extends units\test
 					->isEqualTo($this->newTestedInstance($depedency, $otherDepedency))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments(new name\required, new depedency\container\infinite($depedency, $otherDepedency))
+						->withArguments(new name\required, new depedency\container\fifo($depedency, $otherDepedency))
 							->once
 		;
 	}

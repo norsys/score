@@ -33,7 +33,7 @@ class depedencies extends units\test
 					->isEqualTo($this->newTestedInstance($name, $depedency, $otherDepedency))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments($name, new depedency\container\infinite($depedency, $otherDepedency))
+						->withArguments($name, new depedency\container\fifo($depedency, $otherDepedency))
 							->once
 		;
 	}

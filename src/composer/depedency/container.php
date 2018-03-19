@@ -2,6 +2,6 @@
 
 use norsys\score\composer\part;
 
-interface container extends part
+interface container extends part\container
 {
 }

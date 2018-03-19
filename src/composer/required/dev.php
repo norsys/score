@@ -1,10 +1,7 @@
 <?php namespace norsys\score\composer\required;
 
-use norsys\score\composer\part\{ object\any, name };
-use norsys\score\composer\required;
+use norsys\score\composer\part\name;
 use norsys\score\composer\depedency;
-use norsys\score\serializer\keyValue as serializer;
-
 
 class dev extends depedencies
 {
