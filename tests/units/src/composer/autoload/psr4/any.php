@@ -33,7 +33,7 @@ class any extends units\test
 					->isEqualTo($this->newTestedInstance($mapping, $otherMapping))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments(new psr4, new mapping\container\infinite($mapping, $otherMapping))
+						->withArguments(new psr4, new mapping\container\fifo($mapping, $otherMapping))
 							->once
 		;
 	}

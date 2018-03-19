@@ -1,6 +1,6 @@
-<?php namespace norsys\score\tests\units\serializer\keyValue\part\container;
+<?php namespace norsys\score\tests\units\composer\part\container;
 
-require __DIR__ . '/../../../../../runner.php';
+require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
@@ -10,7 +10,7 @@ class fifo extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\serializer\keyValue\part')
+			->implements('norsys\score\composer\part')
 		;
 	}
 
@@ -19,9 +19,9 @@ class fifo extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$part1 = new mockOfScore\serializer\keyValue\part,
-					$part2 = new mockOfScore\serializer\keyValue\part,
-					$part3 = new mockOfScore\serializer\keyValue\part
+					$part1 = new mockOfScore\composer\part,
+					$part2 = new mockOfScore\composer\part,
+					$part3 = new mockOfScore\composer\part
 				),
 
 				$serializer = new mockOfScore\serializer\keyValue,
@@ -59,4 +59,5 @@ class fifo extends units\test
 					->isEqualTo([ $part1, $part2, $part3 ])
 		;
 	}
+
 }
