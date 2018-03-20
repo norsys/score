@@ -38,7 +38,6 @@ class any extends units\test
 			)
 				->isIdenticalTo($exception)
 		;
-		;
 	}
 
 	protected function badArgumentProvider()
