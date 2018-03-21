@@ -1,8 +1,8 @@
 <?php namespace norsys\score\composer\autoload\psr4\mapping\directory;
 
 use norsys\score\composer\autoload\psr4\mapping\directory;
-use norsys\score\php\string\{ recipient, recipient\buffer, recipient\suffix };
 use norsys\score\fs\path\filename;
+use norsys\score\php\string\{ recipient, provider };
 use norsys\score\container\iterator\{ fifo, block };
 
 class any
@@ -20,29 +20,13 @@ class any
 
 	function recipientOfStringIs(recipient $recipient) :void
 	{
-		$buffer = new buffer;
-
 		(
-			new fifo
-		)
-			->variablesForIteratorBlockAre(
-				new block\functor(
-					function($iterator, $filename) use ($buffer)
-					{
-						$filename
-							->recipientOfStringIs(
-								new suffix(
-									'/',
-									$buffer
-								)
-							)
-						;
-					}
-				),
+			new provider\suffix(
+				'/',
 				... $this->filenames
 			)
+		)
+			->recipientOfStringIs($recipient)
 		;
-
-		$buffer->recipientOfStringIs($recipient);
 	}
 }

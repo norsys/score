@@ -8,30 +8,30 @@ class provider
 		recipient
 {
 	private
-		$provider,
+		$suffix,
 		$recipient
 	;
 
-	function __construct(php\string\provider $provider, recipient $recipient)
+	function __construct(php\string\provider $suffix, recipient $recipient)
 	{
-		$this->provider = $provider;
+		$this->suffix = $suffix;
 		$this->recipient = $recipient;
 	}
 
 	function stringIs(string $string) :void
 	{
-		$this->provider
+		$this->suffix
 			->recipientOfStringIs(
 				new recipient\functor(
-					function($providerAsString) use ($string)
+					function($suffixAsString) use ($string)
 					{
 						(
-							new suffix(
-								$providerAsString,
+							new php\string\recipient\prefix(
+								$string,
 								$this->recipient
 							)
 						)
-							->stringIs($string)
+							->stringIs($suffixAsString)
 						;
 					}
 				)
