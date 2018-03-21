@@ -51,6 +51,28 @@ class official extends units\test
 				->receive('stringIs')
 					->withArguments($labelAsString . '\\')
 						->once
+
+		->given(
+			$this->newTestedInstance(
+				$label,
+				$otherLabel = new mockOfScore\php\label
+			),
+
+			$otherLabelAsString = uniqid(),
+			$this->calling($otherLabel)->recipientOfStringIs = function($aRecipient) use ($otherLabelAsString) {
+				$aRecipient->stringIs($otherLabelAsString);
+			}
+		)
+		->if(
+			$this->testedInstance->recipientOfStringIs($recipient)
+		)
+		->then
+			->object($this->testedInstance)
+				->isEqualTo($this->newTestedInstance($label, $otherLabel))
+			->mock($recipient)
+				->receive('stringIs')
+					->withArguments($labelAsString . '\\' . $otherLabelAsString . '\\')
+						->once
 		;
 	}
 }
