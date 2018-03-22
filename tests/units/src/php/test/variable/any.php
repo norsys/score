@@ -7,6 +7,13 @@ use mock\norsys\score as mockOfScore;
 
 class any extends units\test
 {
+	function testClass()
+	{
+		$this->testedClass
+			->implements('norsys\score\php\test\variable')
+		;
+	}
+
 	function testRecipientOfTestIs()
 	{
 		$this

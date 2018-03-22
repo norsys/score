@@ -24,8 +24,14 @@ use norsys\score\{
 	composer\authors\author\role\any as role,
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
+	composer\autoload\psr4\any as psr4,
+	composer\autoload\psr4\mapping\any as mapping,
+	composer\autoload\psr4\mapping\directory\any as directory,
+	composer\autoload\psr4\mapping\prefix\official as prefix,
 	composer\required\dev as require_dev,
 	composer\depedency\version\semver\number\any as number,
+	php\label\any as label,
+	fs\path\filename\ext4NtfsHfsPlus as filename,
 	vcs\branch\any as branch,
 	serializer\keyValue\json,
 	serializer\keyValue\json\decorator\proxy,
@@ -63,6 +69,12 @@ use norsys\score\{
 		),
 		new require_dev(
 			new atoum\dev
+		),
+		new psr4(
+			new mapping(
+				new prefix(new label('norsys'), new label('score')),
+				new directory(new filename('src'))
+			)
 		)
 	)
 )

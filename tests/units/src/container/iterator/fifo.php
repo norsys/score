@@ -20,7 +20,7 @@ class fifo extends units\test
 			->given(
 				$this->newTestedInstance,
 
-				$variables = [ rand(PHP_INT_MIN, PHP_INT_MAX), uniqid(), [], new \stdClass ],
+				$variables = [ $firstVariable = rand(PHP_INT_MIN, PHP_INT_MAX), uniqid(), [], new \stdClass ],
 
 				$block = new mockOfScore\container\iterator\block,
 				$this->calling($block)->containerIteratorHasValue = function($iterator, $value) use (& $variablesFromIterator) {
@@ -35,6 +35,39 @@ class fifo extends units\test
 					->isEqualTo($this->newTestedInstance)
 				->array($variablesFromIterator)
 					->isEqualTo($variables)
+
+			->given(
+				$variablesFromIterator = null,
+
+				$this->calling($block)->containerIteratorHasValue = function($iterator, $value) use (& $variablesFromIterator) {
+					$variablesFromIterator[] = $value;
+
+					$iterator->nextIterationAreUseless();
+				}
+			)
+			->if(
+				$this->testedInstance->variablesForIteratorBlockAre($block, ...$variables)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->array($variablesFromIterator)
+					->isEqualTo([ $firstVariable ])
+		;
+	}
+
+	function testNextIterationAreUseless()
+	{
+		$this
+			->given(
+				$this->newTestedInstance
+			)
+			->if(
+				$this->testedInstance->nextIterationAreUseless()
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
 		;
 	}
 }

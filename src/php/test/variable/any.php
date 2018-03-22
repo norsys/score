@@ -3,6 +3,8 @@
 use norsys\score\php\test;
 
 class any
+	implements
+		test\variable
 {
 	private
 		$variable,

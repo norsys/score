@@ -75,10 +75,7 @@ class fifo extends units\test
 				$block = new mockOfScore\container\iterator\block,
 
 				$this->calling($block)->containerIteratorHasValue = function($anIterator, $aValue) use (& $parts) {
-					if ($anIterator == new iterator\fifo)
-					{
-						$parts[] =  $aValue;
-					}
+					$parts[] =  $aValue;
 				}
 			)
 			->if(
