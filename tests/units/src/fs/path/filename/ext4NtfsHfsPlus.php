@@ -3,6 +3,7 @@
 require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units;
+use mock\norsys\score as mockOfScore;
 
 class ext4NtfsHfsPlus extends units\test
 {
@@ -48,5 +49,25 @@ class ext4NtfsHfsPlus extends units\test
 			'>',
 			'|'
 		];
+	}
+
+	function testRecipientOfStringIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance($filename = uniqid()),
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfStringIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($filename))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($filename)
+							->once
+		;
 	}
 }

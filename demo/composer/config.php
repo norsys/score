@@ -28,7 +28,7 @@ use norsys\score\{
 	composer\autoload\psr4\mapping\any as mapping,
 	composer\autoload\psr4\mapping\directory\any as directory,
 	composer\autoload\psr4\mapping\prefix\official as prefix,
-	composer\autoload\psr4\mapping\prefix\fallback,
+	composer\autoload\psr4\mapping\fallback\directory as fallback,
 	composer\required\dev as require_dev,
 	composer\depedency\version\semver\number\any as number,
 	php\label\any as label,
@@ -76,8 +76,7 @@ use norsys\score\{
 				new prefix(new label('norsys'), new label('score')),
 				new directory(new filename('src'))
 			),
-			new mapping(
-				new fallback,
+			new fallback(
 				new directory(new filename('src'))
 			)
 		)
