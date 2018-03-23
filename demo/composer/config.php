@@ -26,8 +26,8 @@ use norsys\score\{
 	composer\required\prod as require_prod,
 	composer\autoload\psr4\any as psr4,
 	composer\autoload\psr4\mapping\any as mapping,
-	composer\autoload\psr4\mapping\directory\any as directory,
-	composer\autoload\psr4\mapping\prefix\official as prefix,
+	composer\autoload\psr4\mapping\directory,
+	composer\autoload\psr4\mapping\prefix,
 	composer\autoload\psr4\mapping\fallback\directory as fallback,
 	composer\required\dev as require_dev,
 	composer\depedency\version\semver\number\any as number,
@@ -73,11 +73,11 @@ use norsys\score\{
 		),
 		new psr4(
 			new mapping(
-				new prefix(new label('norsys'), new label('score')),
-				new directory(new filename('src'))
+				new prefix\norsys\score,
+				new directory\src
 			),
 			new fallback(
-				new directory(new filename('src'))
+				new directory\src
 			)
 		)
 	)
