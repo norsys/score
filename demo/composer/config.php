@@ -25,7 +25,7 @@ use norsys\score\{
 	composer\depedency\atoum,
 	composer\required\prod as require_prod,
 	composer\autoload\psr4\any as psr4,
-	composer\autoload\psr4\mapping\any as mapping,
+	composer\autoload\psr4\mapping,
 	composer\autoload\psr4\mapping\directory,
 	composer\autoload\psr4\mapping\prefix,
 	composer\autoload\psr4\mapping\fallback\directory as fallback,
@@ -72,10 +72,7 @@ use norsys\score\{
 			new atoum\dev
 		),
 		new psr4(
-			new mapping(
-				new prefix\norsys\score,
-				new directory\src
-			),
+			new mapping\norsys\score,
 			new fallback(
 				new directory\src
 			)
