@@ -22,12 +22,12 @@ use norsys\score\{
 	composer\authors\author\homepage\any as homepage,
 	composer\authors\author\role\any as role,
 	composer\depedency\atoum,
-	composer\required\prod as require_prod,
+	composer\required,
+	composer\autoload,
 	composer\autoload\psr4\any as psr4,
 	composer\autoload\psr4\mapping,
 	composer\autoload\psr4\mapping\directory,
 	composer\autoload\psr4\mapping\fallback\directory as fallback,
-	composer\required\dev as require_dev,
 	composer\depedency\version\semver\number\any as number,
 	vcs\branch\any as branch,
 	serializer\keyValue\json,
@@ -47,7 +47,7 @@ use norsys\score\{
 				new name('John Doe'), new email('john@doe.name'), new homepage('http://john.doe.name'), new role('Translator')
 			)
 		),
-		new require_prod(
+		new required\prod(
 			new atoum\dev,
 			new atoum(
 				new version\dev\any(new branch('a_branch'))
@@ -64,13 +64,23 @@ use norsys\score\{
 				)
 			)
 		),
-		new require_dev(
+		new required\dev(
 			new atoum\dev
 		),
-		new psr4(
-			new mapping\norsys\score,
-			new fallback(
-				new directory\src
+		new autoload\prod(
+			new psr4(
+				new mapping\norsys\score,
+				new fallback(
+					new directory\src
+				)
+			)
+		),
+		new autoload\dev(
+			new psr4(
+				new mapping\norsys\score,
+				new fallback(
+					new directory\src
+				)
 			)
 		)
 	)
