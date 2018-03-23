@@ -6,33 +6,37 @@ namespace norsys\score\demo\config\writer\depedencies\depedency;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use norsys\score\{
-	php\string\recipient\stdout,
-	composer\config\any as config,
-	composer\depedency\version,
-	composer\depedency\version\semver,
-	composer\name\norsys,
-	composer\type\project,
-	composer\license,
-	composer\description\any as description,
-	composer\authors\any as authors,
-	composer\authors\author,
-	composer\authors\author\name\any as name,
-	composer\authors\author\email\any as email,
-	composer\authors\author\homepage\any as homepage,
-	composer\authors\author\role\any as role,
-	composer\depedency\atoum,
-	composer\required,
-	composer\autoload,
-	composer\autoload\psr4\any as psr4,
-	composer\autoload\psr4\mapping,
-	composer\autoload\psr4\mapping\directory,
-	composer\autoload\psr4\mapping\fallback\directory as fallback,
-	composer\depedency\version\semver\number\any as number,
-	vcs\branch\any as branch,
-	serializer\keyValue\json,
-	serializer\keyValue\json\decorator\proxy,
-	serializer\keyValue\json\decorator\pretty
+use norsys\score\php\string\recipient\stdout;
+use norsys\score\vcs\branch\any as branch;
+
+use norsys\score\composer\{
+	config\any as config,
+	depedency\version,
+	depedency\version\semver,
+	name\norsys,
+	type\project,
+	license,
+	description\any as description,
+	authors\any as authors,
+	authors\author,
+	authors\author\name\any as name,
+	authors\author\email\any as email,
+	authors\author\homepage\any as homepage,
+	authors\author\role\any as role,
+	depedency\atoum,
+	required,
+	autoload,
+	autoload\psr4\any as psr4,
+	autoload\psr4\mapping,
+	autoload\psr4\mapping\directory,
+	autoload\psr4\mapping\fallback\directory as fallback,
+	depedency\version\semver\number\any as number
+};
+
+use norsys\score\serializer\keyValue\{
+	json,
+	json\decorator\proxy,
+	json\decorator\pretty
 };
 
 (
