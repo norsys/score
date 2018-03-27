@@ -9,8 +9,10 @@ class directory extends filename
 {
 	function testClass()
 	{
+		parent::testClass();
+
 		$this->testedClass
-			->implements('norsys\score\composer\autoload\classmap\filename')
+			->implements('norsys\score\composer\part\text')
 		;
 	}
 
