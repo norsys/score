@@ -3,12 +3,14 @@
 use norsys\score\composer\autoload\classmap\filename;
 use norsys\score\fs\path;
 use norsys\score\php\string\recipient;
-use norsys\score\container\iterator\{ fifo, block };
 use norsys\score\php\string\{ join, any };
+use norsys\score\composer\part;
+use norsys\score\serializer\keyValue as serializer;
 
 class file
 	implements
-		filename
+		filename,
+		part
 {
 	private
 		$filenames
@@ -23,11 +25,16 @@ class file
 	{
 		(
 			new join(
-				new any('/'),
+				new path\separator\php,
 				... $this->filenames
 			)
 		)
 			->recipientOfStringIs($recipient)
 		;
+	}
+
+	function keyValueSerializerIs(serializer $serializer) :void
+	{
+		$serializer->textToSerializeIs($this);
 	}
 }
