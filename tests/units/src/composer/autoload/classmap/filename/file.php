@@ -2,18 +2,12 @@
 
 require __DIR__ . '/../../../../../runner.php';
 
+use norsys\score\tests\units\composer\autoload\classmap\filename;
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class file extends units\test
+class file extends filename
 {
-	function testClass()
-	{
-		$this->testedClass
-			->implements('norsys\score\composer\autoload\classmap\filename')
-		;
-	}
-
 	function testRecipientOfStringIs()
 	{
 		$this
@@ -36,20 +30,9 @@ class file extends units\test
 						->never
 
 			->given(
-				$filenameAsString = uniqid(),
-				$this->calling($filename)->recipientOfStringIs = function($aRecipient) use ($filenameAsString) {
-					$aRecipient->stringIs($filenameAsString);
-				},
-
-				$otherFilenameAsString = uniqid(),
-				$this->calling($otherFilename)->recipientOfStringIs = function($aRecipient) use ($otherFilenameAsString) {
-					$aRecipient->stringIs($otherFilenameAsString);
-				},
-
-				$anOtherFilenameAsString = uniqid(),
-				$this->calling($anOtherFilename)->recipientOfStringIs = function($aRecipient) use ($anOtherFilenameAsString) {
-					$aRecipient->stringIs($anOtherFilenameAsString);
-				}
+				$this->providerHasString($filename, $filenameAsString = uniqid()),
+				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid()),
+				$this->providerHasString($anOtherFilename, $anOtherFilenameAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)

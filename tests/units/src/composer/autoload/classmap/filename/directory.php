@@ -2,10 +2,10 @@
 
 require __DIR__ . '/../../../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\tests\units\composer\autoload\classmap\filename;
 use mock\norsys\score as mockOfScore;
 
-class directory extends units\test
+class directory extends filename
 {
 	function testClass()
 	{
@@ -34,10 +34,7 @@ class directory extends units\test
 						->never
 
 			->given(
-				$filenameAsString = uniqid(),
-				$this->calling($filename)->recipientOfStringIs = function($aRecipient) use ($filenameAsString) {
-					$aRecipient->stringIs($filenameAsString);
-				}
+				$this->providerHasString($filename, $filenameAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
@@ -57,10 +54,7 @@ class directory extends units\test
 					$otherFilename = new mockOfScore\fs\path\filename
 				),
 
-				$otherFilenameAsString = uniqid(),
-				$this->calling($otherFilename)->recipientOfStringIs = function($aRecipient) use ($otherFilenameAsString) {
-					$aRecipient->stringIs($otherFilenameAsString);
-				}
+				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
