@@ -75,11 +75,6 @@ class pretty extends proxy
 		;
 	}
 
-	private function recipientOfStringIs(string $string, recipient $recipient) :void
-	{
-		$recipient->stringIs($string);
-	}
-
 	private function recipientOfStartStringIs(string $string, recipient $recipient) :void
 	{
 		$recipient->stringIs(PHP_EOL);
