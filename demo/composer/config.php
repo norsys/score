@@ -75,15 +75,15 @@ use norsys\score\serializer\keyValue\{
 			new atoum\dev
 		),
 		new autoload\prod(
-			new part\container\fifo(
-				new psr4(
-					new mapping\norsys\score,
-					new fallback(
-						new directory\src
-					)
-				),
-				new classmap\any(
-					new classmap\filename\directory(new filename('lib'))
+			new psr4(
+				new mapping\norsys\score,
+				new fallback(
+					new directory\src
+				)
+			),
+			new classmap\any(
+				new classmap\filename\directory(
+					new filename('lib')
 				)
 			)
 		),
