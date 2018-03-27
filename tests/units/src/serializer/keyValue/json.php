@@ -14,6 +14,76 @@ class json extends units\test
 		;
 	}
 
+	function testTextToSerializeIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$decorator = new mockOfScore\serializer\keyValue\json\decorator,
+					$recipient = new mockOfScore\php\string\recipient
+				),
+
+				$this->calling($recipient)->stringIs = function($aString) use (& $buffer) {
+					$buffer .= $aString;
+				},
+
+				$text = new mockOfScore\serializer\keyValue\text
+			)
+			->if(
+				$this->testedInstance->textToSerializeIs($text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient))
+				->variable($buffer)
+					->isNull
+
+			->given(
+				$textAsString = uniqid(),
+				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($textAsString) {
+					$aRecipient->stringIs($textAsString);
+				},
+
+				$decoratedText = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonTextInArrayIs = function($aText, $aRecipient) use ($textAsString, $decoratedText) {
+					if ($aText == '"' . $textAsString . '"')
+					{
+						$aRecipient->stringIs($decoratedText);
+					}
+				}
+			)
+			->if(
+				$this->testedInstance->textToSerializeIs($text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedText)
+
+			->given(
+				$buffer = null,
+
+				$decoratedValueSeparator = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedValueSeparator) {
+					if ($aSeparator == ',')
+					{
+						$aRecipient->stringIs($decoratedValueSeparator);
+					}
+				}
+			)
+			->if(
+				$this->testedInstance->textToSerializeIs($text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedValueSeparator . $decoratedText)
+
+		;
+	}
+
 	function testTextToSerializeWithNameIs()
 	{
 		$this

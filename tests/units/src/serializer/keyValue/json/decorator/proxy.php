@@ -56,6 +56,27 @@ class proxy extends units\test
 		;
 	}
 
+	function testRecipientOfDecoratedJsonTextInArrayIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$recipient = new mockOfScore\php\string\recipient,
+				$text = uniqid()
+			)
+			->if(
+				$this->testedInstance->recipientOfDecoratedJsonTextInArrayIs($text, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($text)
+							->once
+		;
+	}
+
 	function testRecipientOfDecoratedJsonNameSeparatorIs()
 	{
 		$this

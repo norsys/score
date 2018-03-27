@@ -1,7 +1,7 @@
 <?php namespace norsys\score\composer\part\container;
 
 use norsys\score\composer\{ part\container, part };
-use norsys\score\container\{ iterator\block, iterator, iterator\block\functor as iteratorBlock };
+use norsys\score\container\{ iterator\block, iterator };
 use norsys\score\serializer\keyValue as serializer;
 
 class any
@@ -23,7 +23,7 @@ class any
 	{
 		$this
 			->blockForContainerIteratorIs(
-				new iteratorBlock(
+				new block\functor(
 					function($iterator, $part) use ($serializer)
 					{
 						$part

@@ -8,8 +8,10 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use norsys\score\php\string\recipient\stdout;
 use norsys\score\vcs\branch\any as branch;
+use norsys\score\fs\path\filename\ext4NtfsHfsPlus as filename;
 
 use norsys\score\composer\{
+	part,
 	config\any as config,
 	depedency\version,
 	depedency\version\semver,
@@ -26,6 +28,7 @@ use norsys\score\composer\{
 	depedency\atoum,
 	required,
 	autoload,
+	autoload\classmap,
 	autoload\psr4\any as psr4,
 	autoload\psr4\mapping,
 	autoload\psr4\mapping\directory,
@@ -72,10 +75,15 @@ use norsys\score\serializer\keyValue\{
 			new atoum\dev
 		),
 		new autoload\prod(
-			new psr4(
-				new mapping\norsys\score,
-				new fallback(
-					new directory\src
+			new part\container\fifo(
+				new psr4(
+					new mapping\norsys\score,
+					new fallback(
+						new directory\src
+					)
+				),
+				new classmap\any(
+					new classmap\filename\directory(new filename('lib'))
 				)
 			)
 		),

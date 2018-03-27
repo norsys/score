@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../../runner.php';
 
-use norsys\score\{ tests\units, serializer\keyValue\json\depth };
+use norsys\score\{ tests\units, serializer\keyValue\json\depth, serializer\keyValue\json\decorator\pretty\line };
 use mock\norsys\score as mockOfScore;
 
 class pretty extends units\test
@@ -23,27 +23,30 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$key = uniqid(),
 
 				$recipient = new mockOfScore\php\string\recipient,
-				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; },
-
-				$key = uniqid()
+				$this->calling($recipient)->stringIs = function($aString) use (& $buffer) { $buffer .= $aString; }
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonKeyIs($key, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo($key)
+					->isEqualTo(PHP_EOL . $key)
 
 			->given(
 				$buffer = null,
 
-				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) {
-					$aRecipient->unsignedIntegerIs(0);
+				$depthAsInteger = rand(1, 3),
+				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) use ($depthAsInteger) {
+					$aRecipient->unsignedIntegerIs($depthAsInteger);
 				}
 			)
 			->if(
@@ -51,19 +54,23 @@ class pretty extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo(PHP_EOL . $key)
+					->isEqualTo(PHP_EOL. str_repeat("	", $depthAsInteger) . $key)
 		;
 	}
 
-	function testRecipientOfDecoratedJsonKValueIs()
+	function testRecipientOfDecoratedJsonValueIs()
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
-				$recipient = new mockOfScore\php\string\recipient,
-				$value = uniqid()
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$value = uniqid(),
+
+				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonValueIs($value, $recipient)
@@ -82,9 +89,13 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
-				$recipient = new mockOfScore\php\string\recipient,
-				$separator = uniqid()
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$separator = uniqid(),
+
+				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonNameSeparatorIs($separator, $recipient)
@@ -103,9 +114,12 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
-				$recipient = new mockOfScore\php\string\recipient,
-				$separator = uniqid()
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+				$separator = uniqid(),
+
+				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonValueSeparatorIs($separator, $recipient)
@@ -120,20 +134,65 @@ class pretty extends units\test
 		;
 	}
 
+	function testRecipientOfDecoratedJsonTextInArrayIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$text = uniqid(),
+
+				$recipient = new mockOfScore\php\string\recipient,
+				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; }
+			)
+			->if(
+				$this->testedInstance->recipientOfDecoratedJsonTextInArrayIs($text, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($depth))
+				->string($buffer)
+					->isEqualTo(PHP_EOL . $text)
+
+			->given(
+				$buffer = null,
+
+				$depthAsInteger = rand(1, 3),
+				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) use ($depthAsInteger) {
+					$aRecipient->unsignedIntegerIs($depthAsInteger);
+				}
+			)
+			->if(
+				$this->testedInstance->recipientOfDecoratedJsonTextInArrayIs($text, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($depth))
+				->string($buffer)
+					->isEqualTo(PHP_EOL. str_repeat("	", $depthAsInteger) . $text)
+		;
+	}
+
 	function testRecipientOfDecoratedJsonOpenTagForObjectIs()
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
-				$recipient = new mockOfScore\php\string\recipient,
-				$tag = uniqid()
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$tag = uniqid(),
+
+				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonOpenTagForObjectIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments($tag)
@@ -145,43 +204,30 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$tag = uniqid(),
 
 				$recipient = new mockOfScore\php\string\recipient,
-				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; },
-
-				$tag = uniqid()
+				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; }
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonCloseTagForObjectIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
-				->string($buffer)
-					->isEqualTo($tag)
-
-			->given(
-				$buffer = null,
-
-				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) {
-					$aRecipient->unsignedIntegerIs(0);
-				}
-			)
-			->if(
-				$this->testedInstance->recipientOfDecoratedJsonCloseTagForObjectIs($tag, $recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
 					->isEqualTo(PHP_EOL . $tag)
 
 			->given(
 				$buffer = null,
 
-				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) {
-					$aRecipient->unsignedIntegerIs(1);
+				$depthAsInteger = rand(1, 3),
+				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) use ($depthAsInteger) {
+					$aRecipient->unsignedIntegerIs($depthAsInteger);
 				}
 			)
 			->if(
@@ -189,9 +235,9 @@ class pretty extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo(PHP_EOL . "	" . $tag)
+					->isEqualTo(PHP_EOL. str_repeat("	", $depthAsInteger) . $tag)
 		;
 	}
 
@@ -199,53 +245,40 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$tag = uniqid(),
 
 				$recipient = new mockOfScore\php\string\recipient,
-				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; },
-
-				$tag = uniqid()
+				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; }
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonOpenTagForObjectInArrayIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo($tag)
+					->isEqualTo(PHP_EOL . $tag)
 
 			->given(
 				$buffer = null,
 
-				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) {
-					$aRecipient->unsignedIntegerIs(1);
-				},
-
-				$this->newTestedInstance($depth)
+				$depthAsInteger = rand(1, 3),
+				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) use ($depthAsInteger) {
+					$aRecipient->unsignedIntegerIs($depthAsInteger);
+				}
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonOpenTagForObjectInArrayIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo("	" . $tag)
-
-			->given(
-				$buffer = null,
-
-				$this->newTestedInstance($depth, false)
-			)
-			->if(
-				$this->testedInstance->recipientOfDecoratedJsonOpenTagForObjectInArrayIs($tag, $recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
-				->string($buffer)
-					->isEqualTo(PHP_EOL . "	" . $tag)
+					->isEqualTo(PHP_EOL. str_repeat("	", $depthAsInteger) . $tag)
 		;
 	}
 
@@ -253,53 +286,40 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$tag = uniqid(),
 
 				$recipient = new mockOfScore\php\string\recipient,
-				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; },
-
-				$tag = uniqid()
+				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; }
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonCloseTagForObjectInArrayIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo($tag)
+					->isEqualTo(PHP_EOL . $tag)
 
 			->given(
 				$buffer = null,
 
-				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) {
-					$aRecipient->unsignedIntegerIs(1);
-				},
-
-				$this->newTestedInstance($depth)
+				$depthAsInteger = rand(1, 3),
+				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) use ($depthAsInteger) {
+					$aRecipient->unsignedIntegerIs($depthAsInteger);
+				}
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonCloseTagForObjectInArrayIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo("	" . $tag)
-
-			->given(
-				$buffer = null,
-
-				$this->newTestedInstance($depth, false)
-			)
-			->if(
-				$this->testedInstance->recipientOfDecoratedJsonCloseTagForObjectInArrayIs($tag, $recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
-				->string($buffer)
-					->isEqualTo(PHP_EOL . "	" . $tag)
+					->isEqualTo(PHP_EOL. str_repeat("	", $depthAsInteger) . $tag)
 		;
 	}
 
@@ -307,21 +327,24 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
 
-				$recipient = new mockOfScore\php\string\recipient,
-				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; },
+				$tag = uniqid(),
 
-				$tag = uniqid()
+				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonOpenTagForArrayIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
-				->string($buffer)
-					->isEqualTo($tag)
+					->isEqualTo($this->newTestedInstance($depth))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments($tag)
+							->once
 		;
 	}
 
@@ -329,43 +352,30 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth
+				),
+
+				$tag = uniqid(),
 
 				$recipient = new mockOfScore\php\string\recipient,
-				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; },
-
-				$tag = uniqid()
+				$this->calling($recipient)->stringIs = function($string) use (& $buffer) { $buffer .= $string; }
 			)
 			->if(
 				$this->testedInstance->recipientOfDecoratedJsonCloseTagForArrayIs($tag, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
-				->string($buffer)
-					->isEqualTo($tag)
-
-			->given(
-				$buffer = null,
-
-				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) {
-					$aRecipient->unsignedIntegerIs(0);
-				}
-			)
-			->if(
-				$this->testedInstance->recipientOfDecoratedJsonCloseTagForArrayIs($tag, $recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
 					->isEqualTo(PHP_EOL . $tag)
 
 			->given(
 				$buffer = null,
 
-				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) {
-					$aRecipient->unsignedIntegerIs(1);
+				$depthAsInteger = rand(1, 3),
+				$this->calling($depth)->recipientOfUnsignedIntegerIs = function($aRecipient) use ($depthAsInteger) {
+					$aRecipient->unsignedIntegerIs($depthAsInteger);
 				}
 			)
 			->if(
@@ -373,9 +383,9 @@ class pretty extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth, false))
+					->isEqualTo($this->newTestedInstance($depth))
 				->string($buffer)
-					->isEqualTo(PHP_EOL . "	" . $tag)
+					->isEqualTo(PHP_EOL. str_repeat("	", $depthAsInteger) . $tag)
 		;
 	}
 
@@ -383,7 +393,10 @@ class pretty extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($depth = new mockOfScore\serializer\keyValue\json\depth),
+				$this->newTestedInstance(
+					$depth = new mockOfScore\serializer\keyValue\json\depth,
+					$line = new mockOfScore\serializer\keyValue\json\decorator\pretty\line
+				),
 				$recipient = new mockOfScore\serializer\keyValue\json\decorator\recipient
 			)
 			->if(
@@ -391,7 +404,7 @@ class pretty extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth))
+					->isEqualTo($this->newTestedInstance($depth, $line))
 				->mock($recipient)
 					->receive('jsonDecoratorIs')
 						->never
@@ -407,7 +420,7 @@ class pretty extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($depth))
+					->isEqualTo($this->newTestedInstance($depth, $line))
 				->mock($recipient)
 					->receive('jsonDecoratorIs')
 						->withArguments($this->newTestedInstance($nextDepth))

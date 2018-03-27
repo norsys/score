@@ -21,6 +21,34 @@ class json
 		$this->partial = $partial;
 	}
 
+	function textToSerializeIs(text $text) :void
+	{
+		$text
+			->recipientOfStringIs(
+				new functor(
+					function($text)
+					{
+						$this
+							->recipientOfQuotedStringIs(
+								$text,
+								new functor(
+									function($text)
+									{
+										$this->jsonValueSeparator();
+
+										$this->decorator->recipientOfDecoratedJsonTextInArrayIs($text, $this->recipient);
+
+										$this->partial = true;
+									}
+								)
+							)
+						;
+					}
+				)
+			)
+		;
+	}
+
 	function textToSerializeWithNameIs(name $name, text $text) :void
 	{
 		$name
@@ -168,12 +196,13 @@ class json
 					function($value)
 					{
 						$this->decorator->recipientOfDecoratedJsonValueIs($value, $this->recipient);
+
+						$this->partial = true;
 					}
 				)
 			)
 		;
 
-		$this->partial = true;
 	}
 
 	private function jsonValueSeparator() :void

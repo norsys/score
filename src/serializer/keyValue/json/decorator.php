@@ -4,6 +4,8 @@ use norsys\score\php\string\recipient;
 
 interface decorator
 {
+	function recipientOfDecoratedJsonTextInArrayIs(string $text, recipient $recipient) :void;
+
 	function recipientOfDecoratedJsonKeyIs(string $key, recipient $recipient) :void;
 	function recipientOfDecoratedJsonNameSeparatorIs(string $separator, recipient $recipient) :void;
 

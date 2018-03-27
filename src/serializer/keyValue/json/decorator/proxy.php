@@ -17,6 +17,11 @@ class proxy
 		$recipient->stringIs($value);
 	}
 
+	function recipientOfDecoratedJsonTextInArrayIs(string $text, recipient $recipient) :void
+	{
+		$recipient->stringIs($text);
+	}
+
 	function recipientOfDecoratedJsonNameSeparatorIs(string $separator, recipient $recipient) :void
 	{
 		$recipient->stringIs($separator);
