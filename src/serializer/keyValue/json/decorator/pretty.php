@@ -5,9 +5,7 @@ use norsys\score\php\string\{ recipient, recipient\prefix, recipient\suffix };
 use norsys\score\php\integer\unsigned\recipient\functor;
 use norsys\score\php\test\{ variable\isFalse\strictly as isFalse, variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
 
-class pretty
-	implements
-		decorator
+class pretty extends proxy
 {
 	private
 		$depth,
@@ -24,11 +22,6 @@ class pretty
 		$this->recipientOfStartStringIs($key, $recipient);
 	}
 
-	function recipientOfDecoratedJsonValueIs(string $value, recipient $recipient) :void
-	{
-		$this->recipientOfStringIs($value, $recipient);
-	}
-
 	function recipientOfDecoratedJsonNameSeparatorIs(string $separator, recipient $recipient) :void
 	{
 		(
@@ -41,19 +34,9 @@ class pretty
 		;
 	}
 
-	function recipientOfDecoratedJsonValueSeparatorIs(string $separator, recipient $recipient) :void
-	{
-		$this->recipientOfStringIs($separator, $recipient);
-	}
-
 	function recipientOfDecoratedJsonTextInArrayIs(string $text, recipient $recipient) :void
 	{
 		$this->recipientOfStartStringIs($text, $recipient);
-	}
-
-	function recipientOfDecoratedJsonOpenTagForObjectIs(string $tag, recipient $recipient) :void
-	{
-		$this->recipientOfStringIs($tag, $recipient);
 	}
 
 	function recipientOfDecoratedJsonCloseTagForObjectIs(string $tag, recipient $recipient) :void
@@ -69,11 +52,6 @@ class pretty
 	function recipientOfDecoratedJsonCloseTagForObjectInArrayIs(string $tag, recipient $recipient) :void
 	{
 		$this->recipientOfStartStringIs($tag, $recipient);
-	}
-
-	function recipientOfDecoratedJsonOpenTagForArrayIs(string $tag, recipient $recipient) :void
-	{
-		$this->recipientOfStringIs($tag, $recipient);
 	}
 
 	function recipientOfDecoratedJsonCloseTagForArrayIs(string $tag, recipient $recipient) :void
