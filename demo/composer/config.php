@@ -84,6 +84,17 @@ use norsys\score\serializer\keyValue\{
 			new classmap\any(
 				new classmap\filename\directory(
 					new filename('lib')
+				),
+				new classmap\filename\file(
+					new filename('Something.php')
+				),
+				new classmap\filename\file(
+					new filename('app'),
+					new filename('AppKernel.php')
+				),
+				new classmap\filename\file(
+					new filename('app'),
+					new filename('AppCache.php')
 				)
 			)
 		),
