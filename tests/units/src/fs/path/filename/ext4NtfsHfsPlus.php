@@ -2,18 +2,11 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\tests\units\fs\path\filename;
 use mock\norsys\score as mockOfScore;
 
-class ext4NtfsHfsPlus extends units\test
+class ext4NtfsHfsPlus extends filename
 {
-	function testClass()
-	{
-		$this->testedClass
-			->implements('norsys\score\fs\path\filename')
-		;
-	}
-
 	/**
 	 * @dataProvider invalidStringProvider
 	 */
