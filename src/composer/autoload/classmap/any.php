@@ -21,7 +21,7 @@ class any
 		$serializer
 			->arrayToSerializeWithNameIs(
 				new name\autoload\classmap,
-				new part\text\anArray\fifo(... $this->filenames)
+				new part\anArray\fifo(... $this->filenames)
 			)
 		;
 	}

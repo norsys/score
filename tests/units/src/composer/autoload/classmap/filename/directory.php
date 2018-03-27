@@ -47,7 +47,6 @@ class directory extends filename
 						->withArguments($filenameAsString . '/')
 							->once
 
-
 			->given(
 				$this->newTestedInstance(
 					$filename,
@@ -65,6 +64,31 @@ class directory extends filename
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments($filenameAsString . '/' . $otherFilenameAsString . '/')
+							->once
+		;
+	}
+
+	function testKeyValueSerializerIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$filename = new mockOfScore\fs\path\filename,
+					$otherFilename = new mockOfScore\fs\path\filename,
+					$anOtherFilename = new mockOfScore\fs\path\filename
+				),
+
+				$serializer = new mockOfScore\serializer\keyValue
+			)
+			->if(
+				$this->testedInstance->keyValueSerializerIs($serializer)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
+				->mock($serializer)
+					->receive('textToSerializeIs')
+						->withArguments($this->testedInstance)
 							->once
 		;
 	}

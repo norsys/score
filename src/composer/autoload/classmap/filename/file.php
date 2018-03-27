@@ -4,13 +4,13 @@ use norsys\score\composer\autoload\classmap\filename;
 use norsys\score\fs\path;
 use norsys\score\php\string\recipient;
 use norsys\score\php\string\{ join, any };
-use norsys\score\composer\part;
+use norsys\score\composer\part\text;
 use norsys\score\serializer\keyValue as serializer;
 
 class file
 	implements
 		filename,
-		part
+		text
 {
 	private
 		$filenames

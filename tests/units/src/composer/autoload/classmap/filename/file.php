@@ -13,7 +13,7 @@ class file extends filename
 		parent::testClass();
 
 		$this->testedClass
-			->implements('norsys\score\composer\part')
+			->implements('norsys\score\composer\part\text')
 		;
 	}
 
