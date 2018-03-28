@@ -29,7 +29,7 @@ class src extends units\test
 					->isEqualTo($this->newTestedInstance)
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments('src/')
+						->withArguments('./src/')
 							->once
 		;
 	}

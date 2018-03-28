@@ -2,18 +2,11 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\tests\units;
+use norsys\score\tests\units\fs\path\separator;
 use mock\norsys\score as mockOfScore;
 
-class php extends units\test
+class php extends separator
 {
-	function testClass()
-	{
-		$this->testedClass
-			->implements('norsys\score\fs\path\separator')
-		;
-	}
-
 	function testRecipientOfStringIs()
 	{
 		$this

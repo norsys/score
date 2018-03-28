@@ -28,7 +28,7 @@ git/setup: .git/hooks/pre-commit ## Install pre-commit hook for git.
 export: | .git ## Generate a `./score.zip` archive from local git repository
 	git archive -o score.zip HEAD
 
-vendor/autoload.php: bin/composer
+vendor/autoload.php: composer.lock | bin/composer
 	bin/composer install
 
 composer.lock: composer.json

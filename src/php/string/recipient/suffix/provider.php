@@ -1,7 +1,6 @@
 <?php namespace norsys\score\php\string\recipient\suffix;
 
-use norsys\score\{ php, php\string\recipient, php\string\recipient\suffix };
-
+use norsys\score\{ php, php\string\recipient, php\string\recipient\prefix };
 
 class provider
 	implements
@@ -22,18 +21,9 @@ class provider
 	{
 		$this->suffix
 			->recipientOfStringIs(
-				new recipient\functor(
-					function($suffixAsString) use ($string)
-					{
-						(
-							new php\string\recipient\prefix(
-								$string,
-								$this->recipient
-							)
-						)
-							->stringIs($suffixAsString)
-						;
-					}
+				new prefix(
+					$string,
+					$this->recipient
 				)
 			)
 		;

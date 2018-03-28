@@ -18,7 +18,9 @@ class any extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance,
+				$this->newTestedInstance(
+					$path = new mockOfScore\fs\path
+				),
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -26,52 +28,23 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
+					->isEqualTo($this->newTestedInstance($path))
 				->mock($recipient)
 					->receive('stringIs')
 						->never
 
 			->given(
-				$this->newTestedInstance(
-					$filename = new mockOfScore\fs\path\filename
-				),
-
-				$filenameAsString = uniqid(),
-				$this->calling($filename)->recipientOfStringIs = function($aRecipient) use ($filenameAsString) {
-					$aRecipient->stringIs($filenameAsString);
-				}
+				$this->providerHasString($path, $pathAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($filename))
+					->isEqualTo($this->newTestedInstance($path))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments($filenameAsString . '/')
-							->once
-
-			->given(
-				$this->newTestedInstance(
-					$filename,
-					$otherFilename = new mockOfScore\fs\path\filename
-				),
-
-				$otherFilenameAsString = uniqid(),
-				$this->calling($otherFilename)->recipientOfStringIs = function($aRecipient) use ($otherFilenameAsString) {
-					$aRecipient->stringIs($otherFilenameAsString);
-				}
-			)
-			->if(
-				$this->testedInstance->recipientOfStringIs($recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($filename, $otherFilename))
-				->mock($recipient)
-					->receive('stringIs')
-						->withArguments($filenameAsString . '/' . $otherFilenameAsString . '/')
+						->withArguments($pathAsString . '/')
 							->once
 		;
 	}

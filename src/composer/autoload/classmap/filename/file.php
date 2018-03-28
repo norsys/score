@@ -13,24 +13,17 @@ class file
 		text
 {
 	private
-		$filenames
+		$path
 	;
 
-	function __construct(path\filename... $filenames)
+	function __construct(path $path)
 	{
-		$this->filenames = $filenames;
+		$this->path = $path;
 	}
 
 	function recipientOfStringIs(recipient $recipient) :void
 	{
-		(
-			new join(
-				new path\separator\php,
-				... $this->filenames
-			)
-		)
-			->recipientOfStringIs($recipient)
-		;
+		$this->path->recipientOfStringIs($recipient);
 	}
 
 	function keyValueSerializerIs(serializer $serializer) :void

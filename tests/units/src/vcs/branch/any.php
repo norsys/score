@@ -21,8 +21,8 @@ class any extends units\test
 	{
 		$this
 			->exception(function() use ($argument) { $this->newTestedInstance($argument); })
-			->isInstanceOf('invalidArgumentException')
-			->hasMessage('VCS branch must be a not empty string')
+				->isInstanceOf('invalidArgumentException')
+				->hasMessage('VCS branch must be a not empty string')
 		;
 	}
 

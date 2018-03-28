@@ -22,9 +22,7 @@ class file extends filename
 		$this
 			->given(
 				$this->newTestedInstance(
-					$filename = new mockOfScore\fs\path\filename,
-					$otherFilename = new mockOfScore\fs\path\filename,
-					$anOtherFilename = new mockOfScore\fs\path\filename
+					$path = new mockOfScore\fs\path
 				),
 				$recipient = new mockOfScore\php\string\recipient
 			)
@@ -33,25 +31,23 @@ class file extends filename
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
+					->isEqualTo($this->newTestedInstance($path))
 				->mock($recipient)
 					->receive('stringIs')
 						->never
 
 			->given(
-				$this->providerHasString($filename, $filenameAsString = uniqid()),
-				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid()),
-				$this->providerHasString($anOtherFilename, $anOtherFilenameAsString = uniqid())
+				$this->providerHasString($path, $pathAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
+					->isEqualTo($this->newTestedInstance($path))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments($filenameAsString . '/' . $otherFilenameAsString . '/' . $anOtherFilenameAsString)
+						->withArguments($pathAsString)
 							->once
 		;
 	}
@@ -61,14 +57,8 @@ class file extends filename
 		$this
 			->given(
 				$this->newTestedInstance(
-					$filename = new mockOfScore\fs\path\filename,
-					$otherFilename = new mockOfScore\fs\path\filename,
-					$anOtherFilename = new mockOfScore\fs\path\filename
+					$path = new mockOfScore\fs\path
 				),
-
-				$this->providerHasString($filename, $filenameAsString = uniqid()),
-				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid()),
-				$this->providerHasString($anOtherFilename, $anOtherFilenameAsString = uniqid()),
 
 				$serializer = new mockOfScore\serializer\keyValue
 			)
@@ -77,7 +67,7 @@ class file extends filename
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
+					->isEqualTo($this->newTestedInstance($path))
 				->mock($serializer)
 					->receive('textToSerializeIs')
 						->withArguments($this->testedInstance)

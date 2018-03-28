@@ -8,7 +8,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use norsys\score\php\string\recipient\stdout;
 use norsys\score\vcs\branch\any as branch;
-use norsys\score\fs\path\filename\ext4NtfsHfsPlus as filename;
+use norsys\score\fs\{ path, path\unix, path\filename };
 
 use norsys\score\composer\{
 	part,
@@ -83,12 +83,18 @@ use norsys\score\serializer\keyValue\{
 			),
 			new classmap\any(
 				new classmap\filename\directory(
-					new filename('lib')
+					new unix\relative\filename(new filename\ext4NtfsHfsPlus('lib'))
 				),
 				new classmap\filename\file(
-					new filename('Something.php')
+					new unix\relative\filename(new filename\ext4NtfsHfsPlus('Something.php'))
 				),
-				new classmap\filename\symfony
+				new classmap\filename\root(
+					new unix\relative\filename(new filename\ext4NtfsHfsPlus('app')),
+					new path\container\fifo(
+						new unix\relative\filename(new filename\ext4NtfsHfsPlus('AppKernel.php')),
+						new unix\relative\filename(new filename\ext4NtfsHfsPlus('AppCache.php'))
+					)
+				)
 			)
 		),
 		new autoload\dev(
