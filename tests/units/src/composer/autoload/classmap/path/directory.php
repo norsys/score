@@ -1,12 +1,11 @@
-<?php namespace norsys\score\tests\units\composer\autoload\classmap\filename;
+<?php namespace norsys\score\tests\units\composer\autoload\classmap\path;
 
 require __DIR__ . '/../../../../../runner.php';
 
-use norsys\score\tests\units\composer\autoload\classmap\filename;
-use norsys\score\tests\units;
+use norsys\score\tests\units\composer\autoload\classmap\path;
 use mock\norsys\score as mockOfScore;
 
-class file extends filename
+class directory extends path
 {
 	function testClass()
 	{
@@ -47,7 +46,7 @@ class file extends filename
 					->isEqualTo($this->newTestedInstance($path))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments($pathAsString)
+						->withArguments($pathAsString . '/')
 							->once
 		;
 	}

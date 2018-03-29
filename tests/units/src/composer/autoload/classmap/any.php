@@ -19,9 +19,9 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$filename = new mockOfScore\composer\autoload\classmap\filename,
-					$otherFilename = new mockOfScore\composer\autoload\classmap\filename,
-					$anOtherFilename = new mockOfScore\composer\autoload\classmap\filename
+					$path = new mockOfScore\composer\autoload\classmap\path,
+					$otherPath = new mockOfScore\composer\autoload\classmap\path,
+					$anOtherPath = new mockOfScore\composer\autoload\classmap\path
 				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
@@ -30,10 +30,10 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
+					->isEqualTo($this->newTestedInstance($path, $otherPath, $anOtherPath))
 				->mock($serializer)
 					->receive('arrayToSerializeWithNameIs')
-						->withArguments(new classmap, new part\anArray\fifo($filename, $otherFilename, $anOtherFilename))
+						->withArguments(new classmap, new part\anArray\fifo($path, $otherPath, $anOtherPath))
 							->once
 		;
 	}

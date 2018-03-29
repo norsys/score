@@ -2,7 +2,6 @@
 
 use norsys\score\composer\part;
 
-interface filename extends part
+interface path extends part
 {
-
 }

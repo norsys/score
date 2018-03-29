@@ -82,13 +82,13 @@ use norsys\score\serializer\keyValue\{
 				)
 			),
 			new classmap\any(
-				new classmap\filename\directory(
+				new classmap\path\directory(
 					new unix\relative\filename(new filename\ext4NtfsHfsPlus('lib'))
 				),
-				new classmap\filename\file(
+				new classmap\path\file(
 					new unix\relative\filename(new filename\ext4NtfsHfsPlus('Something.php'))
 				),
-				new classmap\filename\root(
+				new classmap\path\root(
 					new unix\relative\filename(new filename\ext4NtfsHfsPlus('app')),
 					new path\container\fifo(
 						new unix\relative\filename(new filename\ext4NtfsHfsPlus('AppKernel.php')),

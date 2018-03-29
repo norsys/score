@@ -1,13 +1,13 @@
-<?php namespace norsys\score\composer\autoload\classmap\filename;
+<?php namespace norsys\score\composer\autoload\classmap\path;
 
-use norsys\score\composer\autoload\classmap\filename;
+use norsys\score\composer\autoload\classmap;
 use norsys\score\fs\path;
 use norsys\score\serializer\keyValue as serializer;
 use norsys\score\container\iterator\block\functor;
 
 class root
 	implements
-		filename
+		classmap\path
 {
 	private
 		$root,

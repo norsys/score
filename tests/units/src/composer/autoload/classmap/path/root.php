@@ -1,14 +1,14 @@
-<?php namespace norsys\score\tests\units\composer\autoload\classmap\filename;
+<?php namespace norsys\score\tests\units\composer\autoload\classmap\path;
 
 require __DIR__ . '/../../../../../runner.php';
 
-use norsys\score\tests\units\composer\autoload\classmap\filename;
-use norsys\score\composer\autoload\classmap\filename\file;
+use norsys\score\tests\units\composer\autoload\classmap\path;
+use norsys\score\composer\autoload\classmap\path\file;
 use norsys\score\fs\path\filename\container\fifo;
 use norsys\score\fs\path\unix;
 use mock\norsys\score as mockOfScore;
 
-class root extends filename
+class root extends path
 {
 	function testKeyValueSerializerIs()
 	{

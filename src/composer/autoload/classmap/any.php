@@ -8,12 +8,12 @@ class any
 		classmap
 {
 	private
-		$filenames
+		$paths
 	;
 
-	function __construct(filename... $filenames)
+	function __construct(path... $paths)
 	{
-		$this->filenames = $filenames;
+		$this->paths = $paths;
 	}
 
 	function keyValueSerializerIs(serializer $serializer) :void
@@ -21,7 +21,7 @@ class any
 		$serializer
 			->arrayToSerializeWithNameIs(
 				new name\autoload\classmap,
-				new part\anArray\fifo(... $this->filenames)
+				new part\anArray\fifo(... $this->paths)
 			)
 		;
 	}

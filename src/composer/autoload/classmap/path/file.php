@@ -1,6 +1,6 @@
-<?php namespace norsys\score\composer\autoload\classmap\filename;
+<?php namespace norsys\score\composer\autoload\classmap\path;
 
-use norsys\score\composer\autoload\classmap\filename;
+use norsys\score\composer\autoload\classmap;
 use norsys\score\fs\path;
 use norsys\score\php\string\recipient;
 use norsys\score\php\string\{ join, any };
@@ -9,7 +9,7 @@ use norsys\score\serializer\keyValue as serializer;
 
 class file
 	implements
-		filename,
+		classmap\path,
 		text
 {
 	private

@@ -1,14 +1,13 @@
-<?php namespace norsys\score\tests\units\composer\autoload\classmap\filename;
+<?php namespace norsys\score\tests\units\composer\autoload\classmap\path;
 
 require __DIR__ . '/../../../../../runner.php';
 
-use norsys\score\tests\units\composer\autoload\classmap\filename;
-use norsys\score\fs\path\filename\ext4NtfsHfsPlus;
-use norsys\score\fs\path\unix;
-use norsys\score\composer\autoload\classmap\filename\file;
+use norsys\score\tests\units\composer\autoload\classmap\path;
+use norsys\score\fs\path\{ unix, filename\ext4NtfsHfsPlus };
+use norsys\score\composer\autoload\classmap\path\file;
 use mock\norsys\score as mockOfScore;
 
-class symfony extends filename
+class symfony extends path
 {
 	function testKeyValueSerializerIs()
 	{

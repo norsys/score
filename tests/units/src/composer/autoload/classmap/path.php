@@ -4,12 +4,12 @@ require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units;
 
-abstract class filename extends units\test
+abstract class path extends units\test
 {
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\autoload\classmap\filename')
+			->implements('norsys\score\composer\autoload\classmap\path')
 		;
 	}
 }
