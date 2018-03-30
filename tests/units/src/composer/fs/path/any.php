@@ -1,20 +1,27 @@
-<?php namespace norsys\score\tests\units\composer\fs;
+<?php namespace norsys\score\tests\units\composer\fs\path;
 
-require __DIR__ . '/../../../runner.php';
+require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\tests\units\fs;
+use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class path extends fs\path
+class any extends units\test
 {
+	function testClass()
+	{
+		$this->testedClass
+			->implements('norsys\score\composer\fs\path')
+		;
+	}
+
 	function testRecipientOfStringIs()
 	{
 		$this
 			->given(
 				$this->newTestedInstance(
-					$filename = new mockOfScore\fs\path\filename,
-					$otherFilename = new mockOfScore\fs\path\filename,
-					$anOtherFilename = new mockOfScore\fs\path\filename
+					$filename = new mockOfScore\composer\fs\path\filename,
+					$otherFilename = new mockOfScore\composer\fs\path\filename,
+					$anOtherFilename = new mockOfScore\composer\fs\path\filename
 				),
 				$recipient = new mockOfScore\php\string\recipient
 			)

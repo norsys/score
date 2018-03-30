@@ -1,12 +1,19 @@
-<?php namespace norsys\score\tests\units\composer\fs\path;
+<?php namespace norsys\score\tests\units\composer\fs\path\filename;
 
-require __DIR__ . '/../../../../runner.php';
+require __DIR__ . '/../../../../../runner.php';
 
-use norsys\score\tests\units\fs\path;
+use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class filename extends path\filename
+class any extends units\test
 {
+	function testClass()
+	{
+		$this->testedClass
+			->implements('norsys\score\composer\fs\path\filename')
+		;
+	}
+
 	/**
 	 * @dataProvider invalidStringProvider
 	 */

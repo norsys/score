@@ -4,7 +4,7 @@ require __DIR__ . '/../../../../../runner.php';
 
 use norsys\score\tests\units\composer\autoload\classmap\path;
 use norsys\score\fs\path\unix;
-use norsys\score\composer\{ autoload\classmap\path\file, fs\path\filename };
+use norsys\score\composer\{ autoload\classmap\path\file, fs\path\filename\any as filename };
 use mock\norsys\score as mockOfScore;
 
 class symfony extends path

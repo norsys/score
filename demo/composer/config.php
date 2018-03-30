@@ -11,8 +11,8 @@ use norsys\score\vcs\branch\any as branch;
 use norsys\score\fs\path\container\fifo as container;
 
 use norsys\score\composer\{
-	fs\path,
-	fs\path\filename,
+	fs\path\any as path,
+	fs\path\filename\any as filename,
 	part,
 	config\any as config,
 	depedency\version,

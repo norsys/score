@@ -1,8 +1,8 @@
 <?php namespace norsys\score\composer\fs;
 
-use norsys\score\fs\path\unix\relative\filename;
+use norsys\score\fs;
 
-class path extends filename
+interface path extends fs\path
 {
 
 }

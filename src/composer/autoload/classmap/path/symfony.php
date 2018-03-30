@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\autoload\classmap\path;
 
-use norsys\score\composer\{ autoload\classmap, part, fs\path\filename };
+use norsys\score\composer\{ autoload\classmap, part, fs\path\filename\any as filename };
 use norsys\score\fs\path\container\fifo;
 use norsys\score\fs\path\unix;
 
