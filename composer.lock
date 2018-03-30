@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/atoum/atoum.git",
-                "reference": "24ec4c46f4036113439e1e38e92252d65a328bfa"
+                "reference": "def510437f6854912b45e234ac8fb34301a5e7dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/atoum/atoum/zipball/24ec4c46f4036113439e1e38e92252d65a328bfa",
-                "reference": "24ec4c46f4036113439e1e38e92252d65a328bfa",
+                "url": "https://api.github.com/repos/atoum/atoum/zipball/def510437f6854912b45e234ac8fb34301a5e7dd",
+                "reference": "def510437f6854912b45e234ac8fb34301a5e7dd",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
                 "mageekguy/atoum": "*"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~1.12"
+                "friendsofphp/php-cs-fixer": "^2"
             },
             "suggest": {
                 "atoum/stubs": "Provides IDE support (like autocompletion) for atoum",
@@ -88,7 +88,7 @@
                 "test",
                 "unit testing"
             ],
-            "time": "2017-11-06T21:02:33+00:00"
+            "time": "2018-03-24T16:20:00+00:00"
         }
     ],
     "aliases": [],
