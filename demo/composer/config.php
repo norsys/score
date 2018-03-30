@@ -8,9 +8,10 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use norsys\score\php\string\recipient\stdout;
 use norsys\score\vcs\branch\any as branch;
-use norsys\score\fs\{ path, path\unix };
+use norsys\score\fs\path\container\fifo as container;
 
 use norsys\score\composer\{
+	fs\path,
 	fs\path\filename,
 	part,
 	config\any as config,
@@ -84,16 +85,16 @@ use norsys\score\serializer\keyValue\{
 			),
 			new classmap\any(
 				new classmap\path\directory(
-					new unix\relative\filename(new filename('lib'))
+					new path(new filename('lib'))
 				),
 				new classmap\path\file(
-					new unix\relative\filename(new filename('Something.php'))
+					new path(new filename('Something.php'))
 				),
 				new classmap\path\root(
-					new unix\relative\filename(new filename('app')),
-					new path\container\fifo(
-						new unix\relative\filename(new filename('AppKernel.php')),
-						new unix\relative\filename(new filename('AppCache.php'))
+					new path(new filename('app')),
+					new container(
+						new path(new filename('AppKernel.php')),
+						new path(new filename('AppCache.php'))
 					)
 				)
 			)
