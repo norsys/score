@@ -1,11 +1,11 @@
-<?php namespace norsys\score\tests\units\fs\path\filename;
+<?php namespace norsys\score\tests\units\composer\fs\path;
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\tests\units\fs\path\filename;
+use norsys\score\tests\units\fs\path;
 use mock\norsys\score as mockOfScore;
 
-class ext4NtfsHfsPlus extends filename
+class filename extends path\filename
 {
 	/**
 	 * @dataProvider invalidStringProvider

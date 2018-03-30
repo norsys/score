@@ -3,8 +3,8 @@
 require __DIR__ . '/../../../../../runner.php';
 
 use norsys\score\tests\units\composer\autoload\classmap\path;
-use norsys\score\fs\path\{ unix, filename\ext4NtfsHfsPlus };
-use norsys\score\composer\autoload\classmap\path\file;
+use norsys\score\fs\path\unix;
+use norsys\score\composer\{ autoload\classmap\path\file, fs\path\filename };
 use mock\norsys\score as mockOfScore;
 
 class symfony extends path
@@ -24,9 +24,9 @@ class symfony extends path
 					->isEqualTo($this->newTestedInstance)
 				->mock($serializer)
 					->receive('textToSerializeIs')
-						->withArguments(new file(new unix\relative\filename(new ext4NtfsHfsPlus('app'), new ext4NtfsHfsPlus('Appkernel.php'))))
+						->withArguments(new file(new unix\relative\filename(new filename('app'), new filename('Appkernel.php'))))
 							->once
-						->withArguments(new file(new unix\relative\filename(new ext4NtfsHfsPlus('app'), new ext4NtfsHfsPlus('AppCache.php'))))
+						->withArguments(new file(new unix\relative\filename(new filename('app'), new filename('AppCache.php'))))
 							->once
 		;
 	}

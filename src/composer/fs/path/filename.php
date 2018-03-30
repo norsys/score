@@ -1,12 +1,12 @@
-<?php namespace norsys\score\fs\path\filename;
+<?php namespace norsys\score\composer\fs\path;
 
-use norsys\score\fs\path\filename;
+use norsys\score\fs\path;
 use norsys\score\php;
 use norsys\score\php\{ test\variable\disjunction, test\variable\isTrue, test\recipient\exception\fallback as exception };
 
-class ext4NtfsHfsPlus extends php\string\any
+class filename extends php\string\any
 	implements
-		filename
+		path\filename
 {
 	function __construct(string $string, \exception $exception = null)
 	{
