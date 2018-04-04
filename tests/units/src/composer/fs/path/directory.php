@@ -5,7 +5,7 @@ require __DIR__ . '/../../../../runner.php';
 use norsys\score\{ tests\units\composer\fs\path, composer\part\text\any as text };
 use mock\norsys\score as mockOfScore;
 
-class any extends path
+class directory extends path
 {
 	function testRecipientOfStringIs()
 	{
@@ -39,11 +39,12 @@ class any extends path
 					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
 				->mock($recipient)
 					->receive('stringIs')
-					->withArguments('./' . $anOtherFilenameAsString)
+					->withArguments('./' . $anOtherFilenameAsString . '/')
 							->once
 
 			->given(
-				$this->providerHasString($filename, $filenameAsString = uniqid())
+				$this->providerHasString($filename, $filenameAsString = uniqid()),
+				$this->providerHasString($anOtherFilename, $anOtherFilenameAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
@@ -53,11 +54,13 @@ class any extends path
 					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
 				->mock($recipient)
 					->receive('stringIs')
-					->withArguments('./' . $filenameAsString . '/' . $anOtherFilenameAsString)
+					->withArguments('./' . $filenameAsString . '/' . $anOtherFilenameAsString . '/')
 							->once
 
 			->given(
-				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid())
+				$this->providerHasString($filename, $filenameAsString = uniqid()),
+				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid()),
+				$this->providerHasString($anOtherFilename, $anOtherFilenameAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
@@ -67,7 +70,7 @@ class any extends path
 					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
 				->mock($recipient)
 					->receive('stringIs')
-					->withArguments('./' . $filenameAsString . '/' . $otherFilenameAsString . '/' . $anOtherFilenameAsString)
+					->withArguments('./' . $filenameAsString . '/' . $otherFilenameAsString . '/' . $anOtherFilenameAsString . '/')
 							->once
 		;
 	}
@@ -104,7 +107,7 @@ class any extends path
 					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
 				->mock($serializer)
 					->receive('textToSerializeIs')
-					->withArguments(new text('./' . $anOtherFilenameAsString))
+					->withArguments(new text('./' . $anOtherFilenameAsString . '/'))
 							->once
 
 			->given(
@@ -118,7 +121,7 @@ class any extends path
 					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
 				->mock($serializer)
 					->receive('textToSerializeIs')
-					->withArguments(new text('./' . $filenameAsString . '/' . $anOtherFilenameAsString))
+					->withArguments(new text('./' . $filenameAsString . '/' . $anOtherFilenameAsString . '/'))
 							->once
 
 			->given(
@@ -132,7 +135,7 @@ class any extends path
 					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
 				->mock($serializer)
 					->receive('textToSerializeIs')
-					->withArguments(new text('./' . $filenameAsString . '/' . $otherFilenameAsString . '/' . $anOtherFilenameAsString))
+					->withArguments(new text('./' . $filenameAsString . '/' . $otherFilenameAsString . '/' . $anOtherFilenameAsString . '/'))
 							->once
 		;
 	}

@@ -13,6 +13,8 @@ use norsys\score\fs\path\container\fifo as container;
 use norsys\score\composer\{
 	fs\path\any as path,
 	fs\path\filename\any as filename,
+	fs\path\file,
+	fs\path\directory,
 	part,
 	config\any as config,
 	depedency\version,
@@ -33,7 +35,6 @@ use norsys\score\composer\{
 	autoload\classmap,
 	autoload\psr4\any as psr4,
 	autoload\psr4\mapping,
-	autoload\psr4\mapping\directory,
 	autoload\psr4\mapping\fallback\directory as fallback,
 	depedency\version\semver\number\any as number
 };
@@ -84,29 +85,25 @@ use norsys\score\serializer\keyValue\{
 				)
 			),
 			new classmap\any(
-				new classmap\path\directory(
-					new path(new filename('lib'))
-				),
-				new classmap\path\file(
-					new path(new filename('Something.php'))
-				),
-				new classmap\path\root(
-					new path(new filename('app')),
-					new container(
-						new path(new filename('AppKernel.php')),
-						new path(new filename('AppCache.php'))
-					)
-				)
+				new directory(new filename('lib')),
+				new file(new filename('Something.php'))
+//				new classmap\path\root(
+//					new path(new filename('app')),
+//					new container(
+//						new path(new filename('AppKernel.php')),
+//						new path(new filename('AppCache.php'))
+//					)
+//				)
 			)
-		),
-		new autoload\dev(
-			new psr4(
-				new mapping\norsys\score,
-				new fallback(
-					new directory\src
-				)
-			)
-		)
+		)//,
+//		new autoload\dev(
+//			new psr4(
+//				new mapping\norsys\score,
+//				new fallback(
+//					new directory\src
+//				)
+//			)
+//		)
 	)
 )
 	->keyValueSerializerIs(

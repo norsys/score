@@ -1,6 +1,7 @@
 <?php namespace norsys\score\composer\autoload\psr4\mapping;
 
-use norsys\score\composer\autoload\psr4\{ mapping, mapping\prefix, mapping\directory };
+use norsys\score\composer\autoload\psr4\{ mapping, mapping\prefix };
+use norsys\score\composer\fs\path;
 use norsys\score\serializer\keyValue as serializer;
 
 class any
@@ -9,17 +10,17 @@ class any
 {
 	private
 		$prefix,
-		$directory
+		$path
 	;
 
-	function __construct(prefix $prefix, directory $directory)
+	function __construct(prefix $prefix, path $path)
 	{
 		$this->prefix = $prefix;
-		$this->directory = $directory;
+		$this->path = $path;
 	}
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer->textToSerializeWithNameIs($this->prefix, $this->directory);
+		$serializer->partToSerializeWithNameIs($this->prefix, $this->path);
 	}
 }

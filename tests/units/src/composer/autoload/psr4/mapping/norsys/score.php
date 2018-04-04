@@ -3,7 +3,7 @@
 require __DIR__ . '/../../../../../../runner.php';
 
 use norsys\score\tests\units;
-use norsys\score\composer\autoload\psr4\mapping\{ prefix, directory };
+use norsys\score\composer\{ autoload\psr4\mapping\prefix, fs\path\directory\src };
 use mock\norsys\score as mockOfScore;
 
 class score extends units\test
@@ -29,8 +29,8 @@ class score extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance)
 				->mock($serializer)
-					->receive('textToSerializeWithNameIs')
-						->withArguments(new prefix\norsys\score, new directory\src)
+					->receive('partToSerializeWithNameIs')
+						->withArguments(new prefix\norsys\score, new src)
 							->once
 		;
 	}

@@ -20,7 +20,7 @@ class any extends units\test
 			->given(
 				$this->newTestedInstance(
 					$prefix = new mockOfScore\composer\autoload\psr4\mapping\prefix,
-					$directory = new mockOfScore\composer\autoload\psr4\mapping\directory
+					$path = new mockOfScore\composer\fs\path
 				),
 
 				$serializer = new mockOfScore\serializer\keyValue
@@ -30,10 +30,10 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($prefix, $directory))
+					->isEqualTo($this->newTestedInstance($prefix, $path))
 				->mock($serializer)
-					->receive('textToSerializeWithNameIs')
-						->withArguments($prefix, $directory)
+					->receive('partToSerializeWithNameIs')
+						->withArguments($prefix, $path)
 							->once
 		;
 	}

@@ -19,9 +19,9 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$path = new mockOfScore\composer\autoload\classmap\path,
-					$otherPath = new mockOfScore\composer\autoload\classmap\path,
-					$anOtherPath = new mockOfScore\composer\autoload\classmap\path
+					$path = new mockOfScore\composer\fs\path,
+					$otherPath = new mockOfScore\composer\fs\path,
+					$anOtherPath = new mockOfScore\composer\fs\path
 				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)

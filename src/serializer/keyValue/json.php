@@ -2,7 +2,7 @@
 
 use norsys\score\php\test\{ variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
 use norsys\score\serializer\{ keyValue as serializer, keyValue\part, keyValue\name, keyValue\text, keyValue\json\decorator, keyValue\json\depth };
-use norsys\score\php\string\{ recipient, recipient\surround\quotationMark, recipient\functor, recipient\utf8 };
+use norsys\score\php\string\{ recipient, recipient\surround\quotationMark, recipient\buffer, recipient\functor, recipient\utf8 };
 
 class json
 	implements
@@ -21,6 +21,40 @@ class json
 		$this->partial = $partial;
 	}
 
+	function partToSerializeWithNameIs(name $name, part $part) :void
+	{
+		$serializer = clone $this;
+		$serializer->recipient = new buffer;
+		$serializer->partial = false;
+
+
+		$part
+			->keyValueSerializerIs($serializer)
+		;
+
+		$serializer->recipient
+			->recipientOfStringIs(
+				new functor(
+					function($partAsString) use ($name)
+					{
+						$name
+							->recipientOfStringIs(
+								new functor(
+									function($key) use ($partAsString)
+									{
+										$this->keyIs($key);
+										$this->recipient->stringIs($partAsString);
+										$this->partial = true;
+									}
+								)
+							)
+						;
+					}
+				)
+			)
+		;
+	}
+
 	function textToSerializeIs(text $text) :void
 	{
 		$text
@@ -36,7 +70,7 @@ class json
 									{
 										$this->jsonValueSeparator();
 
-										$this->decorator->recipientOfDecoratedJsonTextInArrayIs($text, $this->recipient);
+										$this->decorator->recipientOfDecoratedJsonValueIs($text, $this->recipient);
 
 										$this->partial = true;
 									}
@@ -72,22 +106,11 @@ class json
 		;
 	}
 
-	function objectInJsonArrayIs(part $part) :void
+	function objectToSerializeIs(part $part) :void
 	{
-		$this->jsonValueSeparator();
-
-		$this->decorator->recipientOfDecoratedJsonOpenTagForObjectInArrayIs('{', $this->recipient);
+		$this->decorator->recipientOfDecoratedJsonOpenTagForObjectIs('{', $this->recipient);
 		$this->partIs($part);
-		$this->decorator->recipientOfDecoratedJsonCloseTagForObjectInArrayIs('}', $this->recipient);
-
-		$this->partial = true;
-	}
-
-	function objectToSerializeAtKeyIs(string $key, part $part) :void
-	{
-		$this->keyIs($key);
-
-		$this->objectToSerializeIs($part);
+		$this->decorator->recipientOfDecoratedJsonCloseTagForObjectIs('}', $this->recipient);
 	}
 
 	function objectToSerializeWithNameIs(name $name, part $part) :void
@@ -108,6 +131,24 @@ class json
 		;
 	}
 
+	function objectToSerializeInArrayIs(part $part) :void
+	{
+		$this->jsonValueSeparator();
+
+		$this->decorator->recipientOfDecoratedJsonOpenTagForObjectInArrayIs('{', $this->recipient);
+		$this->partIs($part);
+		$this->decorator->recipientOfDecoratedJsonCloseTagForObjectInArrayIs('}', $this->recipient);
+
+		$this->partial = true;
+	}
+
+	function arrayToSerializeIs(part $part) :void
+	{
+		$this->decorator->recipientOfDecoratedJsonOpenTagForArrayIs('[', $this->recipient);
+		$this->partIs($part);
+		$this->decorator->recipientOfDecoratedJsonCloseTagForArrayIs(']', $this->recipient);
+	}
+
 	function arrayToSerializeWithNameIs(name $name, part $part) :void
 	{
 		$name
@@ -124,20 +165,6 @@ class json
 				)
 			)
 		;
-	}
-
-	function objectToSerializeIs(part $part) :void
-	{
-		$this->decorator->recipientOfDecoratedJsonOpenTagForObjectIs('{', $this->recipient);
-		$this->partIs($part);
-		$this->decorator->recipientOfDecoratedJsonCloseTagForObjectIs('}', $this->recipient);
-	}
-
-	function arrayToSerializeIs(part $part) :void
-	{
-		$this->decorator->recipientOfDecoratedJsonOpenTagForArrayIs('[', $this->recipient);
-		$this->partIs($part);
-		$this->decorator->recipientOfDecoratedJsonCloseTagForArrayIs(']', $this->recipient);
 	}
 
 	private function recipientOfKeyValueSerializerForPartIs(serializer\recipient $recipient) :void

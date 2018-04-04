@@ -1,8 +1,8 @@
 <?php namespace norsys\score\composer\fs;
 
-use norsys\score\fs;
+use norsys\score\composer\part;
 
-interface path extends fs\path
+interface path extends part
 {
 
 }

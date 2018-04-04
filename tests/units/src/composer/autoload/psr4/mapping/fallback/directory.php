@@ -19,7 +19,7 @@ class directory extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$directory = new mockOfScore\composer\autoload\psr4\mapping\directory
+					$path = new mockOfScore\composer\fs\path
 				),
 
 				$serializer = new mockOfScore\serializer\keyValue
@@ -29,10 +29,10 @@ class directory extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($directory))
+					->isEqualTo($this->newTestedInstance($path))
 				->mock($serializer)
-					->receive('textToSerializeWithNameIs')
-						->withArguments(new fallback, $directory)
+					->receive('partToSerializeWithNameIs')
+						->withArguments(new fallback, $path)
 							->once
 		;
 	}

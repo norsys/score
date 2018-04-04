@@ -5,7 +5,7 @@ require __DIR__ . '/../../../../runner.php';
 use norsys\score\{ tests\units\composer\fs\path, composer\part\text\any as text };
 use mock\norsys\score as mockOfScore;
 
-class any extends path
+class file extends path
 {
 	function testRecipientOfStringIs()
 	{
@@ -43,7 +43,8 @@ class any extends path
 							->once
 
 			->given(
-				$this->providerHasString($filename, $filenameAsString = uniqid())
+				$this->providerHasString($filename, $filenameAsString = uniqid()),
+				$this->providerHasString($anOtherFilename, $anOtherFilenameAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
@@ -57,7 +58,9 @@ class any extends path
 							->once
 
 			->given(
-				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid())
+				$this->providerHasString($filename, $filenameAsString = uniqid()),
+				$this->providerHasString($otherFilename, $otherFilenameAsString = uniqid()),
+				$this->providerHasString($anOtherFilename, $anOtherFilenameAsString = uniqid())
 			)
 			->if(
 				$this->testedInstance->recipientOfStringIs($recipient)
