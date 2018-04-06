@@ -1,25 +1,31 @@
 <?php namespace norsys\score\serializer\keyValue\json\decorator;
 
-use norsys\score\serializer\keyValue\json\{ decorator, depth, decorator\pretty\line };
-use norsys\score\php\string\{ recipient, recipient\prefix, recipient\suffix };
-use norsys\score\php\integer\unsigned\recipient\functor;
+use norsys\score\serializer\keyValue\json\{ decorator, decorator\pretty\line };
+use norsys\score\php\string\{ recipient, recipient\prefix, recipient\suffix, recipient\functor };
 use norsys\score\php\test\{ variable\isFalse\strictly as isFalse, variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
 
-class pretty extends proxy
+class pretty
+	implements
+		decorator
 {
 	private
-		$depth,
-		$line
+		$currentLine,
+		$blankLine,
+		$notBlankLine
 	;
 
-	function __construct(depth $depth = null)
+	function __construct(line $currentLine = null, line $blankLine = null, line $notBlankLine = null)
 	{
-		$this->depth = $depth ?: new depth\any;
+		$this->currentLine = $currentLine ?: new line\blank\not;
+		$this->blankLine = $blankLine ?: new line\blank;
+		$this->notBlankLine = $notBlankLine ?: new line\blank\not;
 	}
 
 	function recipientOfDecoratedJsonKeyIs(string $key, recipient $recipient) :void
 	{
-		$this->recipientOfStartStringIs($key, $recipient);
+		$this->blankLine->recipientOfStringIs($key, $recipient);
+
+		$this->currentLine = $this->notBlankLine;
 	}
 
 	function recipientOfDecoratedJsonNameSeparatorIs(string $separator, recipient $recipient) :void
@@ -27,69 +33,63 @@ class pretty extends proxy
 		(
 			new suffix(
 				' ',
-				$recipient
+				new functor(
+					function($separator) use ($recipient)
+					{
+						$this->notBlankLine->recipientOfStringIs($separator, $recipient);
+					}
+				)
 			)
 		)
 			->stringIs($separator)
 		;
 	}
 
-	function recipientOfDecoratedJsonTextInArrayIs(string $text, recipient $recipient) :void
+	function recipientOfDecoratedJsonValueIs(string $value, recipient $recipient) :void
 	{
-		$this->recipientOfStartStringIs($text, $recipient);
+		$this->currentLine->recipientOfStringIs($value, $recipient);
+	}
+
+	function recipientOfDecoratedJsonValueSeparatorIs(string $separator, recipient $recipient) :void
+	{
+		$this->notBlankLine->recipientOfStringIs($separator, $recipient);
+	}
+
+	function recipientOfDecoratedJsonOpenTagForObjectIs(string $tag, recipient $recipient) :void
+	{
+		$this->currentLine->recipientOfStringIs($tag, $recipient);
 	}
 
 	function recipientOfDecoratedJsonCloseTagForObjectIs(string $tag, recipient $recipient) :void
 	{
-		$this->recipientOfStartStringIs($tag, $recipient);
+		$this->blankLine->recipientOfStringIs($tag, $recipient);
 	}
 
-	function recipientOfDecoratedJsonOpenTagForObjectInArrayIs(string $tag, recipient $recipient) :void
+	function recipientOfDecoratedJsonOpenTagForArrayIs(string $tag, recipient $recipient) :void
 	{
-		$this->recipientOfStartStringIs($tag, $recipient);
-	}
-
-	function recipientOfDecoratedJsonCloseTagForObjectInArrayIs(string $tag, recipient $recipient) :void
-	{
-		$this->recipientOfStartStringIs($tag, $recipient);
+		$this->currentLine->recipientOfStringIs($tag, $recipient);
 	}
 
 	function recipientOfDecoratedJsonCloseTagForArrayIs(string $tag, recipient $recipient) :void
 	{
-		$this->recipientOfStartStringIs($tag, $recipient);
+		$this->blankLine->recipientOfStringIs($tag, $recipient);
 	}
 
 	function recipientOfDecoratorForJsonPartIs(decorator\recipient $recipient) :void
 	{
-		$this->depth
-			->recipientOfNextDepthIs(
-				new depth\recipient\functor(
-					function($nextDepth) use ($recipient) {
+		$this->blankLine
+			->recipientOfJsonLineDecoratorForPartIs(
+				new line\recipient\functor(
+					function($lineForPart) use ($recipient)
+					{
 						$decorator = clone $this;
-						$decorator->depth = $nextDepth;
+						$decorator->currentLine = $lineForPart;
+						$decorator->blankLine = $lineForPart;
 
 						$recipient->jsonDecoratorIs($decorator);
 					}
 				)
 			)
 		;
-	}
-
-	private function recipientOfStartStringIs(string $string, recipient $recipient) :void
-	{
-		$recipient->stringIs(PHP_EOL);
-
-		$this->depth
-			->recipientOfUnsignedIntegerIs(
-				new functor(
-					function($depth) use ($recipient)
-					{
-						$recipient->stringIs(str_repeat("	", $depth));
-					}
-				)
-			)
-		;
-
-		$recipient->stringIs($string);
 	}
 }

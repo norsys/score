@@ -11,7 +11,6 @@ interface keyValue
 	function textToSerializeWithNameIs(name $name, text $text) :void;
 
 	function objectToSerializeIs(part $part) :void;
-	function objectToSerializeInArrayIs(part $part) :void;
 	function objectToSerializeWithNameIs(name $name, part $part) :void;
 
 	function arrayToSerializeIs(part $part) :void;

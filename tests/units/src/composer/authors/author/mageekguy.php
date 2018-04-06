@@ -21,7 +21,7 @@ class mageekguy extends test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance)
 				->mock($serializer)
-					->receive('objectToSerializeInArrayIs')
+					->receive('objectToSerializeIs')
 						->withArguments(
 							new serializer\part\container\fifo(
 								new author\name\any('Frédéric Hardy'),

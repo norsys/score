@@ -95,15 +95,15 @@ use norsys\score\serializer\keyValue\{
 //					)
 //				)
 			)
-		)//,
-//		new autoload\dev(
-//			new psr4(
-//				new mapping\norsys\score,
-//				new fallback(
-//					new directory\src
-//				)
-//			)
-//		)
+		),
+		new autoload\dev(
+			new psr4(
+				new mapping\norsys\score,
+				new fallback(
+					new directory\src
+				)
+			)
+		)
 	)
 )
 	->keyValueSerializerIs(

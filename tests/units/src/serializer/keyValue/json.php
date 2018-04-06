@@ -59,18 +59,8 @@ class json extends units\test
 					{
 						$aRecipient->stringIs($decoratedNameSeparator);
 					}
-				}
-			)
-			->if(
-				$this->testedInstance->partToSerializeWithNameIs($name, $part)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($decorator, $recipient))
-				->variable($buffer)
-					->isNull
+				},
 
-			->given(
 				$partText = new mockOfScore\serializer\keyValue\text,
 				$partTextAsString = uniqid(),
 				$this->calling($partText)->recipientOfStringIs = function($aRecipient) use ($partTextAsString) {
@@ -337,7 +327,7 @@ class json extends units\test
 		;
 	}
 
-	function testObjectToSerializeInArrayIs()
+	function testObjectToSerializeIs()
 	{
 		$this
 			->given(
@@ -346,14 +336,14 @@ class json extends units\test
 					$recipient = new mockOfScore\php\string\recipient
 				),
 
+				$part = new mockOfScore\serializer\keyValue\part,
+
 				$this->calling($recipient)->stringIs = function($aString) use (& $buffer) {
 					$buffer .= $aString;
-				},
-
-				$part = new mockOfScore\serializer\keyValue\part
+				}
 			)
 			->if(
-				$this->testedInstance->objectToSerializeInArrayIs($part)
+				$this->testedInstance->objectToSerializeIs($part)
 			)
 			->then
 				->object($this->testedInstance)
@@ -364,6 +354,75 @@ class json extends units\test
 			->given(
 				$buffer = null,
 
+				$decoratedOpenTag = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonOpenTagForObjectIs = function($aTag, $aRecipient) use ($decoratedOpenTag) {
+					if ($aTag == '{')
+					{
+						$aRecipient->stringIs($decoratedOpenTag);
+					}
+				},
+
+				$decoratedCloseTag = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonCloseTagForObjectIs = function($aTag, $aRecipient) use ($decoratedCloseTag) {
+					if ($aTag == '}')
+					{
+						$aRecipient->stringIs($decoratedCloseTag);
+					}
+				}
+			)
+			->if(
+				$this->testedInstance->objectToSerializeIs($part)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedOpenTag . $decoratedCloseTag)
+
+			->given(
+				$buffer = null,
+
+				$partDecorator = new mockOfScore\serializer\keyValue\json\decorator,
+				$this->calling($decorator)->recipientOfDecoratorForJsonPartIs = function($aRecipient) use ($partDecorator) {
+					$aRecipient->jsonDecoratorIs($partDecorator);
+				},
+
+				$name = new mockOfScore\serializer\keyValue\name,
+				$nameAsString = uniqid(),
+				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($nameAsString) {
+					$aRecipient->stringIs($nameAsString);
+				},
+
+				$text = new mockOfScore\serializer\keyValue\text,
+				$textAsString = uniqid(),
+				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($textAsString) {
+					$aRecipient->stringIs($textAsString);
+				},
+
+				$decoratedKey = uniqid(),
+				$this->calling($partDecorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($nameAsString, $decoratedKey) {
+					if ($aKey == '"' . $nameAsString . '"')
+					{
+						$aRecipient->stringIs($decoratedKey);
+					}
+				},
+
+				$decoratedValue = uniqid(),
+				$this->calling($partDecorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($textAsString, $decoratedValue) {
+					if ($aValue == '"' . $textAsString . '"')
+					{
+						$aRecipient->stringIs($decoratedValue);
+					}
+				},
+
+				$decoratedNameSeparator = uniqid(),
+				$this->calling($partDecorator)->recipientOfDecoratedJsonNameSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedNameSeparator) {
+					if ($aSeparator == ':')
+					{
+						$aRecipient->stringIs($decoratedNameSeparator);
+					}
+				},
+
 				$decoratedValueSeparator = uniqid(),
 				$this->calling($decorator)->recipientOfDecoratedJsonValueSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedValueSeparator) {
 					if ($aSeparator == ',')
@@ -372,30 +431,24 @@ class json extends units\test
 					}
 				},
 
-				$decoratedOpenTag = uniqid(),
-				$this->calling($decorator)->recipientOfDecoratedJsonOpenTagForObjectInArrayIs = function($aTag, $aRecipient) use ($decoratedOpenTag) {
-					if ($aTag == '{')
+				$partSerializer = $this->newTestedInstance($partDecorator, $recipient, false),
+				$this->calling($part)->keyValueSerializerIs = function($aSerializer) use ($partSerializer, $name, $text) {
+					if ($aSerializer == $partSerializer)
 					{
-						$aRecipient->stringIs($decoratedOpenTag);
+						$aSerializer->textToSerializeWithNameIs($name, $text);
 					}
 				},
 
-				$decoratedCloseTag = uniqid(),
-				$this->calling($decorator)->recipientOfDecoratedJsonCloseTagForObjectInArrayIs = function($aTag, $aRecipient) use ($decoratedCloseTag) {
-					if ($aTag == '}')
-					{
-						$aRecipient->stringIs($decoratedCloseTag);
-					}
-				}
+				$this->newTestedInstance($decorator, $recipient, true)
 			)
 			->if(
-				$this->testedInstance->objectToSerializeInArrayIs($part)
+				$this->testedInstance->objectToSerializeIs($part)
 			)
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
 				->string($buffer)
-					->isEqualTo($decoratedValueSeparator . $decoratedOpenTag . $decoratedCloseTag)
+					->isEqualTo($decoratedValueSeparator. $decoratedOpenTag . $decoratedKey . $decoratedNameSeparator . $decoratedValue . $decoratedCloseTag)
 		;
 	}
 
@@ -734,131 +787,6 @@ class json extends units\test
 					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
 				->string($buffer)
 					->isEqualTo($decoratedValueSeparator . $decoratedName . $decoratedNameSeparator . $decoratedOpenTag . $partDecoratedName . $partDecoratedNameSeparator . $partDecoratedValue .  $decoratedCloseTag)
-		;
-	}
-
-	function testObjectToSerializeIs()
-	{
-		$this
-			->given(
-				$this->newTestedInstance(
-					$decorator = new mockOfScore\serializer\keyValue\json\decorator,
-					$recipient = new mockOfScore\php\string\recipient
-				),
-
-				$part = new mockOfScore\serializer\keyValue\part,
-
-				$this->calling($recipient)->stringIs = function($aString) use (& $buffer) {
-					$buffer .= $aString;
-				}
-			)
-			->if(
-				$this->testedInstance->objectToSerializeIs($part)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($decorator, $recipient))
-				->variable($buffer)
-					->isNull
-
-			->given(
-				$buffer = null,
-
-				$decoratedOpenTag = uniqid(),
-				$this->calling($decorator)->recipientOfDecoratedJsonOpenTagForObjectIs = function($aTag, $aRecipient) use ($decoratedOpenTag) {
-					if ($aTag == '{')
-					{
-						$aRecipient->stringIs($decoratedOpenTag);
-					}
-				},
-
-				$decoratedCloseTag = uniqid(),
-				$this->calling($decorator)->recipientOfDecoratedJsonCloseTagForObjectIs = function($aTag, $aRecipient) use ($decoratedCloseTag) {
-					if ($aTag == '}')
-					{
-						$aRecipient->stringIs($decoratedCloseTag);
-					}
-				}
-			)
-			->if(
-				$this->testedInstance->objectToSerializeIs($part)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($decorator, $recipient, false))
-				->string($buffer)
-					->isEqualTo($decoratedOpenTag . $decoratedCloseTag)
-
-			->given(
-				$buffer = null,
-
-				$partDecorator = new mockOfScore\serializer\keyValue\json\decorator,
-				$this->calling($decorator)->recipientOfDecoratorForJsonPartIs = function($aRecipient) use ($partDecorator) {
-					$aRecipient->jsonDecoratorIs($partDecorator);
-				},
-
-				$name = new mockOfScore\serializer\keyValue\name,
-				$nameAsString = uniqid(),
-				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($nameAsString) {
-					$aRecipient->stringIs($nameAsString);
-				},
-
-				$text = new mockOfScore\serializer\keyValue\text,
-				$textAsString = uniqid(),
-				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($textAsString) {
-					$aRecipient->stringIs($textAsString);
-				},
-
-				$decoratedKey = uniqid(),
-				$this->calling($partDecorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($nameAsString, $decoratedKey) {
-					if ($aKey == '"' . $nameAsString . '"')
-					{
-						$aRecipient->stringIs($decoratedKey);
-					}
-				},
-
-				$decoratedValue = uniqid(),
-				$this->calling($partDecorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($textAsString, $decoratedValue) {
-					if ($aValue == '"' . $textAsString . '"')
-					{
-						$aRecipient->stringIs($decoratedValue);
-					}
-				},
-
-				$decoratedNameSeparator = uniqid(),
-				$this->calling($partDecorator)->recipientOfDecoratedJsonNameSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedNameSeparator) {
-					if ($aSeparator == ':')
-					{
-						$aRecipient->stringIs($decoratedNameSeparator);
-					}
-				},
-
-				$decoratedValueSeparator = uniqid(),
-				$this->calling($decorator)->recipientOfDecoratedJsonValueSeparatorIs = function($aSeparator, $aRecipient) use ($decoratedValueSeparator) {
-					if ($aSeparator == ',')
-					{
-						$aRecipient->stringIs($decoratedValueSeparator);
-					}
-				},
-
-				$partSerializer = $this->newTestedInstance($partDecorator, $recipient, false),
-				$this->calling($part)->keyValueSerializerIs = function($aSerializer) use ($partSerializer, $name, $text) {
-					if ($aSerializer == $partSerializer)
-					{
-						$aSerializer->textToSerializeWithNameIs($name, $text);
-					}
-				},
-
-				$this->newTestedInstance($decorator, $recipient, true)
-			)
-			->if(
-				$this->testedInstance->objectToSerializeIs($part)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
-				->string($buffer)
-					->isEqualTo($decoratedOpenTag . $decoratedKey . $decoratedNameSeparator . $decoratedValue . $decoratedCloseTag)
 		;
 	}
 
