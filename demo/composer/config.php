@@ -86,14 +86,8 @@ use norsys\score\serializer\keyValue\{
 			),
 			new classmap\any(
 				new directory(new filename('lib')),
-				new file(new filename('Something.php'))
-//				new classmap\path\root(
-//					new path(new filename('app')),
-//					new container(
-//						new path(new filename('AppKernel.php')),
-//						new path(new filename('AppCache.php'))
-//					)
-//				)
+				new file(new filename('Something.php')),
+				new classmap\path\symfony
 			)
 		),
 		new autoload\dev(

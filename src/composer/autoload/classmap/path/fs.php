@@ -1,16 +1,14 @@
 <?php namespace norsys\score\composer\autoload\classmap\path;
 
 use norsys\score\composer\autoload\classmap;
+use norsys\score\composer;
 use norsys\score\fs\path;
-use norsys\score\php\string\recipient;
-use norsys\score\php\string\{ join, any };
-use norsys\score\composer\part\text;
+use norsys\score\php;
 use norsys\score\serializer\keyValue as serializer;
 
-class file
+class fs
 	implements
-		classmap\path,
-		text
+		classmap\path
 {
 	private
 		$path
@@ -21,13 +19,17 @@ class file
 		$this->path = $path;
 	}
 
-	function recipientOfStringIs(recipient $recipient) :void
-	{
-		$this->path->recipientOfStringIs($recipient);
-	}
-
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer->textToSerializeIs($this);
+		$this->path
+			->recipientOfStringIs(
+				new php\string\recipient\functor(
+					function($pathAsString) use ($serializer)
+					{
+						$serializer->textToSerializeIs(new composer\part\text\any($pathAsString));
+					}
+				)
+			)
+		;
 	}
 }

@@ -1,13 +1,14 @@
 <?php namespace norsys\score\composer\autoload\classmap\path;
 
 use norsys\score\composer\autoload\classmap;
+use norsys\score\composer;
 use norsys\score\fs\path;
 use norsys\score\serializer\keyValue as serializer;
 use norsys\score\container\iterator\block\functor;
 
 class root
 	implements
-		classmap\path
+		composer\fs\path
 {
 	private
 		$root,
@@ -38,7 +39,11 @@ class root
 								new path\recipient\functor(
 									function($path) use ($serializer)
 									{
-										$serializer->textToSerializeIs(new file($path));
+										(
+											new composer\autoload\classmap\path\fs($path)
+										)
+											->keyValueSerializerIs($serializer)
+										;
 									}
 								)
 							)

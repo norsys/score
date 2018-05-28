@@ -1,27 +1,18 @@
 <?php namespace norsys\score\composer\autoload\classmap\path;
 
-use norsys\score\composer\{ autoload\classmap, part, fs\path\filename\any as filename };
-use norsys\score\fs\path\container\fifo;
-use norsys\score\fs\path\unix;
+use norsys\score\composer\fs\path\any as path;
+use norsys\score\composer\fs\path\filename\any as filename;
+use norsys\score\fs\path\container\fifo as container;
 
-class symfony extends part\text\anArray\fifo
-	implements
-		classmap\path
+class symfony extends root
 {
 	function __construct()
 	{
 		parent::__construct(
-			new classmap\path\file(
-				new unix\relative\filename(
-					new filename('app'),
-					new filename('Appkernel.php')
-				)
-			),
-			new classmap\path\file(
-				new unix\relative\filename(
-					new filename('app'),
-					new filename('AppCache.php')
-				)
+			new path(new filename('app')),
+			new container(
+				new path(new filename('AppKernel.php')),
+				new path(new filename('AppCache.php'))
 			)
 		);
 	}

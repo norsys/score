@@ -9,7 +9,8 @@ abstract class path extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\autoload\classmap\path')
+			->implements('norsys\score\composer\fs\path')
 		;
 	}
+
 }
