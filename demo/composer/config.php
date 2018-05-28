@@ -15,6 +15,7 @@ use norsys\score\composer\{
 	fs\path\filename\any as filename,
 	fs\path\file,
 	fs\path\directory,
+	fs\path\symfony,
 	part,
 	config\any as config,
 	depedency\version,
@@ -87,7 +88,7 @@ use norsys\score\serializer\keyValue\{
 			new classmap\any(
 				new directory(new filename('lib')),
 				new file(new filename('Something.php')),
-				new classmap\path\symfony
+				new symfony\app
 			)
 		),
 		new autoload\dev(

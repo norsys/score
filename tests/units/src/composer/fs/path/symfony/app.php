@@ -1,4 +1,4 @@
-<?php namespace norsys\score\tests\units\composer\autoload\classmap\path;
+<?php namespace norsys\score\tests\units\composer\fs\path\symfony;
 
 require __DIR__ . '/../../../../../runner.php';
 
@@ -6,7 +6,7 @@ use norsys\score\tests\units\composer\autoload\classmap\path;
 use norsys\score\composer;
 use mock\norsys\score as mockOfScore;
 
-class symfony extends path
+class app extends path
 {
 	function testKeyValueSerializerIs()
 	{
