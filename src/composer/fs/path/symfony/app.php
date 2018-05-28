@@ -3,9 +3,9 @@
 use norsys\score\composer\fs\path\any as path;
 use norsys\score\fs\path\container\fifo as container;
 use norsys\score\composer\fs\path\filename\any as filename;
-use norsys\score\composer\autoload\classmap\path\root;
+use norsys\score\composer\fs\path\fork;
 
-class app extends root
+class app extends fork
 {
 	function __construct()
 	{

@@ -1,4 +1,4 @@
-<?php namespace norsys\score\composer\autoload\classmap\path;
+<?php namespace norsys\score\composer\fs\path;
 
 use norsys\score\composer\autoload\classmap;
 use norsys\score\composer;
@@ -6,7 +6,7 @@ use norsys\score\fs\path;
 use norsys\score\serializer\keyValue as serializer;
 use norsys\score\container\iterator\block\functor;
 
-class root
+class fork
 	implements
 		composer\fs\path
 {
