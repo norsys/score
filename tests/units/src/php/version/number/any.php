@@ -1,15 +1,16 @@
-<?php namespace norsys\score\tests\units\php\integer\unsigned;
+<?php namespace norsys\score\tests\units\php\version\number;
 
 require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units;
+use mock\norsys\score as mockOfScore;
 
 class any extends units\php\integer\unsigned
 {
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\php\integer\unsigned')
+			->implements('norsys\score\php\version\number')
 		;
 	}
 

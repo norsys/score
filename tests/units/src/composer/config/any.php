@@ -2,7 +2,8 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\{ tests\units, composer, serializer\keyValue as serializer };
+use norsys\score\tests\units;
+use norsys\score\composer\{ part\name, part };
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -10,7 +11,7 @@ class any extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\config')
+			->implements('norsys\score\composer\part')
 		;
 	}
 
@@ -19,7 +20,8 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$part = new mockOfScore\composer\part
+					$option = new mockOfScore\composer\config\option,
+					$otherOption = new mockOfScore\composer\config\option
 				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
@@ -28,10 +30,10 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($part))
+					->isEqualTo($this->newTestedInstance($option, $otherOption))
 				->mock($serializer)
-					->receive('objectToSerializeIs')
-						->withArguments(new serializer\part\container\fifo($part))
+					->receive('objectToSerializeWithNameIs')
+						->withArguments(new name\config, new part\container\fifo($option, $otherOption))
 							->once
 		;
 	}

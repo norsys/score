@@ -6,6 +6,8 @@ namespace norsys\score\demo\config\writer\depedencies\depedency;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
+use norsys\score\score\any as score;
+use norsys\score\php;
 use norsys\score\php\string\recipient\stdout;
 use norsys\score\vcs\branch\any as branch;
 use norsys\score\fs\path\container\fifo as container;
@@ -18,6 +20,7 @@ use norsys\score\composer\{
 	fs\path\symfony,
 	part,
 	config\any as config,
+	config\platform,
 	depedency\version,
 	depedency\version\semver,
 	name\norsys,
@@ -47,7 +50,7 @@ use norsys\score\serializer\keyValue\{
 };
 
 (
-	new config(
+	new score(
 		new norsys\score,
 		new description('A fucking description.'),
 		new project,
@@ -56,6 +59,17 @@ use norsys\score\serializer\keyValue\{
 			new author\mageekguy,
 			new author\any(
 				new name('John Doe'), new email('john@doe.name'), new homepage('http://john.doe.name'), new role('Translator')
+			)
+		),
+		new config(
+			new platform\any(
+				new platform\php(
+					new php\version\major\minor\release(
+						new php\version\number\any(7),
+						new php\version\number\any(2),
+						new php\version\number\any(6)
+					)
+				)
 			)
 		),
 		new required\prod(
