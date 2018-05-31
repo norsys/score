@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer;
 
-use norsys\score\composer\part;
+use norsys\score\score\part;
 
 interface description extends part
 {

@@ -10,7 +10,7 @@ class any
 		$parts
 	;
 
-	function __construct(part... $parts)
+	function __construct(score\part... $parts)
 	{
 		$this->parts = $parts;
 	}

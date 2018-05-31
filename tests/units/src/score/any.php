@@ -19,7 +19,7 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$part = new mockOfScore\composer\part
+					$part = new mockOfScore\score\part
 				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)

@@ -1,6 +1,7 @@
 <?php namespace norsys\score\composer\config;
 
-use norsys\score\composer\{ part, config\option };
+use norsys\score\score\part;
+use norsys\score\composer\{ config\option, part\name, part\container };
 use norsys\score\serializer\keyValue as serializer;
 
 class any
@@ -18,6 +19,6 @@ class any
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer->objectToSerializeWithNameIs(new part\name\config, new part\container\fifo(... $this->options));
+		$serializer->objectToSerializeWithNameIs(new name\config, new container\fifo(... $this->options));
 	}
 }
