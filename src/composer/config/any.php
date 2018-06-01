@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\config;
 
-use norsys\score\score\part;
+use norsys\score\composer\root\part;
 use norsys\score\composer\{ config\option, part\name, part\container };
 use norsys\score\serializer\keyValue as serializer;
 

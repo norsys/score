@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer;
 
-use norsys\score\composer\part;
+use norsys\score\composer\root\part;
 
 interface autoload extends part
 {

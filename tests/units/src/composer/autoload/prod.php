@@ -19,9 +19,8 @@ class prod extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$part = new mockOfScore\composer\part,
-					$otherPart = new mockOfScore\composer\part,
-					$anOtherPart = new mockOfScore\composer\part
+					$type = new mockOfScore\composer\autoload\type,
+					$otherType = new mockOfScore\composer\autoload\type
 				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
@@ -30,10 +29,10 @@ class prod extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($part, $otherPart, $anOtherPart))
+					->isEqualTo($this->newTestedInstance($type, $otherType))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments(new autoload, new fifo($part, $otherPart, $anOtherPart))
+						->withArguments(new autoload, new fifo($type, $otherType))
 							->once
 		;
 	}

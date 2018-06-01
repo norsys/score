@@ -1,4 +1,4 @@
-<?php namespace norsys\score\score;
+<?php namespace norsys\score\composer\root;
 
 use norsys\score\composer;
 

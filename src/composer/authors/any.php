@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\authors;
 
-use norsys\score\score\part;
+use norsys\score\composer\root\part;
 use norsys\score\composer\part\name\authors;
 use norsys\score\serializer\{ keyValue as serializer, keyValue\part\container\fifo, keyValue\part\anArray };
 

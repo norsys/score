@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\required;
 
-use norsys\score\score\part;
+use norsys\score\composer\root\part;
 use norsys\score\composer\part\{ object\any, name };
 use norsys\score\composer\required;
 use norsys\score\composer\depedency;

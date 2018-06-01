@@ -1,6 +1,6 @@
-<?php namespace norsys\score\tests\units\score;
+<?php namespace norsys\score\tests\units\composer\root;
 
-require __DIR__ . '/../../runner.php';
+require __DIR__ . '/../../../runner.php';
 
 use norsys\score\{ tests\units, composer, serializer\keyValue as serializer };
 use mock\norsys\score as mockOfScore;
@@ -10,7 +10,7 @@ class any extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\score')
+			->implements('norsys\score\composer\root')
 		;
 	}
 
@@ -19,7 +19,7 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$part = new mockOfScore\score\part
+					$part = new mockOfScore\composer\root\part
 				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)

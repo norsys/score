@@ -1,16 +1,16 @@
-<?php namespace norsys\score\score;
+<?php namespace norsys\score\composer\root;
 
-use norsys\score\{ score, composer\part, serializer\keyValue as serializer };
+use norsys\score\{ composer\root, composer\root\part, serializer\keyValue as serializer };
 
 class any
 	implements
-		score
+		root
 {
 	private
 		$parts
 	;
 
-	function __construct(score\part... $parts)
+	function __construct(part... $parts)
 	{
 		$this->parts = $parts;
 	}

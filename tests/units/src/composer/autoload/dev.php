@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\{ tests\units, composer\part\name\autoload };
+use norsys\score\{ tests\units, composer\part\name\autoload, composer\part };
 use mock\norsys\score as mockOfScore;
 
 class dev extends units\test
@@ -19,7 +19,8 @@ class dev extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$part = new mockOfScore\composer\part
+					$type = new mockOfScore\composer\autoload\type,
+					$otherType = new mockOfScore\composer\autoload\type
 				),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
@@ -28,10 +29,10 @@ class dev extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($part))
+					->isEqualTo($this->newTestedInstance($type, $otherType))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments(new autoload\dev, $part)
+						->withArguments(new autoload\dev, new part\container\fifo($type, $otherType))
 							->once
 		;
 	}

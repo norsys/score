@@ -6,19 +6,16 @@ namespace norsys\score\demo\config\writer\depedencies\depedency;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use norsys\score\score\any as score;
-use norsys\score\php;
-use norsys\score\php\string\recipient\stdout;
+use norsys\score\{ php, php\string\recipient\stdout };
 use norsys\score\vcs\branch\any as branch;
-use norsys\score\fs\path\container\fifo as container;
 
 use norsys\score\composer\{
+	root\any as root,
 	fs\path\any as path,
 	fs\path\filename\any as filename,
 	fs\path\file,
 	fs\path\directory,
 	fs\path\symfony,
-	part,
 	config\any as config,
 	config\platform,
 	depedency\version,
@@ -50,7 +47,7 @@ use norsys\score\serializer\keyValue\{
 };
 
 (
-	new score(
+	new root(
 		new norsys\score,
 		new description('A fucking description.'),
 		new project,
@@ -58,7 +55,10 @@ use norsys\score\serializer\keyValue\{
 		new authors(
 			new author\mageekguy,
 			new author\any(
-				new name('John Doe'), new email('john@doe.name'), new homepage('http://john.doe.name'), new role('Translator')
+				new name('John Doe'),
+				new email('john@doe.name'),
+				new homepage('http://john.doe.name'),
+				new role('Translator')
 			)
 		),
 		new config(
