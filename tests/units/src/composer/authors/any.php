@@ -3,8 +3,14 @@
 require __DIR__ . '/../../../runner.php';
 
 use norsys\score\tests\units;
-use norsys\score\serializer\{ keyValue as serializer, keyValue\part\anArray, keyValue\part\container };
+
+use norsys\score\serializer\{
+	keyValue\part\anArray,
+	keyValue\part\container
+};
+
 use norsys\score\composer\part\name\authors;
+
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -31,7 +37,7 @@ class any extends units\test
 					->isEqualTo($this->newTestedInstance($author))
 				->mock($serializer)
 					->receive('partToSerializeWithNameIs')
-						->withArguments(new authors, new anArray(new serializer\part\container\fifo($author)))
+						->withArguments(new authors, new anArray(new container\fifo($author)))
 							->once
 		;
 	}
