@@ -1,6 +1,13 @@
 <?php namespace norsys\score\composer\autoload\classmap;
 
-use norsys\score\composer\{ autoload\classmap, fs\path, part, part\anArray, part\name };
+use norsys\score\composer\{
+	autoload\classmap,
+	fs\path,
+	part\name
+};
+
+use norsys\score\serializer\keyValue\part\container;
+
 use norsys\score\serializer\keyValue as serializer;
 
 class any
@@ -21,7 +28,7 @@ class any
 		$serializer
 			->arrayToSerializeWithNameIs(
 				new name\autoload\classmap,
-				new part\anArray\fifo(... $this->paths)
+				new container\fifo(... $this->paths)
 			)
 		;
 	}

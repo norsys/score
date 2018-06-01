@@ -2,7 +2,12 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\{ tests\units, composer\part\name\autoload\classmap, composer\part };
+use norsys\score\{
+	tests\units,
+	composer\part\name\autoload\classmap,
+	serializer\keyValue\part\container
+};
+
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -33,7 +38,7 @@ class any extends units\test
 					->isEqualTo($this->newTestedInstance($path, $otherPath, $anOtherPath))
 				->mock($serializer)
 					->receive('arrayToSerializeWithNameIs')
-						->withArguments(new classmap, new part\anArray\fifo($path, $otherPath, $anOtherPath))
+						->withArguments(new classmap, new container\fifo($path, $otherPath, $anOtherPath))
 							->once
 		;
 	}
