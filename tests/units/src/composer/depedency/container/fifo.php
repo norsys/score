@@ -23,6 +23,21 @@ class fifo extends units\test
 					$depedency2 = new mockOfScore\composer\depedency,
 					$depedency3 = new mockOfScore\composer\depedency
 				),
+
+				$depedencies = [],
+
+				$this->calling($depedency1)->keyValueSerializerIs = function($aSerializer) use ($depedency1, & $depedencies) {
+					$depedencies[] = $depedency1;
+				},
+
+				$this->calling($depedency2)->keyValueSerializerIs = function($aSerializer) use ($depedency2, & $depedencies) {
+					$depedencies[] = $depedency2;
+				},
+
+				$this->calling($depedency3)->keyValueSerializerIs = function($aSerializer) use ($depedency3, & $depedencies) {
+					$depedencies[] = $depedency3;
+				},
+
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -31,18 +46,8 @@ class fifo extends units\test
 			->then
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($depedency1, $depedency2, $depedency3))
-				->mock($depedency1)
-					->receive('keyValueSerializerIs')
-						->withArguments($serializer)
-							->once
-				->mock($depedency2)
-					->receive('keyValueSerializerIs')
-						->withArguments($serializer)
-							->once
-				->mock($depedency3)
-					->receive('keyValueSerializerIs')
-						->withArguments($serializer)
-							->once
+				->array($depedencies)
+						->isEqualTo([ $depedency1, $depedency2, $depedency3 ])
 		;
 	}
 

@@ -1,7 +1,9 @@
 <?php namespace norsys\score\composer\depedency\container;
 
-use norsys\score\composer\depedency;
-use norsys\score\composer\part\container;
+use norsys\score\composer\{
+	depedency,
+	part\container
+};
 
 class fifo extends container\fifo
 	implements
