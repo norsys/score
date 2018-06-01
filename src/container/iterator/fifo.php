@@ -7,6 +7,7 @@ class fifo
 		container\iterator
 {
 	private
+		$current,
 		$variables
 	;
 
@@ -20,7 +21,7 @@ class fifo
 		$iterator = clone $this;
 		$iterator->variables = new \arrayIterator($variables);
 
-		foreach ($iterator->variables as $value)
+		foreach ($iterator->variables as $iterator->current => $value)
 		{
 			$block->containerIteratorHasValue($iterator, $value);
 		}
@@ -30,7 +31,16 @@ class fifo
 	{
 		try
 		{
-			$this->variables->seek(sizeof($this->variables) - 1);
+			$this->variables->seek(sizeof($this->variables));
+		}
+		catch (\exception $exception) {}
+	}
+
+	function nextIterationAreUsefull() :void
+	{
+		try
+		{
+			$this->variables->seek($this->current);
 		}
 		catch (\exception $exception) {}
 	}

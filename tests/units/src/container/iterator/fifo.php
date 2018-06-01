@@ -70,4 +70,19 @@ class fifo extends units\test
 					->isEqualTo($this->newTestedInstance)
 		;
 	}
+
+	function testNextIterationAreUsefull()
+	{
+		$this
+			->given(
+				$this->newTestedInstance
+			)
+			->if(
+				$this->testedInstance->nextIterationAreUsefull()
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+		;
+	}
 }

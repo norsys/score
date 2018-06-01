@@ -1,15 +1,17 @@
 <?php namespace norsys\score\trampoline\container;
 
 use norsys\score\trampoline;
+use norsys\score\container\{
+	iterator,
+	iterator\block\functor
+};
 
 class fifo
 	implements
 		trampoline
 {
 	private
-		$trampolines,
-		$arguments,
-		$break
+		$trampolines
 	;
 
 	function __construct(trampoline... $trampolines)
@@ -19,31 +21,31 @@ class fifo
 
 	function trampolineArgumentsAre(... $arguments)
 	{
-		$clone = clone $this;
-		$clone->break = true;
+		(
+			new iterator\fifo
+		)
+			->variablesForIteratorBlockAre(
+				new functor(
+					function($iterator, $trampoline) use (& $arguments)
+					{
+						$iterator->nextIterationAreUseless();
 
-		array_unshift(
-			$arguments,
-			new trampoline\functor(
-				function(... $arguments) use ($clone) {
-					$clone->arguments = array_merge($clone->arguments, $arguments);
-					$clone->break = false;
-				}
+						$trampoline
+							->trampolineArgumentsAre(
+								new trampoline\functor(
+									function(... $argumentsFromTrampoline) use ($iterator, & $arguments) {
+										$arguments = array_merge($arguments, $argumentsFromTrampoline);
+
+										$iterator->nextIterationAreUsefull();
+									}
+								),
+								... $arguments
+							)
+						;
+					}
+				),
+				... $this->trampolines
 			)
-		);
-
-		$clone->arguments = $arguments;
-
-		foreach ($clone->trampolines as $trampoline)
-		{
-			$trampoline
-				->trampolineArgumentsAre(... $clone->arguments)
-			;
-
-			if ($clone->break)
-			{
-				break;
-			}
-		}
+		;
 	}
 }
