@@ -1,7 +1,7 @@
 <?php namespace norsys\score\serializer\keyValue\json\depth;
 
-use norsys\score\{ serializer\keyValue\json\depth, php\integer\unsigned };
-use norsys\score\serializer\keyValue\json\depth\recipient;
+use norsys\score\php\integer\unsigned;
+use norsys\score\serializer\keyValue\json\{ depth, depth\recipient };
 use norsys\score\php\integer\unsigned\recipient\functor;
 
 class any extends unsigned\any
@@ -14,7 +14,11 @@ class any extends unsigned\any
 			new functor(
 				function($unsignedInteger) use ($recipient)
 				{
-					$recipient->jsonDepthIs(new self($unsignedInteger + 1));
+					$recipient
+						->jsonDepthIs(
+							new self(++$unsignedInteger)
+						)
+					;
 				}
 			)
 		);

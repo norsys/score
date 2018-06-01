@@ -1,8 +1,8 @@
 <?php namespace norsys\score\trampoline;
 
-use norsys\score\{ trampoline, php };
+use norsys\score\{ trampoline, php\block };
 
-class functor extends php\block\functor
+class functor extends block\functor
 	implements
 		trampoline
 {

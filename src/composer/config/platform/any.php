@@ -1,14 +1,21 @@
 <?php namespace norsys\score\composer\config\platform;
 
-use norsys\score\composer\{ config\option, part };
-use norsys\score\serializer\keyValue as serializer;
+use norsys\score\composer\{
+	config\option,
+	part\object,
+	part\name\config\platform,
+	part\container\fifo
+};
 
-class any extends part\object\any
+class any extends object\any
 	implements
 		option
 {
 	function __construct(constraint... $constraints)
 	{
-		parent::__construct(new part\name\config\platform, new part\container\fifo(... $constraints));
+		parent::__construct(
+			new platform,
+			new fifo(... $constraints)
+		);
 	}
 }

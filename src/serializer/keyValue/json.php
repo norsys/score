@@ -1,8 +1,25 @@
 <?php namespace norsys\score\serializer\keyValue;
 
-use norsys\score\php\test\{ variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
-use norsys\score\serializer\{ keyValue as serializer, keyValue\part, keyValue\name, keyValue\text, keyValue\json\decorator, keyValue\json\depth };
-use norsys\score\php\string\{ recipient, recipient\surround\quotationMark, recipient\buffer, recipient\functor, recipient\utf8 };
+use norsys\score\php\test\{
+	variable\isTrue\strictly as isTrue,
+	recipient\ifTrue\functor as ifTrue
+};
+
+use norsys\score\serializer\{
+	keyValue as serializer,
+	keyValue\part,
+	keyValue\name,
+	keyValue\text,
+	keyValue\json\decorator,
+	keyValue\json\depth
+};
+
+use norsys\score\php\string\{
+	recipient,
+	recipient\surround\quotationMark,
+	recipient\functor,
+	recipient\utf8
+};
 
 class json
 	implements

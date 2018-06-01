@@ -6,15 +6,8 @@ class any extends php\string\not\blank
 	implements
 		branch
 {
-	function __construct($string)
+	function __construct(string $string)
 	{
-		try
-		{
-			parent::__construct($string);
-		}
-		catch (\invalidArgumentException $exception)
-		{
-			throw new \invalidArgumentException('VCS branch must be a not empty string');
-		}
+		parent::__construct($string, new \invalidArgumentException('VCS branch must be a not empty string'));
 	}
 }

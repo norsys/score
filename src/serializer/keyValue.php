@@ -1,7 +1,10 @@
 <?php namespace norsys\score\serializer;
 
-use norsys\score\php\string\recipient;
-use norsys\score\serializer\{ keyValue\part, keyValue\recipient as serializerRecipient, keyValue\name, keyValue\text };
+use norsys\score\serializer\keyValue\{
+	part,
+	name,
+	text
+};
 
 interface keyValue
 {

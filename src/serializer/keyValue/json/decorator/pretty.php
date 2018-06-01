@@ -1,8 +1,22 @@
 <?php namespace norsys\score\serializer\keyValue\json\decorator;
 
-use norsys\score\serializer\keyValue\json\{ decorator, decorator\pretty\line };
-use norsys\score\php\string\{ recipient, recipient\prefix, recipient\suffix, recipient\functor };
-use norsys\score\php\test\{ variable\isFalse\strictly as isFalse, variable\isTrue\strictly as isTrue, recipient\ifTrue\functor as ifTrue };
+use norsys\score\serializer\keyValue\json\{
+	decorator,
+	decorator\pretty\line
+};
+
+use norsys\score\php\string\{
+	recipient,
+	recipient\prefix,
+	recipient\suffix,
+	recipient\functor
+};
+
+use norsys\score\php\test\{
+	variable\isFalse\strictly as isFalse,
+	variable\isTrue\strictly as isTrue,
+	recipient\ifTrue\functor as ifTrue
+};
 
 class pretty
 	implements
