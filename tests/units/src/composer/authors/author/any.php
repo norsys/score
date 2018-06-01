@@ -18,7 +18,7 @@ class any extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($part = new mockOfScore\composer\part),
+				$this->newTestedInstance($part = new mockOfScore\composer\authors\author\part),
 				$serializer = new mockOfScore\serializer\keyValue
 			)
 			->if(
@@ -33,7 +33,7 @@ class any extends units\test
 							->once
 
 			->given(
-				$this->newTestedInstance($part, $otherPart = new mockOfScore\composer\part)
+				$this->newTestedInstance($part, $otherPart = new mockOfScore\composer\authors\author\part)
 			)
 			->if(
 				$this->testedInstance->keyValueSerializerIs($serializer)

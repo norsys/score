@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\authors\author;
 
-use norsys\score\composer\{ authors\author, part, part\object\any as object };
+use norsys\score\composer\{ authors\author, authors\author\part, part\object\any as object };
 use norsys\score\serializer\keyValue as serializer;
 
 class any

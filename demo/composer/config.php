@@ -79,12 +79,22 @@ use norsys\score\serializer\keyValue\{
 			),
 			new atoum(
 				new version\disjunction(
-					new version\greaterThan(new semver\major(new number(1))),
+					new version\greaterThan(
+						new semver\major(
+							new number(1)
+						)
+					),
 					new version\not(
-						new semver\major\minor(new number(3), new number(6))
+						new semver\major\minor(
+							new number(3),
+							new number(6)
+						)
 					),
 					new version\lessThan\orEqualTo(
-						new semver\major\minor(new number(4), new number(2))
+						new semver\major\minor(
+							new number(4),
+							new number(2)
+						)
 					)
 				)
 			)
