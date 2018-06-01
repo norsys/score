@@ -22,7 +22,7 @@ class any
 		$serializer
 			->objectToSerializeWithNameIs(
 				new name\autoload\psr4,
-				new mapping\container\fifo(... $this->mappings)
+				new serializer\part\container\fifo(... $this->mappings)
 			)
 		;
 	}
