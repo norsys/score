@@ -2,5 +2,5 @@
 
 interface trampoline
 {
-	function trampolineArgumentsAre(... $arguments);
+	function argumentsForBlockAre(php\block $block, ... $arguments) :void;
 }

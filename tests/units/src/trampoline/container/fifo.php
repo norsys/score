@@ -20,56 +20,54 @@ class fifo extends units\test
 			->given(
 				$this->newTestedInstance(
 					$trampoline1 = new mockOfScore\trampoline,
-					$trampoline2 = new mockOfScore\trampoline,
-					$trampoline3 = new mockOfScore\trampoline
+					$trampoline2 = new mockOfScore\trampoline
 				),
 
-				$trampolines = [],
+				$argumentForBlock = 3,
 
-				$valueOfTrampoline1 = uniqid(),
-				$this->calling($trampoline1)->trampolineArgumentsAre = function($trampoline) use (& $trampolines, $valueOfTrampoline1) {
-					$trampolines[] = [];
-
-					$trampoline->trampolineArgumentsAre($valueOfTrampoline1);
+				$valueOfTrampoline1 = 1,
+				$this->calling($trampoline1)->argumentsForBlockAre = function($block, $anArgument) use ($argumentForBlock, $valueOfTrampoline1) {
+					if ($argumentForBlock == $anArgument)
+					{
+						$block->blockArgumentsAre($valueOfTrampoline1);
+					}
 				},
 
-				$valueOfTrampoline2 = uniqid(),
-				$this->calling($trampoline2)->trampolineArgumentsAre = function($trampoline, $value1) use (& $trampolines, $valueOfTrampoline2) {
-					$trampolines[] = [ $value1 ];
-
-					$trampoline->trampolineArgumentsAre($valueOfTrampoline2);
+				$valueOfTrampoline2 = 2,
+				$this->calling($trampoline2)->argumentsForBlockAre = function($block, $anArgument, $anAnotherArgument) use ($argumentForBlock, $valueOfTrampoline1, $valueOfTrampoline2) {
+					if ($argumentForBlock == $anArgument && $valueOfTrampoline1 == $anAnotherArgument)
+					{
+						$block->blockArgumentsAre($valueOfTrampoline2);
+					}
 				},
 
-				$this->calling($trampoline3)->trampolineArgumentsAre = function($trampoline, $value1, $value2) use (& $trampolines) {
-					$trampolines[] = [ $value1, $value2 ];
-				}
+				$block = new mockOfScore\php\block
 			)
 			->if(
-				$this->testedInstance->trampolineArgumentsAre()
+				$this->testedInstance->argumentsForBlockAre($block, $argumentForBlock)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($trampoline1, $trampoline2, $trampoline3))
-				->array($trampolines)
-					->isEqualTo([
-							[],
-							[ $valueOfTrampoline1 ],
-							[ $valueOfTrampoline1, $valueOfTrampoline2 ]
-						]
-					)
+					->isEqualTo($this->newTestedInstance($trampoline1, $trampoline2))
+				->mock($block)
+					->receive('blockArgumentsAre')
+						->withArguments($argumentForBlock, $valueOfTrampoline1, $valueOfTrampoline2)
+							->once
 
 			->given(
-				$trampolines = [],
-				$this->calling($trampoline1)->trampolineArgumentsAre = function() {}
+				$block = new mockOfScore\php\block,
+
+				$this->calling($trampoline1)->argumentsForBlockAre = function() {}
 			)
 			->if(
-				$this->testedInstance->trampolineArgumentsAre()
+				$this->testedInstance->argumentsForBlockAre($block, $argumentForBlock)
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($trampoline1, $trampoline2, $trampoline3))
-				->array($trampolines)
-					->isEmpty
+					->isEqualTo($this->newTestedInstance($trampoline1, $trampoline2))
+				->mock($block)
+					->receive('blockArgumentsAre')
+						->never
 		;
 	}
 }

@@ -1,6 +1,6 @@
 <?php namespace norsys\score\php\version\converter\toString;
 
-use norsys\score\php\{ version\converter\toString, version, string\recipient };
+use norsys\score\php\{ version\converter\toString, version, string\recipient, block };
 use norsys\score\trampoline;
 
 class official
@@ -21,47 +21,50 @@ class official
 		(
 			new trampoline\container\fifo(
 				new trampoline\functor(
-					function($trampoline) use ($version)
+					function($block, $version)
 					{
 						$version
 							->toStringConverterOfMajorNumberInPhpVersionForRecipientIs(
-								new recipient\trampoline($trampoline),
+								new recipient\block($block),
 								$this->converter
 							)
 						;
 					}
 				),
 				new trampoline\functor(
-					function($trampoline, $major) use ($version)
+					function($block, $version)
 					{
 						$version
 							->toStringConverterOfMinorNumberInPhpVersionForRecipientIs(
-								new recipient\trampoline($trampoline),
+								new recipient\block($block),
 								$this->converter
 							)
 						;
 					}
 				),
 				new trampoline\functor(
-					function($trampoline, $major, $minor) use ($version)
+					function($block, $version)
 					{
 						$version
 							->toStringConverterOfReleaseNumberInPhpVersionForRecipientIs(
-								new recipient\trampoline($trampoline),
+								new recipient\block($block),
 								$this->converter
 							)
 						;
-					}
-				),
-				new trampoline\functor(
-					function($trampoline, $major, $minor, $release) use ($recipient)
-					{
-						$recipient->stringIs($major . '.' . $minor . '.' . $release);
 					}
 				)
 			)
 		)
-			->trampolineArgumentsAre()
+			->argumentsForBlockAre(
+				new block\functor(
+					function ($version, $recipient, $major, $minor, $release)
+					{
+						$recipient->stringIs($major . '.' . $minor . '.' . $release);
+					}
+				),
+				$version,
+				$recipient
+			)
 		;
 	}
 }

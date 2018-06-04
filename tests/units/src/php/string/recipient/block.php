@@ -5,7 +5,7 @@ require __DIR__ . '/../../../../runner.php';
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
-class trampoline extends units\test
+class block extends units\test
 {
 	function testClass()
 	{
@@ -18,7 +18,7 @@ class trampoline extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($trampoline = new mockOfScore\trampoline),
+				$this->newTestedInstance($block = new mockOfScore\php\block),
 				$string = uniqid()
 			)
 			->if(
@@ -26,9 +26,9 @@ class trampoline extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($trampoline))
-				->mock($trampoline)
-					->receive('trampolineArgumentsAre')
+					->isEqualTo($this->newTestedInstance($block))
+				->mock($block)
+					->receive('blockArgumentsAre')
 						->withArguments($string)
 							->once
 		;

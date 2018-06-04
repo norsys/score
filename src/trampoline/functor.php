@@ -6,8 +6,8 @@ class functor extends block\functor
 	implements
 		trampoline
 {
-	function trampolineArgumentsAre(... $arguments) :void
+	function argumentsForBlockAre(block $block, ... $arguments) :void
 	{
-		parent::blockArgumentsAre(... $arguments);
+		parent::blockArgumentsAre($block, ... $arguments);
 	}
 }

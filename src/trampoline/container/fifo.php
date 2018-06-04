@@ -1,6 +1,7 @@
 <?php namespace norsys\score\trampoline\container;
 
 use norsys\score\trampoline;
+use norsys\score\php\block;
 use norsys\score\container\{
 	iterator,
 	iterator\block\functor
@@ -11,7 +12,9 @@ class fifo
 		trampoline
 {
 	private
-		$trampolines
+		$trampolines,
+		$arguments,
+		$handler
 	;
 
 	function __construct(trampoline... $trampolines)
@@ -19,22 +22,32 @@ class fifo
 		$this->trampolines = $trampolines;
 	}
 
-	function trampolineArgumentsAre(... $arguments)
+	function argumentsForBlockAre(block $block, ... $arguments) :void
 	{
+		$nothing = function() {};
+		$callBlock = function() use ($block, & $arguments) {
+			$block->blockArgumentsAre(... $arguments);
+		};
+		$do = $callBlock;
+
 		(
 			new iterator\fifo
 		)
 			->variablesForIteratorBlockAre(
 				new functor(
-					function($iterator, $trampoline) use (& $arguments)
+					function($iterator, $trampoline) use ($nothing, $callBlock, & $do, & $arguments)
 					{
 						$iterator->nextIterationAreUseless();
 
+						$do = $nothing;
+
 						$trampoline
-							->trampolineArgumentsAre(
-								new trampoline\functor(
-									function(... $argumentsFromTrampoline) use ($iterator, & $arguments) {
+							->argumentsForBlockAre(
+								new block\functor(
+									function(... $argumentsFromTrampoline) use ($iterator, $callBlock, &$do, & $arguments) {
 										$arguments = array_merge($arguments, $argumentsFromTrampoline);
+
+										$do = $callBlock;
 
 										$iterator->nextIterationAreUsefull();
 									}
@@ -47,5 +60,7 @@ class fifo
 				... $this->trampolines
 			)
 		;
+
+		$do();
 	}
 }
