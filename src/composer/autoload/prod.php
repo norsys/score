@@ -1,6 +1,12 @@
 <?php namespace norsys\score\composer\autoload;
 
-use norsys\score\composer\{ autoload, autoload\type, part\object, part\name, part\container\fifo };
+use norsys\score\composer\{
+	autoload,
+	autoload\type,
+	part\object,
+	part\name,
+	part\container\fifo
+};
 
 class prod extends object\named
 	implements
