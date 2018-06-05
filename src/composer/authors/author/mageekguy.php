@@ -5,7 +5,7 @@ class mageekguy extends any
 	function __construct()
 	{
 		parent::__construct(
-			new name\any('Frédéric Hardy'),
+			new name\mageekguy,
 			new email\any('frederic.hardy@mageekbox.net'),
 			new homepage\any('http://blog.mageekbox.net'),
 			new role\developer

@@ -24,7 +24,7 @@ class mageekguy extends test
 					->receive('objectToSerializeIs')
 						->withArguments(
 							new serializer\part\container\fifo(
-								new author\name\any('Frédéric Hardy'),
+								new author\name\mageekguy,
 								new author\email\any('frederic.hardy@mageekbox.net'),
 								new author\homepage\any('http://blog.mageekbox.net'),
 								new author\role\developer

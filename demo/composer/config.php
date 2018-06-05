@@ -26,7 +26,7 @@ use norsys\score\composer\{
 	description\any as description,
 	authors\any as authors,
 	authors\author,
-	authors\author\name\any as name,
+	authors\author\name\human as name,
 	authors\author\email\any as email,
 	authors\author\homepage\any as homepage,
 	authors\author\role\any as role,
@@ -46,6 +46,8 @@ use norsys\score\serializer\keyValue\{
 	json\decorator\pretty
 };
 
+use norsys\score\{ human, human\name\firstname\any as firstname, human\name\lastname\any as lastname };
+
 (
 	new root(
 		new norsys\score,
@@ -55,7 +57,12 @@ use norsys\score\serializer\keyValue\{
 		new authors(
 			new author\mageekguy,
 			new author\any(
-				new name('John Doe'),
+				new name(
+					new human\name\firstname\lastname(
+						new firstname('John'),
+						new lastname('Doe')
+					)
+				),
 				new email('john@doe.name'),
 				new homepage('http://john.doe.name'),
 				new role('Translator')
@@ -75,7 +82,9 @@ use norsys\score\serializer\keyValue\{
 		new required\prod(
 			new atoum\dev,
 			new atoum(
-				new version\dev\any(new branch('a_branch'))
+				new version\dev\any(
+					new branch('a_branch')
+				)
 			),
 			new atoum(
 				new version\disjunction(
