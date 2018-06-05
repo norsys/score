@@ -3,8 +3,8 @@
 require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units;
-use norsys\score\serializer\keyValue as serializer;
-use norsys\score\composer\{ part\name\autoload\psr4, autoload\psr4\mapping };
+use norsys\score\serializer\keyValue\part\container\fifo;
+use norsys\score\composer\part\name\autoload\psr4;
 use mock\norsys\score as mockOfScore;
 
 class any extends units\test
@@ -34,7 +34,7 @@ class any extends units\test
 					->isEqualTo($this->newTestedInstance($mapping, $otherMapping))
 				->mock($serializer)
 					->receive('objectToSerializeWithNameIs')
-						->withArguments(new psr4, new serializer\part\container\fifo($mapping, $otherMapping))
+						->withArguments(new psr4, new fifo($mapping, $otherMapping))
 							->once
 		;
 	}

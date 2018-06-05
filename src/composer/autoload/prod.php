@@ -2,7 +2,7 @@
 
 use norsys\score\composer\{ autoload, autoload\type, part\object, part\name, part\container\fifo };
 
-class prod extends object\any
+class prod extends object\named
 	implements
 		autoload
 {

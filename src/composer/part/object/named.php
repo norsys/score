@@ -1,11 +1,15 @@
-<?php namespace norsys\score\composer\part\anArray;
+<?php namespace norsys\score\composer\part\object;
 
-use norsys\score\composer\{ part, part\anArray, part\name };
+use norsys\score\composer\{
+	part,
+	part\object,
+	part\name
+};
 use norsys\score\serializer\keyValue as serializer;
 
-class any
+class named
 	implements
-		anArray
+		object
 {
 	private
 		$name,
@@ -20,6 +24,6 @@ class any
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer->arrayToSerializeWithNameIs($this->name, $this->part);
+		$serializer->objectToSerializeWithNameIs($this->name, $this->part);
 	}
 }

@@ -7,7 +7,7 @@ use norsys\score\composer\{
 	part\container\fifo
 };
 
-class any extends object\any
+class any extends object\named
 	implements
 		option
 {

@@ -1,8 +1,7 @@
 <?php namespace norsys\score\composer\autoload\psr4;
 
-use norsys\score\composer\autoload\psr4;
-use norsys\score\composer\part\name;
-use norsys\score\serializer\keyValue as serializer;
+use norsys\score\composer\{ autoload\psr4, part\name\autoload };
+use norsys\score\serializer\{ keyValue as serializer, keyValue\part\container\fifo };
 
 class any
 	implements
@@ -21,8 +20,8 @@ class any
 	{
 		$serializer
 			->objectToSerializeWithNameIs(
-				new name\autoload\psr4,
-				new serializer\part\container\fifo(... $this->mappings)
+				new autoload\psr4,
+				new fifo(... $this->mappings)
 			)
 		;
 	}

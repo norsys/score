@@ -1,29 +1,15 @@
 <?php namespace norsys\score\composer\authors;
 
 use norsys\score\composer\root\part;
-use norsys\score\composer\part\name\authors;
-use norsys\score\serializer\{ keyValue as serializer, keyValue\part\container\fifo, keyValue\part\anArray };
+use norsys\score\composer\part\{ name\authors, anArray\named, container\fifo };
+use norsys\score\serializer\keyValue as serializer;
 
-class any
+class any extends named
 	implements
 		part
 {
-	private
-		$authors
-	;
-
 	function __construct(author... $authors)
 	{
-		$this->authors = $authors;
-	}
-
-	function keyValueSerializerIs(serializer $serializer) :void
-	{
-		$serializer
-			->partToSerializeWithNameIs(
-				new authors,
-				new anArray(new fifo(... $this->authors))
-			)
-		;
+		parent::__construct(new authors, new fifo(... $authors));
 	}
 }
