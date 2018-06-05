@@ -16,15 +16,10 @@ class any extends unix\relative\filename
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$this
-			->recipientOfStringIs(
-				new recipient\functor(
-					function($string) use ($serializer)
-					{
-						$serializer->textToSerializeIs(new text($string));
-					}
-				)
+		$this->recipientOfStringIs(
+			new serializer\string\recipient(
+				$serializer
 			)
-		;
+		);
 	}
 }

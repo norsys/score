@@ -23,11 +23,8 @@ class fs
 	{
 		$this->path
 			->recipientOfStringIs(
-				new php\string\recipient\functor(
-					function($pathAsString) use ($serializer)
-					{
-						$serializer->textToSerializeIs(new composer\part\text\any($pathAsString));
-					}
+				new serializer\string\recipient(
+					$serializer
 				)
 			)
 		;

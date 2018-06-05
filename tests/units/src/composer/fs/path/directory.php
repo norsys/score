@@ -107,8 +107,8 @@ class directory extends path
 					->isEqualTo($this->newTestedInstance($filename, $otherFilename, $anOtherFilename))
 				->mock($serializer)
 					->receive('textToSerializeIs')
-					->withArguments(new text('./' . $anOtherFilenameAsString . '/'))
-							->once
+						->withArguments(new text('./' . $anOtherFilenameAsString . '/'))
+								->once
 
 			->given(
 				$this->providerHasString($filename, $filenameAsString = uniqid())
