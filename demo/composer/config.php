@@ -21,8 +21,8 @@ use norsys\score\composer\{
 	config\sort,
 	depedency\version,
 	depedency\version\semver,
+	depedency\version\semver\number\any as number,
 	name\norsys,
-	license,
 	description\any as description,
 	authors\any as authors,
 	authors\author,
@@ -37,7 +37,7 @@ use norsys\score\composer\{
 	autoload\psr4\any as psr4,
 	autoload\psr4\mapping,
 	autoload\psr4\mapping\fallback\directory as fallback,
-	depedency\version\semver\number\any as number
+	scripts\any as scripts
 };
 
 use norsys\score\serializer\keyValue\{
@@ -130,7 +130,8 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 					new directory\src
 				)
 			)
-		)
+		),
+		new scripts
 	)
 )
 	->keyValueSerializerIs(
