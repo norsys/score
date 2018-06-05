@@ -18,6 +18,7 @@ use norsys\score\composer\{
 	fs\path\symfony,
 	config\any as config,
 	config\platform,
+	config\sort,
 	depedency\version,
 	depedency\version\semver,
 	name\norsys,
@@ -66,6 +67,7 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 			)
 		),
 		new config(
+			new sort\packages\yes,
 			new platform\any(
 				new platform\php(
 					new php\version\major\minor\release(
