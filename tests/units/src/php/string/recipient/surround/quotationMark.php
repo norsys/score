@@ -47,6 +47,20 @@ class quotationMark extends units\test
 					->receive('stringIs')
 						->withArguments('"foo\"bar"')
 							->once
+
+			->given(
+				$string = 'foo\'bar'
+			)
+			->if(
+				$this->testedInstance->stringIs($string)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($recipient))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments('"foo\'bar"')
+							->once
 		;
 	}
 }

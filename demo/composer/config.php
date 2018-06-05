@@ -10,7 +10,7 @@ use norsys\score\{ php, php\string\recipient\stdout };
 use norsys\score\vcs\branch\any as branch;
 
 use norsys\score\composer\{
-	root\any as root,
+	root\project,
 	fs\path\any as path,
 	fs\path\filename\any as filename,
 	fs\path\file,
@@ -21,7 +21,6 @@ use norsys\score\composer\{
 	depedency\version,
 	depedency\version\semver,
 	name\norsys,
-	type\project,
 	license,
 	description\any as description,
 	authors\any as authors,
@@ -49,11 +48,9 @@ use norsys\score\serializer\keyValue\{
 use norsys\score\{ human, human\name\firstname\any as firstname, human\name\lastname\any as lastname };
 
 (
-	new root(
+	new project\bsd\threeClause(
 		new norsys\score,
-		new description('A fucking description.'),
-		new project,
-		new license\bsd\threeClause,
+		new description('Score allows a developper to create or maintain a PHP composer\'s configuration file.'),
 		new authors(
 			new author\mageekguy,
 			new author\any(

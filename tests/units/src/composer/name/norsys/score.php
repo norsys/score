@@ -11,7 +11,7 @@ class score extends units\test
 	{
 		$this->testedClass
 			->implements('norsys\score\composer\name')
-			->implements('norsys\score\composer\root\part')
+			->implements('norsys\score\composer\root\name')
 		;
 	}
 

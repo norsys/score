@@ -11,6 +11,6 @@ class quotationMark extends same
 
 	function stringIs(string $string) :void
 	{
-		parent::stringIs(addslashes($string));
+		parent::stringIs(addcslashes($string, '"'));
 	}
 }

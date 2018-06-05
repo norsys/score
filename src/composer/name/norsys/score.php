@@ -1,10 +1,10 @@
 <?php namespace norsys\score\composer\name\norsys;
 
-use norsys\score\composer\{ root\part, name\any as name, depedency, depedency\name\project\score as project };
+use norsys\score\composer\{ root, name\any as name, depedency, depedency\name\project\score as project };
 
 class score extends name
 	implements
-		part
+		root\name
 {
 	function __construct()
 	{
