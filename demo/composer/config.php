@@ -37,7 +37,8 @@ use norsys\score\composer\{
 	autoload\psr4\any as psr4,
 	autoload\psr4\mapping,
 	autoload\psr4\mapping\fallback\directory as fallback,
-	scripts\any as scripts
+	scripts\any as scripts,
+	scripts\method
 };
 
 use norsys\score\serializer\keyValue\{
@@ -131,7 +132,23 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 				)
 			)
 		),
-		new scripts
+		new scripts(
+			new method(
+				new php\aClass\name\any(
+					new php\aNamespace\any(
+						new php\identifier\any('Sensio'),
+						new php\identifier\any('Bundle'),
+						new php\identifier\any('DistributionBundle'),
+						new php\identifier\any('Composer'),
+						new php\identifier\any('ScriptHandler')
+					),
+					new php\identifier\any('ScriptHandler')
+				),
+				new php\method\name\any(
+					new php\identifier\any('buildBootstrap')
+				)
+			)
+		)
 	)
 )
 	->keyValueSerializerIs(
