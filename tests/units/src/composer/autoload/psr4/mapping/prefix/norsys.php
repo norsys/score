@@ -18,7 +18,7 @@ class norsys extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($label = new mockOfScore\php\label),
+				$this->newTestedInstance($identifier = new mockOfScore\php\identifier),
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -26,16 +26,16 @@ class norsys extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($label))
+					->isEqualTo($this->newTestedInstance($identifier))
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments('norsys\\')
 							->once
 
 			->given(
-				$labelAsString = uniqid(),
-				$this->calling($label)->recipientOfStringIs = function($aRecipient) use ($labelAsString) {
-					$aRecipient->stringIs($labelAsString);
+				$identifierAsString = uniqid(),
+				$this->calling($identifier)->recipientOfStringIs = function($aRecipient) use ($identifierAsString) {
+					$aRecipient->stringIs($identifierAsString);
 				}
 			)
 			->if(
@@ -43,10 +43,10 @@ class norsys extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($label))
+					->isEqualTo($this->newTestedInstance($identifier))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments('norsys\\' . $labelAsString . '\\')
+						->withArguments('norsys\\' . $identifierAsString . '\\')
 							->once
 		;
 	}

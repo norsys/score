@@ -1,4 +1,4 @@
-<?php namespace norsys\score\tests\units\php\label;
+<?php namespace norsys\score\tests\units\php\identifier;
 
 require __DIR__ . '/../../../runner.php';
 
@@ -6,13 +6,13 @@ use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
 // http://php.net/manual/en/language.variables.basics.php
-
+//
 class any extends units\test
 {
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\php\label')
+			->implements('norsys\score\php\identifier')
 		;
 	}
 

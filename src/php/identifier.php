@@ -1,6 +1,6 @@
 <?php namespace norsys\score\php;
 
-interface identifier
+interface identifier extends string\provider
 {
 
 }

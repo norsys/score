@@ -1,11 +1,11 @@
-<?php namespace norsys\score\php\label;
+<?php namespace norsys\score\php\identifier;
 
 use norsys\score\php;
 use norsys\score\php\test\{ variable\isTrue, recipient\exception\fallback as exception };
 
 class any extends php\string\any
 	implements
-		php\label
+		php\identifier
 {
 	function __construct(string $string, \exception $exception = null)
 	{

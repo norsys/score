@@ -2,7 +2,7 @@
 
 use norsys\score\composer\autoload\psr4\mapping\prefix;
 use norsys\score\php\string\{ recipient, recipient\buffer, recipient\suffix, provider };
-use norsys\score\php\{ label, aNamespace };
+use norsys\score\php\{ identifier, aNamespace };
 use norsys\score\container\iterator\{ fifo, block };
 
 class official
@@ -10,12 +10,12 @@ class official
 		prefix
 {
 	private
-		$labels
+		$identifiers
 	;
 
-	function __construct(label... $labels)
+	function __construct(identifier... $identifiers)
 	{
-		$this->labels = $labels;
+		$this->identifiers = $identifiers;
 	}
 
 	function recipientOfStringIs(recipient $recipient) :void
@@ -23,7 +23,7 @@ class official
 		(
 			new provider\suffix\provider(
 				new aNamespace\separator\official,
-				... $this->labels
+				... $this->identifiers
 			)
 		)
 			->recipientOfStringIs($recipient)

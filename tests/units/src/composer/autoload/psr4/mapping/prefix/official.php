@@ -33,12 +33,12 @@ class official extends units\test
 
 		->given(
 			$this->newTestedInstance(
-				$label = new mockOfScore\php\label
+				$identifier = new mockOfScore\php\identifier
 			),
 
-			$labelAsString = uniqid(),
-			$this->calling($label)->recipientOfStringIs = function($aRecipient) use ($labelAsString) {
-				$aRecipient->stringIs($labelAsString);
+			$identifierAsString = uniqid(),
+			$this->calling($identifier)->recipientOfStringIs = function($aRecipient) use ($identifierAsString) {
+				$aRecipient->stringIs($identifierAsString);
 			}
 		)
 		->if(
@@ -46,21 +46,21 @@ class official extends units\test
 		)
 		->then
 			->object($this->testedInstance)
-				->isEqualTo($this->newTestedInstance($label))
+				->isEqualTo($this->newTestedInstance($identifier))
 			->mock($recipient)
 				->receive('stringIs')
-					->withArguments($labelAsString . '\\')
+					->withArguments($identifierAsString . '\\')
 						->once
 
 		->given(
 			$this->newTestedInstance(
-				$label,
-				$otherLabel = new mockOfScore\php\label
+				$identifier,
+				$otherIdentifier = new mockOfScore\php\identifier
 			),
 
-			$otherLabelAsString = uniqid(),
-			$this->calling($otherLabel)->recipientOfStringIs = function($aRecipient) use ($otherLabelAsString) {
-				$aRecipient->stringIs($otherLabelAsString);
+			$otherIdentifierAsString = uniqid(),
+			$this->calling($otherIdentifier)->recipientOfStringIs = function($aRecipient) use ($otherIdentifierAsString) {
+				$aRecipient->stringIs($otherIdentifierAsString);
 			}
 		)
 		->if(
@@ -68,10 +68,10 @@ class official extends units\test
 		)
 		->then
 			->object($this->testedInstance)
-				->isEqualTo($this->newTestedInstance($label, $otherLabel))
+				->isEqualTo($this->newTestedInstance($identifier, $otherIdentifier))
 			->mock($recipient)
 				->receive('stringIs')
-					->withArguments($labelAsString . '\\' . $otherLabelAsString . '\\')
+					->withArguments($identifierAsString . '\\' . $otherIdentifierAsString . '\\')
 						->once
 		;
 	}
