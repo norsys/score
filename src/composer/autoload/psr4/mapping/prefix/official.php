@@ -2,7 +2,7 @@
 
 use norsys\score\composer\autoload\psr4\mapping\prefix;
 use norsys\score\php\string\{ recipient, recipient\buffer, recipient\suffix, provider };
-use norsys\score\php\{ label, namespacing };
+use norsys\score\php\{ label, aNamespace };
 use norsys\score\container\iterator\{ fifo, block };
 
 class official
@@ -22,7 +22,7 @@ class official
 	{
 		(
 			new provider\suffix\provider(
-				new namespacing\separator\official,
+				new aNamespace\separator\official,
 				... $this->labels
 			)
 		)

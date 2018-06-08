@@ -1,7 +1,6 @@
 <?php namespace norsys\score\php\aNamespace\converter\toString;
 
 use norsys\score\php\{
-	namespacing\separator,
 	identifier,
 	aNamespace\converter\toString,
 	aNamespace,
@@ -14,7 +13,7 @@ class official
 {
 	function recipientOfPhpNamespaceAsStringIs(aNamespace $namespace, recipient $recipient) :void
 	{
-		$buffer = new recipient\buffer\prefix\provider(new separator\official);
+		$buffer = new recipient\buffer\prefix\provider(new aNamespace\separator\official);
 
 		$namespace
 			->recipientOfIdentifierFromToStringConverterIs(

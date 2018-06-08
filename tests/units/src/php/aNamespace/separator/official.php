@@ -1,4 +1,4 @@
-<?php namespace norsys\score\tests\units\php\namespacing\separator;
+<?php namespace norsys\score\tests\units\php\aNamespace\separator;
 
 require __DIR__ . '/../../../../runner.php';
 
@@ -10,7 +10,7 @@ class official extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\php\namespacing\separator')
+			->implements('norsys\score\php\aNamespace\separator')
 		;
 	}
 
