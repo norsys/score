@@ -140,10 +140,7 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 			new method(
 				new php\method\any(
 					new php\aClass\name\any(
-						new php\aNamespace\sensio\bundle(
-							new php\identifier\any('DistributionBundle'),
-							new php\identifier\any('Composer')
-						),
+						new php\aNamespace\sensio\bundle\distribution\composer,
 						new php\identifier\any('ScriptHandler')
 					),
 					new php\method\name\any(

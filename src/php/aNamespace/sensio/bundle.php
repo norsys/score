@@ -9,7 +9,6 @@ class bundle extends sensio
 {
 	function __construct(identifier... $identifiers)
 	{
-		parent::__construct(new identifier\any('Bundle'), ... $identifiers);
+		parent::__construct(new identifier\bundle, ... $identifiers);
 	}
-
 }

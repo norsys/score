@@ -6,6 +6,6 @@ class sensio extends any
 {
 	function __construct(identifier... $identifiers)
 	{
-		parent::__construct(new identifier\any('Sensio'), ... $identifiers);
+		parent::__construct(new identifier\sensio, ... $identifiers);
 	}
 }

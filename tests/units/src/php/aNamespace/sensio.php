@@ -30,7 +30,7 @@ class sensio extends aNamespace
 					->isEqualTo($this->newTestedInstance($identifier, $otherIdentifier))
 				->array($identifiers)
 					->isEqualTo([
-							[ new identifier\any('Sensio'), $recipient ],
+							[ new identifier\sensio, $recipient ],
 							[ $identifier, $recipient ],
 							[ $otherIdentifier, $recipient ]
 						]

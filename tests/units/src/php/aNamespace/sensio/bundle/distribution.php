@@ -1,11 +1,11 @@
-<?php namespace norsys\score\tests\units\php\aNamespace\sensio;
+<?php namespace norsys\score\tests\units\php\aNamespace\sensio\bundle;
 
-require __DIR__ . '/../../../../runner.php';
+require __DIR__ . '/../../../../../runner.php';
 
 use norsys\score\{ tests\units\php\aNamespace, php\identifier };
 use mock\norsys\score as mockOfScore;
 
-class bundle extends aNamespace
+class distribution extends aNamespace
 {
 	function testRecipientOfIdentifierFromToStringConverterIs()
 	{
@@ -32,6 +32,7 @@ class bundle extends aNamespace
 					->isEqualTo([
 							[ new identifier\sensio, $recipient ],
 							[ new identifier\bundle, $recipient ],
+							[ new identifier\distribution\bundle, $recipient ],
 							[ $identifier, $recipient ],
 							[ $otherIdentifier, $recipient ]
 						]
