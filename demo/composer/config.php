@@ -119,8 +119,12 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 				)
 			),
 			new classmap\any(
-				new directory(new filename('lib')),
-				new file(new filename('Something.php')),
+				new directory(
+					new filename('lib')
+				),
+				new file(
+					new filename('Something.php')
+				),
 				new symfony\app
 			)
 		),
