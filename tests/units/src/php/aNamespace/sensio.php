@@ -2,10 +2,10 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\tests\units\php\aNamespace;
+use norsys\score\{ tests\units\php\aNamespace, php\identifier };
 use mock\norsys\score as mockOfScore;
 
-class any extends aNamespace
+class sensio extends aNamespace
 {
 	function testRecipientOfIdentifierFromToStringConverterIs()
 	{
@@ -30,6 +30,7 @@ class any extends aNamespace
 					->isEqualTo($this->newTestedInstance($identifier, $otherIdentifier))
 				->array($identifiers)
 					->isEqualTo([
+							[ new identifier\any('Sensio'), $recipient ],
 							[ $identifier, $recipient ],
 							[ $otherIdentifier, $recipient ]
 						]
