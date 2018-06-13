@@ -4,8 +4,9 @@
 
 ## About
 
-This project is a work in progress, so the API can evolve rapidly and radicaly.
-Use it at your own risks!
+This project is a work in progress, so the API can evolve rapidly and radicaly.  
+Use it at your own risks!  
+A demo is available in `./demo/composer/config.php`, to run it, just do `php ./demo/composer/config.php`.
 
 ## Contributing
 
