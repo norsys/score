@@ -17,9 +17,12 @@ use norsys\score\serializer\{
 use norsys\score\php\string\{
 	recipient,
 	recipient\surround\quotationMark,
+	recipient\slashes\any as slasher,
 	recipient\functor,
 	recipient\utf8
 };
+
+use norsys\score\php\charlist;
 
 class json
 	implements
@@ -197,8 +200,11 @@ class json
 	{
 		(
 			new utf8(
-				new quotationMark(
-					$recipient
+				new slasher(
+					new charlist\slash,
+					new quotationMark(
+						$recipient
+					)
 				)
 			)
 		)

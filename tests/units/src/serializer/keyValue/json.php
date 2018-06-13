@@ -324,6 +324,44 @@ class json extends units\test
 					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
 				->string($buffer)
 					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
+
+			->given(
+				$key = 'foo\\bar',
+				$this->calling($name)->recipientOfStringIs = function($aRecipient) use ($key) {
+					$aRecipient->stringIs($key);
+				},
+
+				$value = 'bar\\foo',
+				$this->calling($text)->recipientOfStringIs = function($aRecipient) use ($value) {
+					$aRecipient->stringIs($value);
+				},
+
+				$decoratedKey = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonKeyIs = function($aKey, $aRecipient) use ($key, $decoratedKey) {
+					if ($aKey == '"foo\\\\bar"')
+					{
+						$aRecipient->stringIs($decoratedKey);
+					}
+				},
+
+				$decoratedValue = uniqid(),
+				$this->calling($decorator)->recipientOfDecoratedJsonValueIs = function($aValue, $aRecipient) use ($value, $decoratedValue) {
+					if ($aValue == '"bar\\\\foo"')
+					{
+						$aRecipient->stringIs($decoratedValue);
+					}
+				},
+
+				$buffer = null
+			)
+			->if(
+				$this->testedInstance->textToSerializeWithNameIs($name, $text)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($decorator, $recipient, true))
+				->string($buffer)
+					->isEqualTo($decoratedValueSeparator . $decoratedKey . $decoratedNameSeparator . $decoratedValue)
 		;
 	}
 
