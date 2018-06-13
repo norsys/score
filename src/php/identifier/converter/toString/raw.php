@@ -12,5 +12,6 @@ class raw
 {
 	function recipientOfPhpIdentifierAsStringIs(identifier $identifier, recipient $recipient) :void
 	{
+		$identifier->recipientOfStringIs($recipient);
 	}
 }

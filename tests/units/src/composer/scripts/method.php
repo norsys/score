@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../runner.php';
 
-use norsys\score\{ tests\units, composer\part\text\any as text };
+use norsys\score\{ tests\units, composer\part\text\any as text, php };
 use mock\norsys\score as mockOfScore;
 
 class method extends units\test
@@ -12,6 +12,11 @@ class method extends units\test
 		$this->testedClass
 			->implements('norsys\score\composer\scripts\part')
 		;
+	}
+
+	function test__construct()
+	{
+		$this->object($this->newTestedInstance($method = new mockOfScore\php\method))->isEqualTo($this->newTestedInstance($method, new php\method\converter\toString\official));
 	}
 
 	function testKeyValueSerializerIs()

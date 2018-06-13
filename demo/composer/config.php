@@ -134,18 +134,19 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 		),
 		new scripts(
 			new method(
-				new php\aClass\name\any(
-					new php\aNamespace\any(
-						new php\identifier\any('Sensio'),
-						new php\identifier\any('Bundle'),
-						new php\identifier\any('DistributionBundle'),
-						new php\identifier\any('Composer'),
+				new php\method\any(
+					new php\aClass\name\any(
+						new php\aNamespace\any(
+							new php\identifier\any('Sensio'),
+							new php\identifier\any('Bundle'),
+							new php\identifier\any('DistributionBundle'),
+							new php\identifier\any('Composer')
+						),
 						new php\identifier\any('ScriptHandler')
 					),
-					new php\identifier\any('ScriptHandler')
-				),
-				new php\method\name\any(
-					new php\identifier\any('buildBootstrap')
+					new php\method\name\any(
+						'buildBootstrap'
+					)
 				)
 			)
 		)

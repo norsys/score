@@ -13,10 +13,10 @@ class method
 		$converter
 	;
 
-	function __construct(php\method $method, php\method\converter\toString $converter)
+	function __construct(php\method $method, php\method\converter\toString $converter = null)
 	{
 		$this->method = $method;
-		$this->converter = $converter;
+		$this->converter = $converter ?: new php\method\converter\toString\official;
 	}
 
 	function keyValueSerializerIs(serializer $serializer) :void
