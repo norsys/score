@@ -1,11 +1,11 @@
-<?php namespace norsys\score\tests\units\php\identifier\distribution;
+<?php namespace norsys\score\tests\units\php\identifier\sensio\bundle\distribution\composer\script;
 
-require __DIR__ . '/../../../../runner.php';
+require __DIR__ . '/../../../../../../../../runner.php';
 
 use norsys\score\tests\units\php\identifier;
 use mock\norsys\score as mockOfScore;
 
-class bundle extends identifier
+class handler extends identifier
 {
 	function testRecipientOfStringIs()
 	{
@@ -22,7 +22,7 @@ class bundle extends identifier
 					->isEqualTo($this->newTestedInstance)
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments('DistributionBundle')
+						->withArguments('ScriptHandler')
 							->once
 		;
 	}

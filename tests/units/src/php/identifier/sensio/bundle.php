@@ -1,6 +1,6 @@
-<?php namespace norsys\score\tests\units\php\identifier;
+<?php namespace norsys\score\tests\units\php\identifier\sensio;
 
-require __DIR__ . '/../../../runner.php';
+require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units\php\identifier;
 use mock\norsys\score as mockOfScore;
