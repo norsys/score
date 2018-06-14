@@ -139,10 +139,7 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 		new scripts(
 			new method(
 				new php\method\any(
-					new php\aClass\name\any(
-						new php\aNamespace\sensio\bundle\distribution\bundle\composer,
-						new php\identifier\sensio\bundle\distribution\bundle\composer\script\handler
-					),
+					new php\aClass\name\sensio\bundle\distribution\bundle\composer\script\handler,
 					new php\method\name\any(
 						'buildBootstrap'
 					)
