@@ -114,9 +114,7 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 		new autoload\prod(
 			new psr4(
 				new mapping\norsys\score,
-				new fallback(
-					new directory\src
-				)
+				new fallback\src
 			),
 			new classmap\any(
 				new directory(
@@ -131,9 +129,7 @@ use norsys\score\{ human, human\name\firstname\any as firstname, human\name\last
 		new autoload\dev(
 			new psr4(
 				new mapping\norsys\score,
-				new fallback(
-					new directory\src
-				)
+				new fallback\src
 			)
 		),
 		new scripts(

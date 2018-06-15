@@ -31,7 +31,7 @@ class any extends method
 		;
 	}
 
-	function testRecipientOfPhpClassNameFromToStrngConverterIs()
+	function testRecipientOfPhpClassNameFromToStringConverterIs()
 	{
 		$this
 			->given(
