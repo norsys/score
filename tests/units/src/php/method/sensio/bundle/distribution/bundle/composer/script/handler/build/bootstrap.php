@@ -1,11 +1,15 @@
-<?php namespace norsys\score\tests\units\php\method;
+<?php namespace norsys\score\tests\units\php\method\sensio\bundle\distribution\bundle\composer\script\handler\build;
 
-require __DIR__ . '/../../../runner.php';
+require __DIR__ . '/../../../../../../../../../../../runner.php';
 
-use norsys\score\tests\units\php\method;
+use norsys\score\{
+	tests\units\php\method,
+	php
+};
+
 use mock\norsys\score as mockOfScore;
 
-class any extends method
+class bootstrap extends method
 {
 	function testRecipientOfPhpMethodNameFromToStringConverterIs()
 	{
@@ -26,7 +30,7 @@ class any extends method
 					->isEqualTo($this->newTestedInstance($class, $name))
 				->mock($converter)
 					->receive('recipientOfPhpMethodNameAsStringIs')
-						->withArguments($name, $recipient)
+						->withArguments(new php\method\name\sensio\bundle\distribution\bundle\composer\script\handler\build\bootstrap, $recipient)
 							->once
 		;
 	}
@@ -50,7 +54,7 @@ class any extends method
 					->isEqualTo($this->newTestedInstance($class, $name))
 				->mock($converter)
 					->receive('recipientOfPhpClassNameAsStringIs')
-						->withArguments($class, $recipient)
+						->withArguments(new php\aClass\name\sensio\bundle\distribution\bundle\composer\script\handler, $recipient)
 							->once
 		;
 	}
