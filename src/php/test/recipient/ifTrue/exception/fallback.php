@@ -1,4 +1,4 @@
-<?php namespace norsys\score\php\test\recipient\exception;
+<?php namespace norsys\score\php\test\recipient\ifTrue\exception;
 
 use norsys\score\php\test\recipient\ifTrue\exception;
 

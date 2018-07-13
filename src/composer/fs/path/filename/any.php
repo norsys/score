@@ -2,7 +2,7 @@
 
 use norsys\score\composer\fs\path\filename;
 use norsys\score\php;
-use norsys\score\php\{ test\variable\disjunction, test\variable\isTrue, test\recipient\exception\fallback as exception };
+use norsys\score\php\{ test\variable\disjunction, test\variable\isTrue, test\recipient\ifTrue\exception\fallback as exception };
 
 class any extends php\string\any
 	implements

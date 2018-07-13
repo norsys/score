@@ -7,6 +7,28 @@ use mock\norsys\score as mockOfScore;
 
 class any extends aNamespace
 {
+	function testRecipientOfStringIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$identifier = new mockOfScore\php\identifier,
+					$otherIdentifier = new mockOfScore\php\identifier
+				),
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfStringIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($identifier, $otherIdentifier))
+				->mock($recipient)
+					->receive('stringIs')
+						->never
+		;
+	}
+
 	function testRecipientOfIdentifierFromToStringConverterIs()
 	{
 		$this

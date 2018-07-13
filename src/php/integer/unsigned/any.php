@@ -1,6 +1,6 @@
 <?php namespace norsys\score\php\integer\unsigned;
 
-use norsys\score\php\{ integer\any as anyInteger, integer\unsigned, integer\recipient\functor, test\variable\isTrue, test\recipient\exception\fallback as exception };
+use norsys\score\php\{ integer\any as anyInteger, integer\unsigned, integer\recipient\functor, test\variable\isTrue, test\recipient\ifTrue\exception\fallback as exception };
 
 class any extends anyInteger
 	implements

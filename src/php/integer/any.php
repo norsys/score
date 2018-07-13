@@ -15,6 +15,11 @@ class any
 		$this->integer = $integer;
 	}
 
+	function recipientOfStringIs(php\string\recipient $recipient) :void
+	{
+		$recipient->stringIs($this->integer);
+	}
+
 	function recipientOfIntegerIs(php\integer\recipient $recipient) :void
 	{
 		$recipient->integerIs($this->integer);

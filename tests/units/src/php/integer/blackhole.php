@@ -14,6 +14,25 @@ class blackhole extends units\test
 		;
 	}
 
+	function testRecipientOfStringIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance,
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfStringIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance)
+				->mock($recipient)
+					->receive('stringIs')
+						->never
+		;
+	}
+
 	function testRecipientOfIntegerIs()
 	{
 		$this

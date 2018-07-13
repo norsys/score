@@ -14,6 +14,26 @@ class any extends units\test
 		;
 	}
 
+	function testRecipientOfStringIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance($integer = rand(PHP_INT_MIN, PHP_INT_MAX)),
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfStringIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($integer))
+				->mock($recipient)
+					->receive('stringIs')
+						->withArguments((string) $integer)
+							->once
+		;
+	}
+
 	function testRecipientOfIntegerIs()
 	{
 		$this

@@ -1,8 +1,8 @@
 <?php namespace norsys\score\php\integer;
 
-use norsys\score\php\integer;
+use norsys\score\php;
 
-interface provider
+interface provider extends php\string\provider
 {
-	function recipientOfIntegerIs(integer\recipient $recipient) :void;
+	function recipientOfIntegerIs(php\integer\recipient $recipient) :void;
 }

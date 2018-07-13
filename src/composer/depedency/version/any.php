@@ -1,7 +1,12 @@
 <?php namespace norsys\score\composer\depedency\version;
 
 use norsys\score\composer\depedency\version;
-use norsys\score\php\{ string\any as anyString, test\variable\isTrue, test\recipient\ifTrue\exception };
+use norsys\score\php\{
+	string\regex\pcre,
+	string\any as anyString,
+	test\match\regex,
+	test\recipient\ifFalse\exception
+};
 
 class any extends anyString
 	implements
@@ -15,26 +20,26 @@ class any extends anyString
 
 	function __construct(string $string)
 	{
+		parent::__construct($string);
+
 		(
-			new isTrue\strictly(
-				! preg_match(
+			new regex(
+				new pcre(
 					'/' .
 					self::regex(self::constraint . '(?: (?:\|\| )?' . self::constraint . ')*') .
 					'|' .
 					self::regex(self::version . ' - ' . self::version) .
 					'|' .
 					self::regex(self::unaryOperators . self::version) .
-					'/',
-					$string
-				)
+					'/'
+				),
+				$this
 			)
 		)
 			->recipientOfTestIs(
 				new exception(new \invalidArgumentException('Argument must be a valid composer version'))
 			)
 		;
-
-		parent::__construct($string);
 	}
 
 	private static function regex(string $string) :string
