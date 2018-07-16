@@ -3,7 +3,7 @@
 require __DIR__ . '/../../vendor/autoload.php';
 
 use norsys\score\php\string\recipient\vardump;
-use norsys\score\net\{
+use norsys\score\net\uri\{
 	authority,
 	authority\host,
 	authority\port,
@@ -20,7 +20,7 @@ use norsys\score\net\{
 		)
 	)
 )
-	->recipientOfAuthorityInUriFromToStringConverterIs(
+	->recipientOfUriAuthorityAsStringFromConverterIs(
 		new authority\converter\toString\rfc3986,
 		new vardump
 	)
