@@ -3,6 +3,7 @@
 require __DIR__ . '/../../../../../runner.php';
 
 use norsys\score\tests\units;
+use mock\norsys\score as mockOfScore;
 
 class any extends units\test
 {
@@ -10,6 +11,66 @@ class any extends units\test
 	{
 		$this->testedClass
 			->implements('norsys\score\net\uri\authority\port')
+		;
+	}
+
+	function testRecipientOfIntegerIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance($value = rand(0, 65535)),
+				$recipient = new mockOfScore\php\integer\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfIntegerIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($value))
+				->mock($recipient)
+				->receive('integerIs')
+					->withArguments($value)
+						->once
+		;
+	}
+
+	function testRecipientOfUnsignedIntegerIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance($value = rand(0, 65535)),
+				$recipient = new mockOfScore\php\integer\unsigned\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfUnsignedIntegerIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($value))
+				->mock($recipient)
+				->receive('unsignedIntegerIs')
+					->withArguments($value)
+						->once
+		;
+	}
+
+	function testRecipientOfStringIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance($value = rand(0, 65535)),
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfStringIs($recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($value))
+				->mock($recipient)
+				->receive('stringIs')
+					->withArguments($value)
+						->once
 		;
 	}
 
