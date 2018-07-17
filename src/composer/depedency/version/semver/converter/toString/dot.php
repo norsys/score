@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\depedency\version\semver\converter\toString;
 
-use norsys\score\{ composer\depedency\version\semver, php\integer\converter\toString, php };
+use norsys\score\{ trampoline, composer\depedency\version\semver, php };
 
 class dot
 	implements
@@ -12,74 +12,101 @@ class dot
 		$patchToString
 	;
 
-	function __construct(toString $majorToString = null, toString $minorToString = null, toString $patchToString = null)
+	function __construct(semver\number\converter\toString $majorToString = null, semver\number\converter\toString $minorToString = null, semver\number\converter\toString $patchToString = null)
 	{
-		$this->majorToString = $majorToString ?: new toString\identical;
-		$this->minorToString = $minorToString ?: new toString\identical;
-		$this->patchToString = $patchToString ?: new toString\identical;
+		$this->majorToString = $majorToString ?: new semver\number\converter\toString\identical;
+		$this->minorToString = $minorToString ?: new semver\number\converter\toString\identical;
+		$this->patchToString = $patchToString ?: new semver\number\converter\toString\identical;
+	}
+
+	function recipientOfMajorInSemverVersionAsStringIs(semver $semver, php\string\recipient $recipient) :void
+	{
+		$semver
+			->recipientOfMajorNumberAsStringFromConverterIs(
+				$this->majorToString,
+				$recipient
+			)
+		;
+	}
+
+	function recipientOfMinorInSemverVersionAsStringIs(semver $semver, php\string\recipient $recipient) :void
+	{
+		$semver
+			->recipientOfMinorNumberAsStringFromConverterIs(
+				$this->minorToString,
+				$recipient
+			)
+		;
+	}
+
+	function recipientOfPatchInSemverVersionAsStringIs(semver $semver, php\string\recipient $recipient) :void
+	{
+		$semver
+			->recipientOfPatchNumberAsStringFromConverterIs(
+				$this->patchToString,
+				$recipient
+			)
+		;
 	}
 
 	function recipientOfSemverVersionAsStringIs(semver $semver, php\string\recipient $recipient) :void
 	{
-		$semver
-			->recipientOfMajorNumberInSemverIs(
-				new semver\number\recipient\functor(
-					function($major) use ($semver, $recipient)
+		(
+			new trampoline\container\fifo(
+				new trampoline\functor(
+					function($block) use ($semver)
 					{
-						$semver
-							->recipientOfMinorNumberInSemverIs(
-								new semver\number\recipient\functor(
-									function($minor) use ($major, $semver, $recipient)
-									{
-										$semver
-											->recipientOfPatchNumberInSemverIs(
-												new semver\number\recipient\functor(
-													function($patch) use ($major, $minor, $recipient)
-													{
-														$this
-															->majorToString
-																->recipientOfPhpIntegerAsStringIs(
-																	$major,
-																	new php\string\recipient\functor(
-																		function($major) use ($minor, $patch, $recipient)
-																		{
-																			$this
-																				->minorToString
-																					->recipientOfPhpIntegerAsStringIs(
-																						$minor,
-																						new php\string\recipient\functor(
-																							function($minor) use ($major, $patch, $recipient)
-																							{
-																								$this
-																									->patchToString
-																										->recipientOfPhpIntegerAsStringIs(
-																											$patch,
-																											new php\string\recipient\functor(
-																												function($patch) use ($major, $minor, $recipient)
-																												{
-																													$recipient->stringIs($major . '.' . $minor . '.' . $patch);
-																												}
-																											)
-																										)
-																								;
-																							}
-																						)
-																					)
-																			;
-																		}
-																	)
-															)
-														;
-													}
-												)
-											)
-										;
-									}
-								)
+						$this
+							->recipientOfMajorInSemverVersionAsStringIs(
+								$semver,
+								new php\string\recipient\block($block)
+							)
+						;
+					}
+				),
+				new trampoline\functor(
+					function($block) use ($semver)
+					{
+						$this
+							->recipientOfMinorInSemverVersionAsStringIs(
+								$semver,
+								new php\string\recipient\block($block)
+							)
+						;
+					}
+				),
+				new trampoline\functor(
+					function($block) use ($semver)
+					{
+						$this
+							->recipientOfPatchInSemverVersionAsStringIs(
+								$semver,
+								new php\string\recipient\block($block)
 							)
 						;
 					}
 				)
+			)
+		)
+			->argumentsForBlockAre(
+				new php\block\functor(
+					function($recipient, $major, $minor, $patch)
+					{
+						(
+							new php\string\operator\unary\join(
+								$major,
+								$minor,
+								$patch
+							)
+						)
+							->recipientOfStringOperationWithStringIs(
+								'.',
+								$recipient
+							)
+						;
+					}
+				),
+				$recipient
 			)
 		;
 	}

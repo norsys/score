@@ -2,59 +2,40 @@
 
 use norsys\score\{ composer\depedency\version\semver, php, php\test };
 
-class aggregator
-	implements
-		semver\converter\toString
+class aggregator extends semver\converter\toString\dot
 {
-	private
-		$majorToStringConverter,
-		$minorToStringConverter,
-		$patchToStringConverter
-	;
-
-	function __construct(semver\number\converter\toString $majorToStringConverter = null, semver\number\converter\toString $minorToStringConverter = null, semver\number\converter\toString $patchToStringConverter = null)
-	{
-		$this->majorToStringConverter = self::semverNumberConverterIs($majorToStringConverter);
-		$this->minorToStringConverter = self::semverNumberConverterIs($minorToStringConverter);
-		$this->patchToStringConverter = self::semverNumberConverterIs($patchToStringConverter);
-	}
-
 	function recipientOfSemverVersionAsStringIs(semver $version, php\string\recipient $recipient) :void
 	{
 		$buffer = new php\string\recipient\buffer;
 
-		$version
-			->recipientOfMajorNumberAsStringFromConverterIs(
-				$this->majorToStringConverter,
-				new php\string\recipient\fifo(
-					$buffer,
-					new php\string\recipient\functor(
-						function() use ($buffer, $version)
-						{
-							$version
-								->recipientOfMinorNumberAsStringFromConverterIs(
-									$this->minorToStringConverter,
-									new php\string\recipient\fifo(
-										new php\string\recipient\prefix('.', $buffer),
-										new php\string\recipient\functor(
-											function() use ($buffer, $version)
-											{
-												$version
-													->recipientOfPatchNumberAsStringFromConverterIs(
-														$this->patchToStringConverter,
-														new php\string\recipient\prefix('.', $buffer)
-													)
-												;
-											}
-										)
-									)
+		parent::recipientOfMajorInSemverVersionAsStringIs(
+			$version,
+			new php\string\recipient\functor(
+				function($major) use ($buffer, $version)
+				{
+					$buffer->stringIs($major);
+
+					parent::recipientOfMinorInSemverVersionAsStringIs(
+						$version,
+						new php\string\recipient\functor(
+							function($minor) use ($buffer, $version)
+							{
+								(
+									new php\string\recipient\prefix\dot($buffer)
 								)
-							;
-						}
-					)
-				)
+									->stringIs($minor)
+								;
+
+								parent::recipientOfPatchInSemverVersionAsStringIs(
+									$version,
+									new php\string\recipient\prefix\dot($buffer)
+								);
+							}
+						)
+					);
+				}
 			)
-		;
+		);
 
 		$buffer->recipientOfStringIs($recipient);
 	}
