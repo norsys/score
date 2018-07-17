@@ -4,8 +4,8 @@ use norsys\score\{ composer\depedency\version\semver\converter\toString, php, co
 
 class wildcard extends toString\dot\aggregator
 {
-	function __construct(php\integer\converter\toString $majorToStringConverter = null, php\integer\converter\toString $minorToStringConverter = null)
+	function __construct(semver\number\converter\toString $majorToStringConverter = null, semver\number\converter\toString $minorToStringConverter = null)
 	{
-		parent::__construct($majorToStringConverter, $minorToStringConverter, new php\integer\converter\toString\any('*'));
+		parent::__construct($majorToStringConverter, $minorToStringConverter, new semver\number\converter\toString\any('*'));
 	}
 }

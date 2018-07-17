@@ -21,7 +21,7 @@ class official
 						$charlist
 							->recipientOfMaxCharInCharlistIs(
 								new recipient\functor(
-									function($maxChar) use ($minChar, $buffer)
+									function($maxChar) use ($buffer)
 									{
 										$buffer->stringIs('..');
 										$buffer->stringIs($maxChar);

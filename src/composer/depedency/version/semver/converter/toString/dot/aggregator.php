@@ -12,95 +12,55 @@ class aggregator
 		$patchToStringConverter
 	;
 
-	function __construct(php\integer\converter\toString $majorToStringConverter = null, php\integer\converter\toString $minorToStringConverter = null, php\integer\converter\toString $patchToStringConverter = null)
+	function __construct(semver\number\converter\toString $majorToStringConverter = null, semver\number\converter\toString $minorToStringConverter = null, semver\number\converter\toString $patchToStringConverter = null)
 	{
-		$this->majorToStringConverter = self::integerConverterIs($majorToStringConverter);
-		$this->minorToStringConverter = self::integerConverterIs($minorToStringConverter);
-		$this->patchToStringConverter = self::integerConverterIs($patchToStringConverter);
+		$this->majorToStringConverter = self::semverNumberConverterIs($majorToStringConverter);
+		$this->minorToStringConverter = self::semverNumberConverterIs($minorToStringConverter);
+		$this->patchToStringConverter = self::semverNumberConverterIs($patchToStringConverter);
 	}
 
 	function recipientOfSemverVersionAsStringIs(semver $version, php\string\recipient $recipient) :void
 	{
-		$buffer = null;
+		$buffer = new php\string\recipient\buffer;
 
 		$version
-			->recipientOfMajorNumberInSemverIs(
-				new semver\number\recipient\functor(
-					function($major) use (& $buffer, $version)
-					{
-						$this->majorToStringConverter
-							->recipientOfPhpIntegerAsStringIs(
-								$major,
-								new php\string\recipient\functor(
-									function($major) use (& $buffer, $version)
-									{
-										$buffer .= $major;
-
-										$version
-											->recipientOfMinorNumberInSemverIs(
-												new semver\number\recipient\functor(
-													function($minor) use (& $buffer, $version)
-													{
-														$this->minorToStringConverter
-															->recipientOfPhpIntegerAsStringIs(
-																$minor,
-																new php\string\recipient\functor(
-																	function($minor) use (& $buffer, $version)
-																	{
-																		$buffer .= '.' . $minor;
-
-																		$version
-																			->recipientOfPatchNumberInSemverIs(
-																				new semver\number\recipient\functor(
-																					function($patch) use (& $buffer)
-																					{
-																						$this->patchToStringConverter
-																							->recipientOfPhpIntegerAsStringIs(
-																								$patch,
-																								new php\string\recipient\functor(
-																									function($patch) use (& $buffer)
-																									{
-																										$buffer .= '.' . $patch;
-																									}
-																								)
-																							)
-																						;
-																					}
-																				)
-																			)
-																		;
-																	}
-																)
-															)
-														;
-													}
-												)
-											)
-										;
-									}
+			->recipientOfMajorNumberAsStringFromConverterIs(
+				$this->majorToStringConverter,
+				new php\string\recipient\fifo(
+					$buffer,
+					new php\string\recipient\functor(
+						function() use ($buffer, $version)
+						{
+							$version
+								->recipientOfMinorNumberAsStringFromConverterIs(
+									$this->minorToStringConverter,
+									new php\string\recipient\fifo(
+										new php\string\recipient\prefix('.', $buffer),
+										new php\string\recipient\functor(
+											function() use ($buffer, $version)
+											{
+												$version
+													->recipientOfPatchNumberAsStringFromConverterIs(
+														$this->patchToStringConverter,
+														new php\string\recipient\prefix('.', $buffer)
+													)
+												;
+											}
+										)
+									)
 								)
-							)
-						;
-					}
+							;
+						}
+					)
 				)
 			)
 		;
 
-		(new test\defined)
-			->recipientOfTestOnVariableIs(
-				$buffer,
-				new test\recipient\ifTrue\functor(
-					function() use ($buffer, $recipient)
-					{
-						$recipient->stringIs($buffer);
-					}
-				)
-			)
-		;
+		$buffer->recipientOfStringIs($recipient);
 	}
 
-	private static function integerConverterIs($variable) :php\integer\converter\toString
+	private static function semverNumberConverterIs($variable) :semver\number\converter\toString
 	{
-		return $variable ?: new php\integer\converter\toString\identical;
+		return $variable ?: new semver\number\converter\toString\identical;
 	}
 }

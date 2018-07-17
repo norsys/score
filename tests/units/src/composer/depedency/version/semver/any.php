@@ -29,7 +29,7 @@ class any extends units\test
 		;
 	}
 
-	function testRecipientOfMajorInSemverIs()
+	function testRecipientOfMajorNumberInSemverIs()
 	{
 		$this
 			->given(
@@ -51,7 +51,30 @@ class any extends units\test
 		;
 	}
 
-	function testRecipientOfMinorInSemverIs()
+	function testRecipientOfMajorNumberAsStringFromConverterIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$major = new mockOfScore\composer\depedency\version\semver\number
+				),
+				$converter = new mockOfScore\composer\depedency\version\semver\number\converter\toString,
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfMajorNumberAsStringFromConverterIs($converter, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($major))
+				->mock($converter)
+					->receive('recipientOfSemverNumberAsStringIs')
+						->withArguments($major, $recipient)
+							->once
+		;
+	}
+
+	function testRecipientOfMinorNumberInSemverIs()
 	{
 		$this
 			->given(
@@ -74,7 +97,31 @@ class any extends units\test
 		;
 	}
 
-	function testRecipientOfPatchInSemverIs()
+	function testRecipientOfMinorNumberAsStringFromConverterIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$major = new mockOfScore\composer\depedency\version\semver\number,
+					$minor = new mockOfScore\composer\depedency\version\semver\number
+				),
+				$converter = new mockOfScore\composer\depedency\version\semver\number\converter\toString,
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfMinorNumberAsStringFromConverterIs($converter, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($major, $minor))
+				->mock($converter)
+					->receive('recipientOfSemverNumberAsStringIs')
+						->withArguments($minor, $recipient)
+							->once
+		;
+	}
+
+	function testRecipientOfPatchNumberInSemverIs()
 	{
 		$this
 			->given(
@@ -94,6 +141,31 @@ class any extends units\test
 				->mock($recipient)
 					->receive('semverVersionNumberIs')
 						->withArguments($patch)
+							->once
+		;
+	}
+
+	function testRecipientOfPatchNumberAsStringFromConverterIs()
+	{
+		$this
+			->given(
+				$this->newTestedInstance(
+					$major = new mockOfScore\composer\depedency\version\semver\number,
+					$minor = new mockOfScore\composer\depedency\version\semver\number,
+					$patch = new mockOfScore\composer\depedency\version\semver\number
+				),
+				$converter = new mockOfScore\composer\depedency\version\semver\number\converter\toString,
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfPatchNumberAsStringFromConverterIs($converter, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance($major, $minor, $patch))
+				->mock($converter)
+					->receive('recipientOfSemverNumberAsStringIs')
+						->withArguments($patch, $recipient)
 							->once
 		;
 	}

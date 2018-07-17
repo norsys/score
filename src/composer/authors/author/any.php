@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\authors\author;
 
-use norsys\score\composer\{ authors\author, authors\author\part, part\object\any as object };
+use norsys\score\composer\{ authors\author, authors\author\part };
 use norsys\score\serializer\keyValue as serializer;
 
 class any
@@ -18,6 +18,12 @@ class any
 
 	function keyValueSerializerIs(serializer $serializer) :void
 	{
-		$serializer->objectToSerializeIs(new serializer\part\container\fifo(... $this->parts));
+		$serializer
+			->objectToSerializeIs(
+				new serializer\part\container\fifo(
+					... $this->parts
+				)
+			)
+		;
 	}
 }

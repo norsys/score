@@ -26,14 +26,29 @@ class any
 		$recipient->semverVersionNumberIs($this->major);
 	}
 
+	function recipientOfMajorNumberAsStringFromConverterIs(semver\number\converter\toString $converter, php\string\recipient $recipient) :void
+	{
+		$converter->recipientOfSemverNumberAsStringIs($this->major, $recipient);
+	}
+
 	function recipientOfMinorNumberInSemverIs(semver\number\recipient $recipient) :void
 	{
 		$recipient->semverVersionNumberIs($this->minor);
 	}
 
+	function recipientOfMinorNumberAsStringFromConverterIs(semver\number\converter\toString $converter, php\string\recipient $recipient) :void
+	{
+		$converter->recipientOfSemverNumberAsStringIs($this->minor, $recipient);
+	}
+
 	function recipientOfPatchNumberInSemverIs(semver\number\recipient $recipient) :void
 	{
 		$recipient->semverVersionNumberIs($this->patch);
+	}
+
+	function recipientOfPatchNumberAsStringFromConverterIs(semver\number\converter\toString $converter, php\string\recipient $recipient) :void
+	{
+		$converter->recipientOfSemverNumberAsStringIs($this->patch, $recipient);
 	}
 
 	function recipientOfStringIs(php\string\recipient $recipient) :void

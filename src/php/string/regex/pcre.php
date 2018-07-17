@@ -16,7 +16,7 @@ class pcre
 
 	function __construct(string $regex)
 	{
-		$previousErrorHandler = set_error_handler(function($errno, $errstr) {});
+		$previousErrorHandler = set_error_handler(function() {});
 
 		(
 			new test\isFalse\strictly

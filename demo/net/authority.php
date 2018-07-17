@@ -13,9 +13,9 @@ use norsys\score\net\uri\{
 (
 	new authority\any(
 		new host\any('norsys.fr'),
-		new port\any(80),
+		new port\http,
 		new info\any(
-			new info\user\any('mageekguy'),
+			new info\user\mageekguy,
 			new info\password\any('verySecuredPassword')
 		)
 	)

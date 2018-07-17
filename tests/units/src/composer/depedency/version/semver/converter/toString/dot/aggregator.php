@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../../../../../runner.php';
 
-use norsys\score\{ tests\units, php };
+use norsys\score\{ tests\units, composer\depedency\version\semver\number };
 use mock\norsys\score as mockOfScore;
 
 class aggregator extends units\test
@@ -20,9 +20,9 @@ class aggregator extends units\test
 			->object($this->newTestedInstance)
 				->isEqualTo(
 					$this->newTestedInstance(
-						new php\integer\converter\toString\identical,
-						new php\integer\converter\toString\identical,
-						new php\integer\converter\toString\identical
+						new number\converter\toString\identical,
+						new number\converter\toString\identical,
+						new number\converter\toString\identical
 					)
 				)
 		;
@@ -33,9 +33,9 @@ class aggregator extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$majorToStringConverter = new mockOfScore\php\integer\converter\toString,
-					$minorToStringConverter = new mockOfScore\php\integer\converter\toString,
-					$patchToStringConverter = new mockOfScore\php\integer\converter\toString
+					$majorToStringConverter = new mockOfScore\composer\depedency\version\semver\number\converter\toString,
+					$minorToStringConverter = new mockOfScore\composer\depedency\version\semver\number\converter\toString,
+					$patchToStringConverter = new mockOfScore\composer\depedency\version\semver\number\converter\toString
 				),
 				$semver = new mockOfScore\composer\depedency\version\semver,
 				$recipient = new mockOfScore\php\string\recipient
@@ -51,14 +51,9 @@ class aggregator extends units\test
 						->never
 
 			->given(
-				$major = new mockOfScore\composer\depedency\version\semver\number,
-				$this->calling($semver)->recipientOfMajorNumberInSemverIs = function($aRecipient) use ($major) {
-					$aRecipient->semverVersionNumberIs($major);
-				},
-
 				$majorAsString = uniqid(),
-				$this->calling($majorToStringConverter)->recipientOfPhpIntegerAsStringIs = function($aPhpInteger, $aRecipient) use ($major, $majorAsString) {
-					if ($aPhpInteger == $major)
+				$this->calling($semver)->recipientOfMajorNumberAsStringFromConverterIs = function($aConverter, $aRecipient) use ($majorToStringConverter, $majorAsString) {
+					if ($aConverter == $majorToStringConverter)
 					{
 						$aRecipient->stringIs($majorAsString);
 					}
@@ -76,14 +71,9 @@ class aggregator extends units\test
 							->once
 
 			->given(
-				$minor = new mockOfScore\composer\depedency\version\semver\number,
-				$this->calling($semver)->recipientOfminorNumberInSemverIs = function($aRecipient) use ($minor) {
-					$aRecipient->semverVersionNumberIs($minor);
-				},
-
 				$minorAsString = uniqid(),
-				$this->calling($minorToStringConverter)->recipientOfPhpIntegerAsStringIs = function($aPhpInteger, $aRecipient) use ($minor, $minorAsString) {
-					if ($aPhpInteger == $minor)
+				$this->calling($semver)->recipientOfMinorNumberAsStringFromConverterIs = function($aConverter, $aRecipient) use ($minorToStringConverter, $minorAsString) {
+					if ($aConverter == $minorToStringConverter)
 					{
 						$aRecipient->stringIs($minorAsString);
 					}
@@ -102,14 +92,9 @@ class aggregator extends units\test
 
 
 			->given(
-				$patch = new mockOfScore\composer\depedency\version\semver\number,
-				$this->calling($semver)->recipientOfpatchNumberInSemverIs = function($aRecipient) use ($patch) {
-					$aRecipient->semverVersionNumberIs($patch);
-				},
-
 				$patchAsString = uniqid(),
-				$this->calling($patchToStringConverter)->recipientOfPhpIntegerAsStringIs = function($aPhpInteger, $aRecipient) use ($patch, $patchAsString) {
-					if ($aPhpInteger == $patch)
+				$this->calling($semver)->recipientOfpatchNumberAsStringFromConverterIs = function($aConverter, $aRecipient) use ($patchToStringConverter, $patchAsString) {
+					if ($aConverter == $patchToStringConverter)
 					{
 						$aRecipient->stringIs($patchAsString);
 					}
