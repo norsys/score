@@ -1,8 +1,9 @@
 <?php namespace norsys\score\php\string;
 
-use norsys\score\php\string\{ provider, recipient, recipient\functor };
+use norsys\score\php\string\{ provider, recipient, recipient\functor, operator };
 use norsys\score\php\test\{ defined, recipient\ifTrue\functor as ifTrue };
-use norsys\score\container\iterator\{ fifo, block\functor as iteratorBlock };
+use norsys\score\container\iterator\{ block\functor as iteratorBlock };
+use norsys\score\container\fifo;
 
 class join
 	implements
@@ -26,38 +27,28 @@ class join
 				new functor(
 					function($glue) use ($recipient)
 					{
-						(new fifo)
-							->variablesForIteratorBlockAre(
+						$buffer = new recipient\buffer\join($glue);
+
+						(
+							new fifo(
+								... $this->providers
+							)
+						)
+							->blockForIteratorIs(
 								new iteratorBlock(
-									function($iterator, $provider) use (& $strings)
+									function($iterator, $provider) use ($buffer)
 									{
 										$provider
 											->recipientOfStringIs(
-												new functor(
-													function($string) use (& $strings)
-													{
-														$strings[] = $string;
-													}
-												)
+												$buffer
 											)
 										;
-									}
-								),
-								... $this->providers
-							)
-						;
-
-						(new defined)
-							->recipientOfTestOnVariableIs(
-								$strings,
-								new ifTrue(
-									function() use ($recipient, $glue, $strings)
-									{
-										$recipient->stringIs(join($glue, $strings));
 									}
 								)
 							)
 						;
+
+						$buffer->recipientOfStringIs($recipient);
 					}
 				)
 			)
