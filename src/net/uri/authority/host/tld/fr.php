@@ -1,16 +1,16 @@
 <?php namespace norsys\score\net\uri\authority\host\tld;
 
 use norsys\score\{
-	net\uri\authority\host,
-	php\string\recipient
+	php,
+	net\uri\authority\host
 };
 
-class fr
+class fr extends php\string\any
 	implements
 		host
 {
-	function recipientOfStringIs(recipient $recipient) :void
+	function __construct()
 	{
-		$recipient->stringIs('fr');
+		parent::__construct('fr');
 	}
 }
