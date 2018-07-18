@@ -39,9 +39,4 @@ class aggregator extends semver\converter\toString\dot
 
 		$buffer->recipientOfStringIs($recipient);
 	}
-
-	private static function semverNumberConverterIs($variable) :semver\number\converter\toString
-	{
-		return $variable ?: new semver\number\converter\toString\identical;
-	}
 }
