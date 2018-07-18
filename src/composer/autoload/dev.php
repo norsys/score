@@ -1,6 +1,5 @@
 <?php namespace norsys\score\composer\autoload;
 
-use norsys\score\score;
 use norsys\score\composer\{
 	autoload,
 	autoload\type,
