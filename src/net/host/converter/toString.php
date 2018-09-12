@@ -1,7 +1,7 @@
-<?php namespace norsys\score\net\uri\authority\host\converter;
+<?php namespace norsys\score\net\host\converter;
 
 use norsys\score\{
-	net\uri\authority\host,
+	net\host,
 	php\string\recipient
 };
 

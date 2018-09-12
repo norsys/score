@@ -19,7 +19,7 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$host = new mockOfScore\net\uri\authority\host,
+					$host = new mockOfScore\net\host,
 					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),
@@ -44,7 +44,7 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$host = new mockOfScore\net\uri\authority\host,
+					$host = new mockOfScore\net\host,
 					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),
@@ -69,11 +69,11 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$host = new mockOfScore\net\uri\authority\host,
+					$host = new mockOfScore\net\host,
 					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),
-				$converter = new mockOfScore\net\uri\authority\host\converter\toString,
+				$converter = new mockOfScore\net\host\converter\toString,
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -94,7 +94,7 @@ class any extends units\test
 		$this
 			->given(
 				$this->newTestedInstance(
-					$host = new mockOfScore\net\uri\authority\host,
+					$host = new mockOfScore\net\host,
 					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),

@@ -3,10 +3,10 @@
 require __DIR__ . '/../../vendor/autoload.php';
 
 use norsys\score\php\string\recipient\vardump;
+use norsys\score\net\port;
 use norsys\score\net\uri\{
 	authority,
 	authority\host,
-	authority\port,
 	authority\user\info
 };
 

@@ -1,8 +1,8 @@
-<?php namespace norsys\score\net\uri\authority\host\tld;
+<?php namespace norsys\score\net\host\tld;
 
 use norsys\score\{
 	php,
-	net\uri\authority\host
+	net\host
 };
 
 class fr extends php\string\any

@@ -1,6 +1,6 @@
-<?php namespace norsys\score\tests\units\net\uri\authority\host\tld;
+<?php namespace norsys\score\tests\units\net\host\tld;
 
-require __DIR__ . '/../../../../../../runner.php';
+require __DIR__ . '/../../../../runner.php';
 
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
@@ -10,7 +10,7 @@ class fr extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\net\uri\authority\host')
+			->implements('norsys\score\net\host')
 		;
 	}
 

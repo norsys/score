@@ -3,7 +3,7 @@
 use norsys\score\{
 	net\uri\authority,
 	net\uri\authority\user,
-	net\uri\authority\host,
+	net\host,
 	net\port,
 	php\string\recipient
 };

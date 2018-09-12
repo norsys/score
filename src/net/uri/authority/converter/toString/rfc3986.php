@@ -1,6 +1,7 @@
 <?php namespace norsys\score\net\uri\authority\converter\toString;
 
 use norsys\score\{
+	net\host,
 	net\port,
 	net\uri\authority,
 	net\uri\authority\converter\toString,
@@ -15,7 +16,7 @@ class rfc3986
 	{
 		$authority
 			->recipientOfHostInUriAuthorityAsStringFromConverterIs(
-				new authority\host\converter\toString\rfc3986,
+				new host\converter\toString\rfc3986,
 				new recipient\functor(
 					function($host) use ($authority, $recipient)
 					{

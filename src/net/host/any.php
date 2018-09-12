@@ -1,7 +1,7 @@
-<?php namespace norsys\score\net\uri\authority\host;
+<?php namespace norsys\score\net\host;
 
 use norsys\score\{
-	net\uri\authority\host,
+	net\host,
 	php,
 	php\string\regex\pcre,
 	php\test\match\regex,

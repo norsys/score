@@ -4,7 +4,7 @@ require __DIR__ . '/../../../../../../runner.php';
 
 use norsys\score\{
 	tests\units,
-	net\uri\authority\host,
+	net\host,
 	net\port,
 	net\uri\authority\user
 };
