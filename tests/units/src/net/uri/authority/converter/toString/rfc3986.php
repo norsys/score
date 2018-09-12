@@ -5,7 +5,7 @@ require __DIR__ . '/../../../../../../runner.php';
 use norsys\score\{
 	tests\units,
 	net\uri\authority\host,
-	net\uri\authority\port,
+	net\port,
 	net\uri\authority\user
 };
 use mock\norsys\score as mockOfScore;

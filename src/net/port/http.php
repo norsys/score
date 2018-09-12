@@ -1,7 +1,7 @@
-<?php namespace norsys\score\net\uri\authority\port;
+<?php namespace norsys\score\net\port;
 
 use norsys\score\{
-	net\uri\authority\port,
+	net\port,
 	php
 };
 

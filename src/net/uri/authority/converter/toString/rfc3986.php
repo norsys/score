@@ -1,6 +1,7 @@
 <?php namespace norsys\score\net\uri\authority\converter\toString;
 
 use norsys\score\{
+	net\port,
 	net\uri\authority,
 	net\uri\authority\converter\toString,
 	php\string\recipient
@@ -31,7 +32,7 @@ class rfc3986
 
 						$authority
 							->recipientOfPortInUriAuthorityAsStringFromConverterIs(
-								new authority\port\converter\toString\rfc3986,
+								new port\converter\toString\rfc3986,
 								new recipient\prefix(':', $buffer)
 							)
 						;

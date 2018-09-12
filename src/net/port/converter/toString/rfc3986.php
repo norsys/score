@@ -1,8 +1,8 @@
-<?php namespace norsys\score\net\uri\authority\port\converter\toString;
+<?php namespace norsys\score\net\port\converter\toString;
 
 use norsys\score\{
-	net\uri\authority\port\converter\toString,
-	net\uri\authority\port,
+	net\port\converter\toString,
+	net\port,
 	php\string\recipient
 };
 

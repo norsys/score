@@ -1,4 +1,4 @@
-<?php namespace norsys\score\net\uri\authority;
+<?php namespace norsys\score\net;
 
 use norsys\score\php\integer\unsigned;
 

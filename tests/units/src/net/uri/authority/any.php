@@ -20,7 +20,7 @@ class any extends units\test
 			->given(
 				$this->newTestedInstance(
 					$host = new mockOfScore\net\uri\authority\host,
-					$port = new mockOfScore\net\uri\authority\port,
+					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),
 				$converter = new mockOfScore\net\uri\authority\converter\toString,
@@ -45,7 +45,7 @@ class any extends units\test
 			->given(
 				$this->newTestedInstance(
 					$host = new mockOfScore\net\uri\authority\host,
-					$port = new mockOfScore\net\uri\authority\port,
+					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),
 				$converter = new mockOfScore\net\uri\authority\user\info\converter\toString,
@@ -70,7 +70,7 @@ class any extends units\test
 			->given(
 				$this->newTestedInstance(
 					$host = new mockOfScore\net\uri\authority\host,
-					$port = new mockOfScore\net\uri\authority\port,
+					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),
 				$converter = new mockOfScore\net\uri\authority\host\converter\toString,
@@ -95,10 +95,10 @@ class any extends units\test
 			->given(
 				$this->newTestedInstance(
 					$host = new mockOfScore\net\uri\authority\host,
-					$port = new mockOfScore\net\uri\authority\port,
+					$port = new mockOfScore\net\port,
 					$userInfo = new mockOfScore\net\uri\authority\user\info
 				),
-				$converter = new mockOfScore\net\uri\authority\port\converter\toString,
+				$converter = new mockOfScore\net\port\converter\toString,
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(

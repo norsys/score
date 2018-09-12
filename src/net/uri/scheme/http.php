@@ -2,7 +2,10 @@
 
 use norsys\score\{
 	php,
-	net\uri\scheme
+	net\uri\scheme,
+	net\port,
+	net\port\converter\toString
+
 };
 
 class http extends php\string\any
@@ -12,5 +15,15 @@ class http extends php\string\any
 	function __construct()
 	{
 		parent::__construct('http');
+	}
+
+	function recipientOfPortInUriSchemeAsStringFromConverterIs(toString $converter, php\string\recipient $recipient) :void
+	{
+		$converter
+			->recipientOfPortInUriAuthorityAsStringIs(
+				new port\http,
+				$recipient
+			)
+		;
 	}
 }

@@ -2,6 +2,7 @@
 
 use norsys\score\{
 	php,
+	net\port,
 	net\uri\scheme
 };
 
@@ -26,5 +27,9 @@ class any extends php\string\lowercase
 				)
 			)
 		;
+	}
+
+	function recipientOfPortInUriSchemeAsStringFromConverterIs(port\converter\toString $converter, php\string\recipient $recipient) :void
+	{
 	}
 }

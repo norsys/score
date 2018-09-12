@@ -1,6 +1,6 @@
-<?php namespace norsys\score\tests\units\net\uri\authority\port\converter\toString;
+<?php namespace norsys\score\tests\units\net\port\converter\toString;
 
-require __DIR__ . '/../../../../../../../runner.php';
+require __DIR__ . '/../../../../../runner.php';
 
 use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
@@ -10,7 +10,7 @@ class rfc3986 extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\net\uri\authority\port\converter\toString')
+			->implements('norsys\score\net\port\converter\toString')
 		;
 	}
 
@@ -19,7 +19,7 @@ class rfc3986 extends units\test
 		$this
 			->given(
 				$this->newTestedInstance,
-				$port = new mockOfScore\net\uri\authority\port,
+				$port = new mockOfScore\net\port,
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(

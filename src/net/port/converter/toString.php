@@ -1,7 +1,7 @@
-<?php namespace norsys\score\net\uri\authority\port\converter;
+<?php namespace norsys\score\net\port\converter;
 
 use norsys\score\{
-	net\uri\authority\port,
+	net\port,
 	php\string\recipient
 };
 
