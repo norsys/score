@@ -20,11 +20,11 @@ class any extends units\test
 	function test__construct_withBadArgument($argument)
 	{
 		$this
-			->exception(function() use ($argument) { $this->newTestedInstance($argument); })
+			->exception(function() use ($argument) { $this->newTestedInstance($argument, new mockOfScore\net\port); })
 				->isInstanceOf('invalidArgumentException')
 				->hasMessage('Scheme must follow ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )')
 
-			->exception(function() use ($argument, & $exception) { $this->newTestedInstance($argument, $exception = new \mock\exception); })
+			->exception(function() use ($argument, & $exception) { $this->newTestedInstance($argument, new mockOfScore\net\port, $exception = new \mock\exception); })
 				->isIdenticalTo($exception)
 		;
 	}
@@ -49,7 +49,7 @@ class any extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance($scheme),
+				$this->newTestedInstance($scheme, $port = new mockOfScore\net\port),
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -57,7 +57,7 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($scheme))
+					->isEqualTo($this->newTestedInstance($scheme, $port))
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments($string)
@@ -80,4 +80,27 @@ class any extends units\test
 		];
 	}
 
+	/**
+	 * @dataProvider goodArgumentProvider
+	 */
+	function testRecipientOfPortInUriAsStringFromConverterIs($scheme)
+	{
+		$this
+			->given(
+				$this->newTestedInstance('http', $port = new mockOfScore\net\port),
+				$converter = new mockOfScore\net\port\converter\toString,
+				$recipient = new mockOfScore\php\string\recipient
+			)
+			->if(
+				$this->testedInstance->recipientOfPortInUriSchemeAsStringFromConverterIs($converter, $recipient)
+			)
+			->then
+				->object($this->testedInstance)
+					->isEqualTo($this->newTestedInstance('http', $port))
+				->mock($converter)
+					->receive('recipientOfPortInUriAuthorityAsStringIs')
+						->withArguments($port, $recipient)
+							->once
+		;
+	}
 }
