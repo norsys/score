@@ -14,7 +14,7 @@ class rfc3986 extends units\test
 		;
 	}
 
-	function testRecipientOfPortInUriAsStringIs()
+	function testRecipientOfNetPortAsStringIs()
 	{
 		$this
 			->given(
@@ -23,7 +23,7 @@ class rfc3986 extends units\test
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
-				$this->testedInstance->recipientOfPortInUriAuthorityAsStringIs($port, $recipient)
+				$this->testedInstance->recipientOfNetPortAsStringIs($port, $recipient)
 			)
 			->then
 				->object($this->testedInstance)
@@ -39,7 +39,7 @@ class rfc3986 extends units\test
 				}
 			)
 			->if(
-				$this->testedInstance->recipientOfPortInUriAuthorityAsStringIs($port, $recipient)
+				$this->testedInstance->recipientOfNetPortAsStringIs($port, $recipient)
 			)
 			->then
 				->object($this->testedInstance)

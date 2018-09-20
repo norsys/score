@@ -14,42 +14,14 @@ class any extends units\test
 		;
 	}
 
-	/**
-	 * @dataProvider badArgumentProvider
-	 */
-	function test__construct_withBadArgument($argument)
-	{
-		$this
-			->exception(function() use ($argument) { $this->newTestedInstance($argument, new mockOfScore\net\port); })
-				->isInstanceOf('invalidArgumentException')
-				->hasMessage('Scheme must follow ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )')
-
-			->exception(function() use ($argument, & $exception) { $this->newTestedInstance($argument, new mockOfScore\net\port, $exception = new \mock\exception); })
-				->isIdenticalTo($exception)
-		;
-	}
-
-	protected function badArgumentProvider()
-	{
-		return [
-			'',
-			'+',
-			'-',
-			'.',
-			rand(0, PHP_INT_MAX),
-			'a%',
-			'a$'
-		];
-	}
-
-	/**
-	 * @dataProvider goodArgumentProvider
-	 */
-	function testRecipientOfString_withSchemeForString($scheme, $string)
+	function testRecipientOfString()
 	{
 		$this
 			->given(
-				$this->newTestedInstance($scheme, $port = new mockOfScore\net\port),
+				$this->newTestedInstance(
+					$scheme = uniqid(),
+					$port = new mockOfScore\net\port
+				),
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -60,34 +32,16 @@ class any extends units\test
 					->isEqualTo($this->newTestedInstance($scheme, $port))
 				->mock($recipient)
 					->receive('stringIs')
-						->withArguments($string)
+						->withArguments($scheme)
 							->once
 		;
 	}
 
-	protected function goodArgumentProvider()
-	{
-		return [
-			[ 'a', 'a' ],
-			[ 'A', 'a' ],
-			[ 'http', 'http' ],
-			[ 'HTTP', 'http' ],
-			[ 'HTTP-2', 'http-2' ],
-			[ 'http+2', 'http+2' ],
-			[ 'HTTP+2', 'http+2' ],
-			[ 'http.2', 'http.2' ],
-			[ 'HTTP.2', 'http.2' ],
-		];
-	}
-
-	/**
-	 * @dataProvider goodArgumentProvider
-	 */
-	function testRecipientOfPortInUriAsStringFromConverterIs($scheme)
+	function testRecipientOfPortInUriSchemeAsStringFromConverterIs()
 	{
 		$this
 			->given(
-				$this->newTestedInstance('http', $port = new mockOfScore\net\port),
+				$this->newTestedInstance($scheme = uniqid(), $port = new mockOfScore\net\port),
 				$converter = new mockOfScore\net\port\converter\toString,
 				$recipient = new mockOfScore\php\string\recipient
 			)
@@ -96,9 +50,9 @@ class any extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance('http', $port))
+					->isEqualTo($this->newTestedInstance($scheme, $port))
 				->mock($converter)
-					->receive('recipientOfPortInUriAuthorityAsStringIs')
+					->receive('recipientOfNetPortAsStringIs')
 						->withArguments($port, $recipient)
 							->once
 		;

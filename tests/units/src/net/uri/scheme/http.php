@@ -15,11 +15,16 @@ class http extends units\test
 		;
 	}
 
+	function test__construct()
+	{
+		$this->object($this->newTestedInstance)->isEqualTo($this->newTestedInstance(new port\blackhole));
+	}
+
 	function testRecipientOfString()
 	{
 		$this
 			->given(
-				$this->newTestedInstance,
+				$this->newTestedInstance($port = new mockOfScore\net\port),
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -27,7 +32,7 @@ class http extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
+					->isEqualTo($this->newTestedInstance($port))
 				->mock($recipient)
 					->receive('stringIs')
 						->withArguments('http')
@@ -39,7 +44,7 @@ class http extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance,
+				$this->newTestedInstance($port = new mockOfScore\net\port),
 				$converter = new mockOfScore\net\port\converter\toString,
 				$recipient = new mockOfScore\php\string\recipient
 			)
@@ -48,29 +53,10 @@ class http extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('stringIs')
-						->never
-
-			->given(
-				$portAsString = uniqid(),
-				$this->calling($converter)->recipientOfPortInUriAuthorityAsStringIs = function($aPort, $aRecipient) use ($portAsString) {
-					if ($aPort == new port\http)
-					{
-						$aRecipient->stringIs($portAsString);
-					}
-				}
-			)
-			->if(
-				$this->testedInstance->recipientOfPortInUriSchemeAsStringFromConverterIs($converter, $recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('stringIs')
-						->withArguments($portAsString)
+					->isEqualTo($this->newTestedInstance($port))
+				->mock($converter)
+					->receive('recipientOfNetPortAsStringIs')
+						->withArguments($port, $recipient)
 							->once
 		;
 	}

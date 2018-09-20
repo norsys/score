@@ -10,7 +10,7 @@ class rfc3986
 	implements
 		toString
 {
-	function recipientOfPortInUriAuthorityAsStringIs(port $port, recipient $recipient) :void
+	function recipientOfNetPortAsStringIs(port $port, recipient $recipient) :void
 	{
 		$port
 			->recipientOfStringIs(

@@ -12,29 +12,15 @@ class any extends php\string\lowercase
 {
 	private $port;
 
-	function __construct(string $string, port $port, \exception $exception = null)
+	function __construct(string $string, port $port)
 	{
 		parent::__construct($string);
-
-		(
-			new php\test\match\regex(
-				new php\string\regex\pcre('/^[a-z][a-z0-9+-.]*$/'),
-				$this
-			)
-		)
-			->recipientOfTestIs(
-				new php\test\recipient\ifFalse\exception\fallback(
-					new \invalidArgumentException('Scheme must follow ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )'),
-					$exception
-				)
-			)
-		;
 
 		$this->port = $port;
 	}
 
 	function recipientOfPortInUriSchemeAsStringFromConverterIs(port\converter\toString $converter, php\string\recipient $recipient) :void
 	{
-		$converter->recipientOfPortInUriAuthorityAsStringIs($this->port, $recipient);
+		$converter->recipientOfNetPortAsStringIs($this->port, $recipient);
 	}
 }

@@ -108,7 +108,7 @@ class any extends units\test
 				->object($this->testedInstance)
 					->isEqualTo($this->newTestedInstance($host, $port, $userInfo))
 				->mock($converter)
-					->receive('recipientOfPortInUriAuthorityAsStringIs')
+					->receive('recipientOfNetPortAsStringIs')
 						->withArguments($port, $recipient)
 							->once
 		;

@@ -40,6 +40,6 @@ class any
 
 	function recipientOfPortInUriAuthorityAsStringFromConverterIs(port\converter\toString $converter, recipient $recipient) :void
 	{
-		$converter->recipientOfPortInUriAuthorityAsStringIs($this->port, $recipient);
+		$converter->recipientOfNetPortAsStringIs($this->port, $recipient);
 	}
 }

@@ -7,5 +7,5 @@ use norsys\score\{
 
 interface toString
 {
-	function recipientOfPortInUriAuthorityAsStringIs(port $port, recipient $recipient) :void;
+	function recipientOfNetPortAsStringIs(port $port, recipient $recipient) :void;
 }

@@ -8,22 +8,12 @@ use norsys\score\{
 
 };
 
-class http extends php\string\any
+class http extends scheme\any
 	implements
 		scheme
 {
-	function __construct()
+	function __construct(port $port = null)
 	{
-		parent::__construct('http');
-	}
-
-	function recipientOfPortInUriSchemeAsStringFromConverterIs(toString $converter, php\string\recipient $recipient) :void
-	{
-		$converter
-			->recipientOfPortInUriAuthorityAsStringIs(
-				new port\http,
-				$recipient
-			)
-		;
+		parent::__construct('http', $port ?: new port\blackhole);
 	}
 }
