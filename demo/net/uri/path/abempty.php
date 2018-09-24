@@ -9,41 +9,6 @@ use norsys\score\net\uri\{
 };
 
 (
-	new path\abempty(
-		new segment\any('')
-	)
-)
-	->recipientOfSegmentInNetUriPathAsStringFromConverterIs(
-		new path\segment\converter\toString\rfc3986,
-		new vardump
-	)
-;
-
-
-(
-	new path\abempty(
-		new segment\any('foo')
-	)
-)
-	->recipientOfSegmentInNetUriPathAsStringFromConverterIs(
-		new path\segment\converter\toString\rfc3986,
-		new vardump
-	)
-;
-
-(
-	new path\abempty(
-		new segment\any('foo'),
-		new segment\any('bar')
-	)
-)
-	->recipientOfSegmentInNetUriPathAsStringFromConverterIs(
-		new path\segment\converter\toString\rfc3986,
-		new vardump
-	)
-;
-
-(
 	new path\converter\toString\rfc3986
 )
 	->recipientOfNetUriPathAsStringIs(
