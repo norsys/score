@@ -6,7 +6,7 @@ class aggregator extends semver\converter\toString\dot
 {
 	function recipientOfSemverVersionAsStringIs(semver $version, php\string\recipient $recipient) :void
 	{
-		$buffer = new php\string\recipient\buffer;
+		$buffer = new php\string\recipient\buffer\join('.');
 
 		parent::recipientOfMajorInSemverVersionAsStringIs(
 			$version,
@@ -20,15 +20,13 @@ class aggregator extends semver\converter\toString\dot
 						new php\string\recipient\functor(
 							function($minor) use ($buffer, $version)
 							{
-								(
-									new php\string\recipient\prefix\dot($buffer)
-								)
+								$buffer
 									->stringIs($minor)
 								;
 
 								parent::recipientOfPatchInSemverVersionAsStringIs(
 									$version,
-									new php\string\recipient\prefix\dot($buffer)
+									$buffer
 								);
 							}
 						)
