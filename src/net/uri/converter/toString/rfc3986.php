@@ -4,6 +4,7 @@ use norsys\score\{
 	net\uri,
 	net\uri\converter\toString,
 	php\string\recipient,
+	php\string\provider,
 	php\string\buffer
 };
 
@@ -30,16 +31,27 @@ class rfc3986
 				new recipient\functor(
 					function($scheme) use ($uri, $recipient)
 					{
-						$buffer = new recipient\buffer(new buffer\infinite($scheme));
-
-						$uri
-							->recipientOfNetUriHierPartAsStringFromConverterIs(
-								$this->hierPartConverter,
-								new recipient\prefix(':', $buffer)
+						(
+							new buffer\infinite($scheme)
+						)
+							->recipientOfStringFromProviderIs(
+								new provider\functor(
+									function($recipient) use ($uri)
+									{
+										$uri
+											->recipientOfNetUriHierPartAsStringFromConverterIs(
+												$this->hierPartConverter,
+												new recipient\prefix(
+													':',
+													$recipient
+												)
+											)
+										;
+									}
+								),
+								$recipient
 							)
 						;
-
-						$buffer->recipientOfStringIs($recipient);
 					}
 				)
 			)

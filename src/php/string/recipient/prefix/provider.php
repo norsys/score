@@ -7,7 +7,7 @@ class provider
 		recipient
 {
 	private
-		$suffix,
+		$prefix,
 		$recipient
 	;
 

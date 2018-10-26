@@ -3,6 +3,7 @@
 use norsys\score\php\{
 	charlist,
 	string\recipient,
+	string\provider,
 	string\buffer
 };
 
@@ -10,31 +11,36 @@ class official
 {
 	function recipientOfCharlistAsStringIs(charlist $charlist, recipient $recipient)
 	{
-		$buffer = new recipient\buffer(new buffer\infinite(''));
-
-		$charlist
-			->recipientOfMinCharInCharlistIs(
-				new recipient\functor(
-					function($minChar) use ($charlist, $buffer)
+		(
+			new buffer\infinite('')
+		)
+			->recipientOfStringFromProviderIs(
+				new provider\functor(
+					function($recipient) use ($charlist)
 					{
-						$buffer->stringIs($minChar);
-
 						$charlist
-							->recipientOfMaxCharInCharlistIs(
+							->recipientOfMinCharInCharlistIs(
 								new recipient\functor(
-									function($maxChar) use ($buffer)
+									function($minChar) use ($charlist, $recipient)
 									{
-										$buffer->stringIs('..');
-										$buffer->stringIs($maxChar);
+										$recipient->stringIs($minChar);
+
+										$charlist
+											->recipientOfMaxCharInCharlistIs(
+												new recipient\prefix(
+													'..',
+													$recipient
+												)
+											)
+										;
 									}
 								)
 							)
 						;
 					}
-				)
+				),
+				$recipient
 			)
 		;
-
-		$buffer->recipientOfStringIs($recipient);
 	}
 }

@@ -4,6 +4,7 @@ use norsys\score\{
 	net\uri\path,
 	net\uri\path\converter\toString,
 	php\string\recipient,
+	php\string\provider,
 	php\string\buffer
 };
 
@@ -13,15 +14,23 @@ class rfc3986
 {
 	function recipientOfNetUriPathAsStringIs(path $path, recipient $recipient) :void
 	{
-		$buffer = new recipient\buffer(new buffer\infinite);
-
-		$path
-			->recipientOfSegmentInNetUriPathAsStringFromConverterIs(
-				new path\segment\converter\toString\rfc3986,
-				$buffer
+		(
+			new buffer\infinite
+		)
+			->recipientOfStringFromProviderIs(
+				new provider\functor(
+					function($recipient) use ($path)
+					{
+						$path
+							->recipientOfSegmentInNetUriPathAsStringFromConverterIs(
+								new path\segment\converter\toString\rfc3986,
+								$recipient
+							)
+						;
+					}
+				),
+				$recipient
 			)
 		;
-
-		$buffer->recipientOfStringIs($recipient);
 	}
 }
