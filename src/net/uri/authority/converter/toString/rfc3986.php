@@ -5,7 +5,8 @@ use norsys\score\{
 	net\port,
 	net\uri\authority,
 	net\uri\authority\converter\toString,
-	php\string\recipient
+	php\string\recipient,
+	php\string\buffer
 };
 
 class rfc3986
@@ -20,7 +21,7 @@ class rfc3986
 				new recipient\functor(
 					function($host) use ($authority, $recipient)
 					{
-						$buffer = new recipient\buffer;
+						$buffer = new recipient\buffer(new buffer\infinite);
 
 						$authority
 							->recipientOfUserInfoInUriAuthorityAsStringFromConverterIs(

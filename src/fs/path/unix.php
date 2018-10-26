@@ -1,7 +1,7 @@
 <?php namespace norsys\score\fs\path;
 
 use norsys\score\fs\path;
-use norsys\score\php\string\{ recipient, recipient\buffer, recipient\functor, recipient\prefix };
+use norsys\score\php\string\{ recipient, buffer, recipient\functor, recipient\prefix };
 use norsys\score\container\iterator\block;
 
 class unix
@@ -19,7 +19,7 @@ class unix
 
 	function recipientOfStringIs(recipient $recipient) :void
 	{
-		$buffer = new buffer;
+		$buffer = new buffer\infinite;
 
 		$this->container
 			->blockForContainerIteratorIs(
@@ -30,7 +30,7 @@ class unix
 							->recipientOfStringIs(
 								new prefix\provider(
 									new path\separator\unix,
-									$buffer
+									new recipient\buffer($buffer)
 								)
 							)
 						;
@@ -39,7 +39,7 @@ class unix
 			)
 		;
 
-		$buffer->recipientOfStringIs($recipient);
+		$buffer->recipientOfStringFromBufferIs($recipient);
 	}
 
 	function recipientOfFilenameContainerFromFsPathIs(filename\container\recipient $recipient) :void

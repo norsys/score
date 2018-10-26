@@ -3,7 +3,8 @@
 use norsys\score\{
 	net\uri,
 	net\uri\converter\toString,
-	php\string\recipient
+	php\string\recipient,
+	php\string\buffer
 };
 
 class rfc3986
@@ -29,7 +30,7 @@ class rfc3986
 				new recipient\functor(
 					function($scheme) use ($uri, $recipient)
 					{
-						$buffer = new recipient\buffer($scheme);
+						$buffer = new recipient\buffer(new buffer\infinite($scheme));
 
 						$uri
 							->recipientOfNetUriHierPartAsStringFromConverterIs(

@@ -21,6 +21,13 @@ vendor/update: composer.lock
 unit-tests: install ## Run unit tests
 	php tests/units/runner.php -ulr
 
+.PHONY: unit-tests/loop
+unit-tests/loop: install ## Run unit tests in an infinite loop
+	php tests/units/runner.php -ulr --loop
+
+.PHONY: tests
+tests: unit-tests
+
 .PHONY: git/setup
 git/setup: .git/hooks/pre-commit ## Install pre-commit hook for git.
 

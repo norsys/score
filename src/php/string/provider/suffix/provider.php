@@ -21,7 +21,7 @@ class provider
 
 	function recipientOfStringIs(recipient $recipient) :void
 	{
-		$buffer = new buffer;
+		$buffer = new php\string\buffer\infinite;
 
 		(
 			new fifo
@@ -34,7 +34,7 @@ class provider
 							->recipientOfStringIs(
 								new recipient\suffix\provider(
 									$this->suffix,
-									$buffer
+									new recipient\buffer($buffer)
 								)
 							)
 						;
@@ -45,6 +45,6 @@ class provider
 			)
 		;
 
-		$buffer->recipientOfStringIs($recipient);
+		$buffer->recipientOfStringFromBufferIs($recipient);
 	}
 }

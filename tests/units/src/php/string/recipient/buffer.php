@@ -12,7 +12,6 @@ class buffer extends units\test
 		$this->testedClass
 			->implements('norsys\score\php\string\recipient')
 			->implements('norsys\score\php\string\provider')
-			->implements('norsys\score\php\string\buffer')
 		;
 	}
 
@@ -20,7 +19,9 @@ class buffer extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance,
+				$this->newTestedInstance(
+					$buffer = new mockOfScore\php\string\buffer
+				),
 				$string = uniqid()
 			)
 			->if(
@@ -28,43 +29,11 @@ class buffer extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($string))
-
-			->given(
-				$this->newTestedInstance($inBuffer = uniqid())
-			)
-			->if(
-				$this->testedInstance->stringIs($string)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($inBuffer . $string))
-		;
-	}
-
-	function testStringForBufferIs()
-	{
-		$this
-			->given(
-				$this->newTestedInstance,
-				$string = uniqid()
-			)
-			->if(
-				$this->testedInstance->stringForBufferIs($string)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($string))
-
-			->given(
-				$this->newTestedInstance($inBuffer = uniqid())
-			)
-			->if(
-				$this->testedInstance->stringForBufferIs($string)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($inBuffer . $string))
+					->isEqualTo($this->newTestedInstance($buffer))
+				->mock($buffer)
+					->receive('stringForBufferIs')
+						->withArguments($string)
+							->once
 		;
 	}
 
@@ -72,7 +41,9 @@ class buffer extends units\test
 	{
 		$this
 			->given(
-				$this->newTestedInstance,
+				$this->newTestedInstance(
+					$buffer = new mockOfScore\php\string\buffer
+				),
 				$recipient = new mockOfScore\php\string\recipient
 			)
 			->if(
@@ -80,93 +51,10 @@ class buffer extends units\test
 			)
 			->then
 				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('stringIs')
-						->never
-
-			->given(
-				$this->newTestedInstance($string = uniqid())
-			)
-			->if(
-				$this->testedInstance->recipientOfStringIs($recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($string))
-				->mock($recipient)
-					->receive('stringIs')
-						->withArguments($string)
-							->once
-		;
-	}
-
-	function testRecipientOfStringFromBufferIs()
-	{
-		$this
-			->given(
-				$this->newTestedInstance,
-				$recipient = new mockOfScore\php\string\recipient
-			)
-			->if(
-				$this->testedInstance->recipientOfStringFromBufferIs($recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('stringIs')
-						->never
-
-			->given(
-				$this->newTestedInstance($string = uniqid())
-			)
-			->if(
-				$this->testedInstance->recipientOfStringFromBufferIs($recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance($string))
-				->mock($recipient)
-					->receive('stringIs')
-						->withArguments($string)
-							->once
-		;
-	}
-
-	function testRecipientOfStringFromProviderIs()
-	{
-		$this
-			->given(
-				$this->newTestedInstance,
-				$provider = new mockOfScore\php\string\provider,
-				$recipient = new mockOfScore\php\string\recipient
-			)
-			->if(
-				$this->testedInstance->recipientOfStringFromProviderIs($provider, $recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('stringIs')
-						->never
-
-			->given(
-				$string = uniqid(),
-				$this->calling($provider)->recipientOfStringIs = function($aRecipient) use ($string) {
-					$aRecipient->stringIs($string);
-				}
-			)
-			->if(
-				$this->testedInstance->recipientOfStringFromProviderIs($provider, $recipient)
-			)
-			->then
-				->object($this->testedInstance)
-					->isEqualTo($this->newTestedInstance)
-				->mock($recipient)
-					->receive('stringIs')
-						->withArguments($string)
+					->isEqualTo($this->newTestedInstance($buffer))
+				->mock($buffer)
+					->receive('recipientOfStringFromBufferIs')
+						->withArguments($recipient)
 							->once
 		;
 	}

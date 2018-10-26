@@ -2,7 +2,8 @@
 
 use norsys\score\php\string\{
 	recipient,
-	provider
+	provider,
+	buffer
 };
 use norsys\score\{
 	composer\depedency\version\semver,
@@ -13,7 +14,7 @@ class aggregator extends semver\converter\toString\dot
 {
 	function recipientOfSemverVersionAsStringIs(semver $version, recipient $recipient) :void
 	{
-		(new recipient\buffer\join('.'))
+		(new buffer\join('.'))
 			->recipientOfStringFromProviderIs(
 				new provider\iterator\fifo(
 					new provider\block(

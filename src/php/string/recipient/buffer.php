@@ -1,37 +1,32 @@
 <?php namespace norsys\score\php\string\recipient;
 
 use norsys\score\php;
-use norsys\score\php\{
-	string\provider,
-	string\recipient,
-	block
+use norsys\score\php\string\{
+	provider,
+	recipient
 };
 
-class buffer extends buffer\prefix
+class buffer
 	implements
-		php\string\buffer
+		recipient,
+		provider
 {
-	function __construct(string $string = null)
+	private
+		$buffer
+	;
+
+	function __construct(php\string\buffer $buffer)
 	{
-		parent::__construct('', $string);
+		$this->buffer = $buffer;
 	}
 
-	function recipientOfStringFromBufferIs(recipient $recipient) :void
+	function stringIs(string $string) :void
 	{
-		parent::recipientOfStringIs($recipient);
+		$this->buffer->stringForBufferIs($string);
 	}
 
-	function stringForBufferIs(string $string) :void
+	function recipientOfStringIs(recipient $recipient) :void
 	{
-		parent::stringIs($string);
-	}
-
-	function recipientOfStringFromProviderIs(provider $provider, recipient $recipient) :void
-	{
-		$buffer = clone $this;
-
-		$provider->recipientOfStringIs($buffer);
-
-		$buffer->recipientOfStringIs($recipient);
+		$this->buffer->recipientOfStringFromBufferIs($recipient);
 	}
 }

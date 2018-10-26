@@ -5,7 +5,8 @@ use norsys\score\{
 	net\uri\authority\user\info\user,
 	net\uri\authority\user\info\password,
 	net\uri\authority,
-	php\string\recipient
+	php\string\recipient,
+	php\string\buffer
 };
 
 class rfc3986
@@ -20,7 +21,7 @@ class rfc3986
 				new recipient\functor(
 					function($user) use ($userInfo, $recipient)
 					{
-						$buffer = new recipient\buffer($user);
+						$buffer = new recipient\buffer(new buffer\infinite($user));
 
 						$userInfo
 							->recipientOfPasswordInUriAuthorityAsStringFromConverterIs(

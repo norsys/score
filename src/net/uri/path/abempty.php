@@ -3,6 +3,7 @@
 use norsys\score\{
 	net\uri\path,
 	php\string\recipient,
+	php\string\buffer,
 	container\fifo,
 	container\iterator\block\functor as block
 };
@@ -22,7 +23,7 @@ class abempty
 
 	function recipientOfSegmentInNetUriPathAsStringFromConverterIs(path\segment\converter\toString $converter, recipient $recipient) :void
 	{
-		$buffer = new recipient\buffer;
+		$buffer = new recipient\buffer(new buffer\infinite);
 
 		(
 			new fifo(

@@ -2,14 +2,15 @@
 
 use norsys\score\php\{
 	charlist,
-	string\recipient
+	string\recipient,
+	string\buffer
 };
 
 class official
 {
 	function recipientOfCharlistAsStringIs(charlist $charlist, recipient $recipient)
 	{
-		$buffer = new recipient\buffer('');
+		$buffer = new recipient\buffer(new buffer\infinite(''));
 
 		$charlist
 			->recipientOfMinCharInCharlistIs(

@@ -11,7 +11,6 @@ use norsys\score\vcs\branch\any as branch;
 
 use norsys\score\composer\{
 	root\project,
-	fs\path\any as path,
 	fs\path\filename\any as filename,
 	fs\path\file,
 	fs\path\directory,

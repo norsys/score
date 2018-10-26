@@ -57,5 +57,4 @@ class provider extends units\test
 							->once
 		;
 	}
-
 }

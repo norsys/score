@@ -1,6 +1,9 @@
 <?php namespace norsys\score\php\string\recipient\buffer;
 
-use norsys\score\php\string\recipient;
+use norsys\score\php\string\{
+	recipient,
+	buffer
+};
 
 class join extends recipient\buffer
 {
@@ -10,7 +13,7 @@ class join extends recipient\buffer
 
 	function __construct(string $glue, string $string = null)
 	{
-		parent::__construct($string);
+		parent::__construct(new buffer\infinite($string));
 
 		$this->glue = $glue;
 	}
