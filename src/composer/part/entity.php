@@ -2,6 +2,6 @@
 
 use norsys\score\composer\part;
 
-interface object extends part
+interface entity extends part
 {
 }

@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../runner.php';
 
-use norsys\score\{ tests\units, serializer\keyValue\part\object, container\iterator };
+use norsys\score\tests\units;
 use mock\norsys\score as mockOfScore;
 
 class fifo extends units\test

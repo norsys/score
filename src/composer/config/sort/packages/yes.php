@@ -1,6 +1,6 @@
 <?php namespace norsys\score\composer\config\sort\packages;
 
-use norsys\score\composer\{ config\option, part\object, part\name, part\text };
+use norsys\score\composer\{ config\option, part\name, part\text };
 use norsys\score\serializer\keyValue as serializer;
 
 class yes

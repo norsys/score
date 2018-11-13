@@ -1,4 +1,4 @@
-<?php namespace norsys\score\tests\units\composer\part\object;
+<?php namespace norsys\score\tests\units\composer\part\entity;
 
 require __DIR__ . '/../../../../runner.php';
 
@@ -10,7 +10,7 @@ class named extends units\test
 	function testClass()
 	{
 		$this->testedClass
-			->implements('norsys\score\composer\part\object')
+			->implements('norsys\score\composer\part\entity')
 		;
 	}
 

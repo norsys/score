@@ -1,15 +1,15 @@
-<?php namespace norsys\score\composer\part\object;
+<?php namespace norsys\score\composer\part\entity;
 
 use norsys\score\composer\{
 	part,
-	part\object,
+	part\entity,
 	part\name
 };
 use norsys\score\serializer\keyValue as serializer;
 
 class named
 	implements
-		object
+		entity
 {
 	private
 		$name,

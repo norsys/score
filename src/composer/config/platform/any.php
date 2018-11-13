@@ -2,12 +2,12 @@
 
 use norsys\score\composer\{
 	config\option,
-	part\object,
+	part\entity,
 	part\name\config\platform,
 	part\container\fifo
 };
 
-class any extends object\named
+class any extends entity\named
 	implements
 		option
 {

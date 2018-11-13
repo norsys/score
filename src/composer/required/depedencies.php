@@ -1,11 +1,11 @@
 <?php namespace norsys\score\composer\required;
 
 use norsys\score\composer\root\part;
-use norsys\score\composer\part\{ object, name };
+use norsys\score\composer\part\{ entity, name };
 use norsys\score\composer\required;
 use norsys\score\composer\depedency;
 
-class depedencies extends object\named
+class depedencies extends entity\named
 	implements
 		required,
 		part

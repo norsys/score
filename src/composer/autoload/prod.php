@@ -3,12 +3,12 @@
 use norsys\score\composer\{
 	autoload,
 	autoload\type,
-	part\object,
+	part\entity,
 	part\name,
 	part\container\fifo
 };
 
-class prod extends object\named
+class prod extends entity\named
 	implements
 		autoload
 {
